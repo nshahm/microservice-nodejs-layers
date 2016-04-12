@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "declaration": false,   
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    
+    "noLib": false,
+    "emitDecoratorMetadata": false,
+    "experimentalDecorators": false,
+    "outDir": "dist"
+  },
+
+ "exclude": [
+        "node_modules",
+        "dist",
+        "typings/browser",
+        "typings/browser.d.ts"
+  ]
+}
+
+

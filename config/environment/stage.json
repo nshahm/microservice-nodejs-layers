@@ -1,0 +1,13 @@
+{
+  // Employee module configs for stating environment - QA
+  "employee": {
+    "dbConfig": {
+      "host": "<STAGINGHOST>",
+      "port": 27017,
+      "dbName": "employees",
+      "poolSize":"5",
+      "username": "",
+      "password": ""          
+    }
+  }
+}

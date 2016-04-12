@@ -1,0 +1,45 @@
+{
+  "name": "Microservice_Nodejs_layers",
+  "version": "1.0.0",
+  "description": "CSD Microservice nodejs layering that show, API, Business and data layer and its communication",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js --NODE_ENV=dev --NODE_CONFIG_DIR=$(pwd)/config/environment",
+    "typings-update": "npm i -g typings to update",
+    "ti": "typings install --save-dev --ambient",
+    "post-install": "typings install",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=dev ./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js",
+    "build": "npm install && npm run post-install && npm run dev",
+    "build-prod": "NODE_ENV=prod ./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js -p"
+  },
+  "author": {
+    "email": "n.shahm@gmail.com",
+    "name": "Shahm Nattarshah"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "http://192.168.99.100:4873/"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "config": "^1.20.1",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.12",
+    "morgan": "^1.7.0",
+    "typescript": "^1.8.9",
+    "typings": "^0.7.12",
+    "webpack": "^1.12.15",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.10.0",
+    "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.7.6",
+    "babel-loader": "^6.2.4",
+    "errorhandler": "^1.4.3",
+    "json-loader": "^0.5.4",
+    "ts-loader": "^0.8.2"
+  }
+}
