@@ -6,19 +6,7 @@ import app from "./config/Express";
 
 import initializeMongoDB from "./config/Mongodb";
 import initializeAPI  from './api/API'
-// import 
 
-// Enter Defaults
-
-
-
-
-let conf = config.get('employee.dbConfig');
-
-console.log(conf);
-// Getting the database configuration
-const dbConfig = config.get('employee');
-//console.log(dbConfig);
 
 
 /**

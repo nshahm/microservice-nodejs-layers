@@ -37,5 +37,4 @@ const EmployeeSchema = new Schema({
 
 }, {collection: 'employees'});
 
-//console.log(EmployeeSchema);
 export default Mangoose.model('Employee', EmployeeSchema);

@@ -1,7 +1,14 @@
 import EmployeeModel from "../model/EmployeeModel";
+import BaseData from "./base/BaseData";
+import {Request, Response } from "express";
 
-export default class Employee {
-     createEmployee(req, res) {
+
+export default class Employee extends BaseData {
+    
+    /**
+     * Creating the new employee
+     */
+     createEmployee(req:Request, res:Response) {
         console.log("Created At " + req.body.createdAt);
         
         new EmployeeModel(req.body).save((err) => {

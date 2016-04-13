@@ -17,26 +17,41 @@ export default class EmployeeService extends BaseService {
         this.employee.createEmployee(req, res);
     }
     
+    /**
+     * Get Employee by Id
+     */
     public getEmployee(req:Request, res:Response) {
         console.log("getEmployee() in employee api invoked");
         res.send("getEmployee() in employee api invoked");
     }
     
+    /**
+     * Updatae Employee
+     */
     public updateEmployee(req:Request, res:Response) {
         console.log("updateEmployee() in employee api invoked");
         res.send('updateEmployee() method invoked');
     }    
     
+    /**
+     * Delete Employee
+     */
     public deleteEmployee(req:Request, res:Response) {
         console.log("deleteEmployee() in employee api invoked");
         res.send('deleteEmployee() method invoked');
     }     
     
+    /**
+     * Employee exists
+     */
     public exists(req:Request, res:Response) {
         console.log("exists() in employee api invoked");
         res.send('exists() method invoked');
     }   
     
+    /**
+     * Create Employee
+     */
     public createEmployee(req:Request, res:Response) {
         new Employee().createEmployee(req, res);
     }

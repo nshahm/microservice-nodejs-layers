@@ -18,8 +18,6 @@ if (process.env.NODE_ENV === 'dev') {
     app.use(errorhandler());
 }
 
-
-
 // Exporting the express app that will used on other module initialization
 
 export default app;
