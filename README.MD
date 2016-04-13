@@ -8,31 +8,30 @@
 * Packages*
 
 * HTTP
->express
+>- express
     
 * Logging
->winston
->morgan    
+>- winston
+>- morgan    
     
 * Lint
->eslint
+>- eslint
     
 * Code
->typescript (typed superset of javascript)
+>- typescript (typed superset of javascript)
 
 * database
->mongodb
->ODM 
->> mangoose
+>- mongodb
+>- mangoose (ODM)
 
 * testing
->mocha (framework)
->chai (asserting library)
+>- mocha (framework)
+>- chai (asserting library)
     
 * Build
->webpack
->gulp (if needed)
-    
+>- webpack
+>- gulp (if needed)
+
 
 ### Follow the below steps to run
 ```
