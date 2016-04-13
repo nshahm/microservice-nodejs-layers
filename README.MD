@@ -3,37 +3,41 @@
 
 ## Packages list
 
-NodeJS
+* NodeJS
 
-Packages
+* Packages*
 
 * HTTP
-    ** express
+>express
     
 * Logging
-    ** winston
-    ** morgan    
+>winston
+>morgan    
     
 * Lint
-    ** eslint
+>eslint
     
-* Code  
-    ** typescript (typed superset of javascript)
+* Code
+>typescript (typed superset of javascript)
 
 * database
-    ** mongodb
-    ** ODM 
-        *** mangoose
+>mongodb
+>ODM 
+>> mangoose
 
 * testing
-    ** mocha (framework)
-    ** chai (asserting library)
+>mocha (framework)
+>chai (asserting library)
     
 * Build
-    webpack
-    gulp (if needed)
+>webpack
+>gulp (if needed)
     
 
+### Follow the below steps to run
+```
 npm run build 
+export NODE_ENV=dev
+export NODE_CONFIG_DIR=./config/environment
 node ./dist/server.js
-
+```
