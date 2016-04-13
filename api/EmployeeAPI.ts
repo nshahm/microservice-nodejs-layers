@@ -8,14 +8,14 @@ class EmployeeAPI extends AbstractBaseAPI {
     }
 
     createRoutes(router) {
-        
+
         //Creating a instance for EmployeeService
         let employeeService = new EmployeeService();
-        
+
         if (router == null) {
             throw Error("router is null");
         }
-        
+
         /**
          * Adding routes to employee service
          */
@@ -26,8 +26,5 @@ class EmployeeAPI extends AbstractBaseAPI {
         router.delete('/employee/:id', employeeService.deleteEmployee);
         router.get('/employee/:id/exists', employeeService.exists);
     }
-    
-    
 };
 export default this.router;
-
