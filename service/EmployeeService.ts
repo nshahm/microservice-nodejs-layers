@@ -1,6 +1,6 @@
 import BaseService  from "./base/BaseService";
 import {Request, Response} from "express";
-import Employee from "../data/Employee";
+import Employee from "../dal/Employee";
 
 /**
  * Employee Service is used to write any business validation
@@ -8,7 +8,7 @@ import Employee from "../data/Employee";
  */
 export default class EmployeeService extends BaseService {
 
-    employee:Employee = new Employee();
+    // TODO - Find a way to not to create new instance.
 
     /**
      * Create Employee

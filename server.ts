@@ -7,24 +7,22 @@ import app from "./config/Express";
 import initializeMongoDB from "./config/Mongodb";
 import initializeAPI  from './api/API'
 
-
-
 /**
  * initilize MongoDB 
  */
 initializeMongoDB();
-
 
 /**
  * Inititlize all the API for this microservices
  */
 initializeAPI(app);
 
-// app.use('/csd', );
+
 app.use('/', (req, res, next) => {
     console.log("middleware function called from server.ts");
     next();
 })
+
 /**
  * Initilizing server with serverport and serverHost.
  */
