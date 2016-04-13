@@ -4,68 +4,62 @@ import {Request, Response } from "express";
 
 
 export default class Employee extends BaseData {
-    
+
     /**
      * Creating the new employee
      */
      createEmployee(req, res) {
-        console.log("Created At " + req.body.createdAt);
-        
         new EmployeeModel(req.body).save((err) => {
         if (err)
             res.send(err);
-
         res.json({ message: 'Employee created!' });
         });
     }
-    
+
+    /**
+    * Get all employees
+    */
     getAllEmployee(req, res) {
         EmployeeModel.find((err, employees) => {
             if (err)
                 res.send(err);
-
             res.json(employees);
         });
     }
-   
 
+    /**
+    * Get employee by ID
+    */
     getEmployeeByID(req, res) {
-        EmployeeModel.findById(req.params.employee_id, (err, employee) =>{
+        EmployeeModel.findById(req.params.id, (err, employee) =>{
             if (err)
                 res.send(err);
             res.json(employee);
         });
     }
 
+    /**
+    * Updated employee
+    */
     updateEmployee(req, res) {
-        // use our employee model to find the employee we want
-        EmployeeModel.findById(req.params.employee_id, (err, employee) => {
-
+        EmployeeModel.findOneAndUpdate({_id:req.params.id}, req.body, (err, employee) => {
             if (err)
                 res.send(err);
-
-            employee.id = req.body.name;  // update the employees info
-
-            // save the employee
-            employee.save(function(err) {
-                if (err)
-                    res.send(err);
-
-                res.json({ message: 'Bear updated!' });
-            });
-
+            res.json({ message: 'Successfully updated' });
         });
     }
 
-  deleteEmployee(req, res) {
-    EmployeeModel.remove({
-        _id: req.params.employee_id
-    }, (err) => {
-        if (err)
-            res.send(err);
+    /**
+    * Delete employee
+    */
+    deleteEmployee(req, res) {
+        EmployeeModel.remove({
+            _id: req.params.id
+        }, (err) => {
+            if (err)
+                res.send(err);
 
-        res.json({ message: 'Successfully deleted' });
-    });
-  }
+            res.json({ message: 'Successfully deleted' });
+        });
+    }
 };
-
