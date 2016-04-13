@@ -8,7 +8,7 @@ export default class Employee extends BaseData {
     /**
      * Creating the new employee
      */
-     createEmployee(req:Request, res:Response) {
+     createEmployee(req, res) {
         console.log("Created At " + req.body.createdAt);
         
         new EmployeeModel(req.body).save((err) => {
