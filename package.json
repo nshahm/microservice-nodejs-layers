@@ -1,7 +1,7 @@
 {
   "name": "Microservice_Nodejs_layers",
   "version": "1.0.0",
-  "description": "CSD Microservice nodejs layering that show, API, Business and data layer and its communication",
+  "description": "Microservice nodejs layering that show, API, Business and data layer and its communication",
   "main": "server.js",
   "scripts": {
     "start": "node server.js --NODE_ENV=dev --NODE_CONFIG_DIR=$(pwd)/config/environment",
