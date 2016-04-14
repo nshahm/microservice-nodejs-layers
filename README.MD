@@ -27,6 +27,7 @@
 * testing
 >- mocha (framework)
 >- chai (asserting library)
+>- sinon (mock)
     
 * Build
 >- webpack
