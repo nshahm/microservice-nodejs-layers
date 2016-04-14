@@ -15,7 +15,7 @@
 >- morgan    
     
 * Lint
->- eslint
+>- tslint
     
 * Code
 >- typescript (typed superset of javascript)
