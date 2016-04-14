@@ -1,6 +1,6 @@
 import BaseService  from "./base/BaseService";
 import {Request, Response} from "express";
-import Employee from "../dal/Employee";
+import Employee from "../dal/EmployeeDAL";
 
 /**
  * Employee Service is used to write any business validation
