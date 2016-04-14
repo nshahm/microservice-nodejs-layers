@@ -3,6 +3,7 @@ import mongoose = require("mongoose");
 import BaseDAO = require("./base/BaseDAO");
 import repository = require("../model/schema/EmployeeSchema");
 import IEmployee = require("../model//Employee");
+import ErrorObj = require("../error/ErrorObject");
 
 
 /**
@@ -21,9 +22,9 @@ class EmployeeDAO extends BaseDAO {
         var employee : IEmployee = <IEmployee>req.body;
         repository.create(employee, (err) => {
             if (err) {
-                res.send(err);
+                res.status(400).send(new ErrorObj("error", err));
             } else {
-                res.send({ message: 'Employee Created Successfully' });
+                res.status(200).send(new ErrorObj("success", "Employee Created Successfully"));
             }
         });
     }
@@ -38,9 +39,9 @@ class EmployeeDAO extends BaseDAO {
         
         repository.find((err, employees) => {
             if (err) {
-                res.send(err);
+                res.status(400).send(new ErrorObj("error", err));
             } else {
-                res.json(employees);
+                res.status(200).send(new ErrorObj("success", employees));
             }
         });
         
@@ -56,9 +57,9 @@ class EmployeeDAO extends BaseDAO {
         
         repository.findById(req.params.id, (err, employee) =>{
             if (err) {
-                res.send(err);
+                res.status(400).send(new ErrorObj("error", err));
             } else {
-                res.json(employee);
+                res.status(200).send(new ErrorObj("success", employee));
             } 
         });
     }
@@ -72,9 +73,11 @@ class EmployeeDAO extends BaseDAO {
     public static updateEmployee(req: express.Request, res: express.Response) {
         
         repository.findOneAndUpdate({_id:req.params.id}, req.body, (err, employee) => {
-            if (err)
-                res.send(err);
-            res.json({ message: 'Employee updated successfully' });
+            if (err) {
+                res.status(400).send(new ErrorObj("error", err));
+            } else {
+                res.status(200).send(new ErrorObj("success", "Employee updated successfully"));
+            }            
         });
     }
     
@@ -88,9 +91,9 @@ class EmployeeDAO extends BaseDAO {
         
         repository.remove({_id: req.params.id}, (err) => {
             if (err) {
-                res.send(err);
+                res.status(400).send(new ErrorObj("error", err));
             } else {
-                res.json({ message: 'Employee deleted successfully ' });
+                res.status(200).send(new ErrorObj("success", "Employee deleted successfully"));
             }
         });
     }
@@ -107,11 +110,11 @@ class EmployeeDAO extends BaseDAO {
         
         var userName = req.params;
     
-        repository.findOne({ 'name.first' : userName }, (error, employee) => {
-            if (error) {
-                res.send(400);
+        repository.findOne({ 'name.first' : userName }, (err, employee) => {
+            if (err) {
+                res.status(400).send(new ErrorObj("error", err));
             } else {
-                res.send(employee);
+                res.status(200).send(new ErrorObj("success", employee));
             }
         });
     }
