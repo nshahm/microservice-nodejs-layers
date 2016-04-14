@@ -1,55 +1,72 @@
 import BaseService  from "./base/BaseService";
 import {Request, Response} from "express";
-import Employee from "../dal/EmployeeDAL";
+import EmployeeDAO = require("../dal/EmployeeDAO");
 
 /**
+ * EmployeeService
+ * 
  * Employee Service is used to write any business validation
  * and the bridge between API and Data access layer
  */
 export default class EmployeeService extends BaseService {
 
-    // TODO - Find a way to not to create new instance.
-
     /**
      * Create Employee
+     * 
+     * @param {Object} req - The request of the employee.
+     * @param {Object} res - The response of the employee.
      */
     public createEmployee(req:Request, res:Response) {
-        new Employee().createEmployee(req, res);
+        EmployeeDAO.createEmployee(req, res);
     }
 
     /**
      * Get all employees
+     * 
+     * @param {Object} req - The request of the employee.
+     * @param {Object} res - The response of the employee.
      */
     public getAll(req:Request, res:Response) {
-        new Employee().getAllEmployee(req, res);
+        EmployeeDAO.getEmployees(req, res);
     }
 
     /**
      * Get Employee by Id
+     * 
+     * @param {Object} req - The request of the employee.
+     * @param {Object} res - The response of the employee.
      */
     public getEmployee(req:Request, res:Response) {
-        new Employee().getEmployeeByID(req, res);
+        EmployeeDAO.getEmployeeByID(req, res);
     }
 
     /**
      * Updatae Employee
+     * 
+     * @param {Object} req - The request of the employee.
+     * @param {Object} res - The response of the employee.
      */
     public updateEmployee(req:Request, res:Response) {
-        new Employee().updateEmployee(req, res);
+        EmployeeDAO.updateEmployee(req, res);
     }
 
     /**
      * Delete Employee
+     * 
+     * @param {Object} req - The request of the employee.
+     * @param {Object} res - The response of the employee.
      */
     public deleteEmployee(req:Request, res:Response) {
-        new Employee().deleteEmployee(req, res);
+        EmployeeDAO.deleteEmployee(req, res);
     }
 
     /**
      * Employee exists
+     * 
+     * @param {Object} req - The request of the employee.
+     * @param {Object} res - The response of the employee.
      */
     public exists(req:Request, res:Response) {
-        console.log("exists() in employee api invoked");
-        res.send('exists() method invoked');
+        EmployeeDAO.findEmployeeByName(req, res);
     }
 }
