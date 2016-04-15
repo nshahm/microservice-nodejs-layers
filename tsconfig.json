@@ -8,11 +8,12 @@
     "removeComments": false,
     "sourceMap": true,
     "target": "es5",
-    
+    "pretty":true,
     "noLib": false,
     "emitDecoratorMetadata": false,
     "experimentalDecorators": false,
-    "outDir": "dist"
+    "outDir": "dist/employee-microservice.d.ts"
+    //"outFile":"dist/employee-microservice.d.ts"
   },
 
  "exclude": [

@@ -1,11 +1,19 @@
 /// <reference path="./typings/main.d.ts" />
 
 
-import * as config  from "config";
+//import * as config  from "config";
 import app from "./config/Express";
 
 import initializeMongoDB from "./config/Mongodb";
 import initializeAPI  from './api/API'
+import {initializeLogging } from './config/Logger';
+
+/**
+ * Initialize logging
+ * TODO - Eventually This will a logging client to logging service running 
+ * separately to enter logs in Mongodb 
+ */
+initializeLogging();
 
 /**
  * initilize MongoDB 

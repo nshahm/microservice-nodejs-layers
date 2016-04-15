@@ -20,8 +20,8 @@ let initializeMongoDB = () => {
     
     const mongodbUrl = "mongodb://" + dbConfig.host + ":" + dbConfig.port + "/" + dbConfig.dbName;
     Mangoose.connect(mongodbUrl, options);
-    console.log(mongodbUrl);
-    console.log(Mangoose);
+    //console.log(mongodbUrl);
+    //console.log(Mangoose);
 
     /** CONNECTION EVENTS */
     /** When successfully connected */
