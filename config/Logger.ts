@@ -21,6 +21,26 @@ const consoleTransportOptions = <winston.ConsoleTransportOptions> {
    level : 'info',
    prettyPrint : true
 };
+
+
+const exceptionFileOption = <winston.FileTransportOptions> {
+    name : 'exception',
+    colorize :true,
+    level : 'error',
+    dirname : "logs",
+    datePattern: '.yyyy-MM-ddTHH',
+    filename: path.join(__dirname, "logs", "exceptions.log")
+}
+
+
+const unHandledExceptionOptions = <winston.FileTransportOptions> {
+    name : 'unhandled-exception',
+    level: 'error',
+    colorize :true,
+    dirname : "logs",
+    datePattern: '.yyyy-MM-ddTHH',
+    filename: path.join(__dirname, "logs", "unhandled-exceptions.log")
+}
  
 // Daily file rotate options
 const dailyRotateFileOptions = <winston.DailyRotateFileTransportOptions> {
@@ -35,7 +55,7 @@ const dailyRotateFileOptions = <winston.DailyRotateFileTransportOptions> {
     maxsize : 5242880,
     dirname : "logs",
     datePattern: '.yyyy-MM-ddTHH',
-    filename: path.join(__dirname, "logs", "employee.log")
+    filename: path.join(__dirname, "logs", "all.log")
 };
  
  
@@ -47,8 +67,19 @@ export function initializeLogging() {
     // Adding console transport
     winston.add(winston.transports.Console, consoleTransportOptions);
     
+    //Adding file transport
+    winston.add(winston.transports.File, exceptionFileOption);
+    winston.add(winston.transports.File, unHandledExceptionOptions);
+    
+    
     // Adding DailyRotateFile transport for file logging.
     winston.add(dailyRotateFile, dailyRotateFileOptions);
+
+    winston.addColors('debug');
+    winston.handleExceptions(winston.transports.Console, winston.transports.File);
+    winston.unhandleExceptions(winston.transports.Console, winston.transports.File);
+
+        
 
     console.log("Winston configured...")
     
