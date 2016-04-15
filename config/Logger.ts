@@ -26,10 +26,10 @@ const consoleTransportOptions = <winston.ConsoleTransportOptions> {
 const exceptionFileOption = <winston.FileTransportOptions> {
     name : 'exception',
     colorize :true,
-    level : 'error',
+    level : 'silly',
     dirname : "logs",
     datePattern: '.yyyy-MM-ddTHH',
-    filename: path.join(__dirname, "logs", "exceptions.log")
+    filename: path.join(__dirname, "logs", "all.log")
 }
 
 
