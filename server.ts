@@ -4,7 +4,7 @@
 //import * as config  from "config";
 import app from "./config/Express";
 import {initializeLogging } from './config/Logger';
-import Middlewares from "./middlewares/base/MiddleWaresBase";
+import Middlewares from "./middlewares/base/MiddlewaresBase";
 
 /**
  * Initialize logging

@@ -1,7 +1,7 @@
 import IEmployeeService  from "./interfaces/IEmployeeService";
 import {Request, Response} from "express";
 import IEmployeeModel from "./../dal/model/interfaces/EmployeeModel";
-import EmployeeDataAccess from "./../dal/DataAccess/EmployeeDataAccess";
+import EmployeeDataAccess from "./../dal/dataAccess/EmployeeDataAccess";
 import ServiceResponse from "../helpers/error/Response"
 import Constants from "../helpers/constants/Constants"
 

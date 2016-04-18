@@ -7,7 +7,7 @@ var mongooseConnection = MongoDB.mongooseConnection;
 class EmployeeSchema {
    
   static get schema () {
-       var schema =  mongoose.Schema({
+       let schema =  mongoose.Schema({
            employeeID: {
                 type: String,
                 required: true,
@@ -44,5 +44,5 @@ class EmployeeSchema {
    }
    
 }
-var schema = mongooseConnection.model<IEmployeeModel>("Employees", EmployeeSchema.schema);
+const schema = mongooseConnection.model<IEmployeeModel>("Employees", EmployeeSchema.schema);
 export default schema;

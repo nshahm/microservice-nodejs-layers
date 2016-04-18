@@ -2,7 +2,7 @@ import * as Express from "express";
 import * as BodyParser from "body-parser";
 
 import BaseAPI from "./../../api//base/BaseAPI";
-import MongoDB from "./../../config/MongoDB"; 
+import MongoDB from "./../../config/Mongodb"; 
 
 
 class MiddlewaresBase {
