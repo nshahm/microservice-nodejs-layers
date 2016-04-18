@@ -1,5 +1,5 @@
-import MongoDB from "../../config/MongoDB";
-import IEmployeeModel from "./../model/interfaces/EmployeeModel";
+import MongoDB from "../../config/Mongodb";
+import IEmployeeModel from "./../model/IEmployeeModel";
 
 var mongoose = MongoDB.mongooseInstance;
 var mongooseConnection = MongoDB.mongooseConnection;
@@ -7,7 +7,7 @@ var mongooseConnection = MongoDB.mongooseConnection;
 class EmployeeSchema {
    
   static get schema () {
-       var schema =  mongoose.Schema({
+       let schema =  mongoose.Schema({
            employeeID: {
                 type: String,
                 required: true,
@@ -44,5 +44,5 @@ class EmployeeSchema {
    }
    
 }
-var schema = mongooseConnection.model<IEmployeeModel>("Employees", EmployeeSchema.schema);
+const schema = mongooseConnection.model<IEmployeeModel>("Employees", EmployeeSchema.schema);
 export default schema;

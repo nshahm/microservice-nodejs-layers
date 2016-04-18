@@ -1,12 +1,11 @@
    /// <reference path="../../../typings/main.d.ts" />
 
-import IRead from "./../interfaces/base/Read";
-import IWrite from "./../interfaces/base/Write";
-import IEmployeeModel from "./../../model/interfaces/EmployeeModel";
+import IRepositoryBase from "./IBaseRepository";
+import IEmployeeModel from "./../../model/EmployeeModel";
 
 import mongoose = require("mongoose");
 
-class RepositoryBase<T extends mongoose.Document> implements IRead<T>, IWrite<T> {
+class RepositoryBase<T extends mongoose.Document> implements IRepositoryBase<T> {
 
     private _model: mongoose.Model<mongoose.Document>;
 

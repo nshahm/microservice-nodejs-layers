@@ -3,8 +3,9 @@
 
 //import * as config  from "config";
 import app from "./config/Express";
-import initializeAPI  from './api/API'
 import {initializeLogging } from './config/Logger';
+import Mongodb from "./config/Mongodb";
+import Middlewares from "./middlewares/base/BaseMiddlewares";
 
 /**
  * Initialize logging
@@ -16,18 +17,15 @@ initializeLogging();
 /**
  * initilize MongoDB 
  */
-//initializeMongoDB();
-
-/**
- * Inititlize all the API for this microservices
- */
-initializeAPI(app);
+Mongodb.initialize();
 
 
-app.use('/', (req, res, next) => {
+/*app.use('/', (req, res, next) => {
     console.log("middleware function called from server.ts");
     next();
-})
+})*/
+
+app.use(Middlewares.configuration);
 
 /**
  * Initilizing server with serverport and serverHost.

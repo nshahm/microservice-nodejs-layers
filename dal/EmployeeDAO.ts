@@ -1,11 +1,11 @@
-/// <reference path="../../typings/main.d.ts" />
-import EmployeeRepository from "./../repository/EmployeeRepository";
-import IEmployeeDataAccess from "./interfaces/EmployeeDataAccess";
-import IEmployeeModel from "./../model/interfaces/EmployeeModel";
-import EmployeeModel from "./../model/EmployeeModel";
+/// <reference path="../typings/main.d.ts" />
+import EmployeeRepository from "./repository/EmployeeRepository";
+import IEmployeeDAO from "./EmployeeDAO";
+import IEmployeeModel from "./model/IEmployeeModel";
 
 
-class EmployeeDataAccess  implements IEmployeeDataAccess {
+
+class EmployeeDAO  implements IEmployeeDAO {
     private _employeeRepository: EmployeeRepository;
 
     constructor () {
@@ -42,5 +42,5 @@ class EmployeeDataAccess  implements IEmployeeDataAccess {
 
 }
 
-Object.seal(EmployeeDataAccess);
-export default EmployeeDataAccess;
+Object.seal(EmployeeDAO);
+export default EmployeeDAO;

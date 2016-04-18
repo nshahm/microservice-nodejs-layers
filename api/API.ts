@@ -1,20 +1,13 @@
-import  NewEmployeeAPI from "./NewEmployeeAPI";
+import * as Express from "express";
+import EmployeeRoutes from "./EmployeeAPI";
 
+const app:Express.Express = Express();
 
-//This API class will hold all the API belongs to this microservices.
-let initializeAPI = (app:any) => {
-
-    // Adding employee API routers
-    app.use('/v1/employee', NewEmployeeAPI);
+class API {
     
-    
-    // app.use('/', );
-    app.use('/', (req, res, next) => {
-        console.log("middleware function called from server.ts");
-        next();
-    })
+    get routes() {
+        app.use("/v1/employee/", new EmployeeRoutes().routes);
+        return app;
+    }
 }
-
-export default initializeAPI;    
- 
-
+export default API;
