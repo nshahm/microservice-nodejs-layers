@@ -4,7 +4,8 @@
 //import * as config  from "config";
 import app from "./config/Express";
 import {initializeLogging } from './config/Logger';
-import Middlewares from "./middlewares/base/MiddlewaresBase";
+import Mongodb from "./config/Mongodb";
+import Middlewares from "./middlewares/base/BaseMiddlewares";
 
 /**
  * Initialize logging
@@ -16,12 +17,7 @@ initializeLogging();
 /**
  * initilize MongoDB 
  */
-//initializeMongoDB();
-
-/**
- * Inititlize all the API for this microservices
- */
-//initializeAPI(app);
+Mongodb.initialize();
 
 
 /*app.use('/', (req, res, next) => {

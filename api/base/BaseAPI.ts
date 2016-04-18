@@ -1,11 +1,9 @@
 import * as Express from "express";
 import EmployeeRoutes from "./../EmployeeAPI";
-var app = Express();
-class BaseRoutes {
+
+const app:Express.Express = Express();
+class BaseAPI {
     
-    get routes() {
-        app.use("/v1/employee/", new EmployeeRoutes().routes);
-        return app;
-    }
+   // Common methods for API layer
 }
-export default BaseRoutes;
+export default BaseAPI;

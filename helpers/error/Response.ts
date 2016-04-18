@@ -1,5 +1,6 @@
 class Response {
     
+    // TODO - introduce status codes.
     status: String;
     message: Object;
     

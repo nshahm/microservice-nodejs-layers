@@ -1,4 +1,4 @@
-import IEmployeeModel from "./interfaces/EmployeeModel";
+import IEmployeeModel from "./IEmployeeModel";
 
 class HeroModel {
    

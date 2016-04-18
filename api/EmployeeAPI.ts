@@ -2,7 +2,7 @@ import * as Express from "express";
 import EmployeeService from "./../service/EmployeeService";
 
 var router = Express.Router();
-class EmployeeRoutes {
+class EmployeeAPI {
     private _employeeController: EmployeeService;
     
     constructor () {
@@ -20,5 +20,5 @@ class EmployeeRoutes {
     }
 }
 
-Object.seal(EmployeeRoutes);
-export default EmployeeRoutes;
+Object.seal(EmployeeAPI);
+export default EmployeeAPI;
