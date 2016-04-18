@@ -7,7 +7,6 @@ interface BaseService {
     delete: Express.RequestHandler;
     retrieve: Express.RequestHandler;
     findById: Express.RequestHandler;
-   
 }
 
 export default BaseService;

@@ -8,11 +8,8 @@ class MongoDB {
     static mongooseInstance: any;
     static mongooseConnection: Mongoose.Connection;
     
-    constructor () {
-        MongoDB.connect();
-    }
     
-    static connect (): Mongoose.Connection {
+    static initialize (): Mongoose.Connection {
         
         const dbConfig: any = Config.get("mongodb");
         const options:any = {
@@ -60,5 +57,5 @@ class MongoDB {
     
 }
 
-MongoDB.connect();
+//MongoDB.connect();
 export default MongoDB;

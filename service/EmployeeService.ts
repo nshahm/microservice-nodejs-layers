@@ -1,7 +1,7 @@
-import IEmployeeService  from "./interfaces/IEmployeeService";
+import IEmployeeService  from "./IEmployeeService";
 import {Request, Response} from "express";
-import IEmployeeModel from "./../dal/model/interfaces/EmployeeModel";
-import EmployeeDataAccess from "./../dal/DataAccess/EmployeeDataAccess";
+import IEmployeeModel from "./../dal/model/IEmployeeModel";
+import EmployeeDAO from "./../dal/EmployeeDAO";
 import ServiceResponse from "../helpers/error/Response"
 import Constants from "../helpers/constants/Constants"
 
@@ -23,7 +23,7 @@ class EmployeeService implements IEmployeeService {
     public create(req:Request, res:Response) {
         try {
             var employee: IEmployeeModel = <IEmployeeModel>req.body;
-            var employeeDataAccess = new EmployeeDataAccess();
+            var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.create(employee, (error, result) => {
                 if (error) {
                     res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
@@ -46,7 +46,7 @@ class EmployeeService implements IEmployeeService {
         try {
             var employee: IEmployeeModel = <IEmployeeModel>req.body;
             var _id: string = req.params.id;
-            var employeeDataAccess = new EmployeeDataAccess();
+            var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.update(_id, employee, (error, result) => {
                 if(error) {
                     res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
@@ -68,7 +68,7 @@ class EmployeeService implements IEmployeeService {
     public delete(req:Request, res:Response) {
         try {
             var _id: string = req.params.id;
-            var employeeDataAccess = new EmployeeDataAccess();
+            var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.delete(_id, (error, result) => {
                 if (error) {
                     res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
@@ -89,7 +89,7 @@ class EmployeeService implements IEmployeeService {
      */
     public retrieve(req:Request, res:Response) {
         try {
-            var employeeDataAccess = new EmployeeDataAccess();
+            var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.retrieve((error, result) => {
                 if(error) {
                     res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
@@ -111,7 +111,7 @@ class EmployeeService implements IEmployeeService {
     public findById(req:Request, res:Response) {
         try {
             var _id: string = req.params.id;
-            var employeeDataAccess = new EmployeeDataAccess();
+            var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.findById(_id, (error, result) => {
                 if(error) {
                     res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
