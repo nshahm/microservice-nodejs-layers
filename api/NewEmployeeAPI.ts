@@ -17,22 +17,19 @@ if (router == null) {
  * Adding routes to employee service
  */
 // List
-router.get('/', employeeService.getAll);
+router.get('/', employeeService.retrieve);
 
 // Get employee by Id
-router.get('/:id', employeeService.getEmployee);
+router.get('/:id', employeeService.findById);
 
 // Create employee
-router.post('/', employeeService.createEmployee);
+router.post('/', employeeService.create);
 
 // Update employee by id
-router.put('/:id', employeeService.updateEmployee);
+router.put('/:id', employeeService.update);
 
 // delete employee
-router.delete('/:id', employeeService.deleteEmployee);
-
-// check employee exists
-router.get('/:id/exists', employeeService.exists);
+router.delete('/:id', employeeService.delete);
 
 export default router;
         

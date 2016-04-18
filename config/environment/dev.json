@@ -1,13 +1,10 @@
 {
-  // Employee module configs for development environment
-  "employee": {
-    "dbConfig": {
-      "host": "localhost",
-      "port": 27017,
-      "dbName": "employees",
-      "poolSize":"5"
-      //"username": "",
-      //"password": ""
-    }
-  }
+  "mongodb": {
+            "host": "localhost",
+            "port": 27017,
+            "dbName": "employees",
+            "user": "",
+            "pass": "",
+            "poolSize":"10"
+        }
 }

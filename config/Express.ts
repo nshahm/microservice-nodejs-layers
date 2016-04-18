@@ -1,6 +1,6 @@
 /// <reference path="../typings/main.d.ts" />
 
-import  * as express from "express";
+import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import * as morgan  from "morgan";

@@ -1,14 +1,14 @@
-import mongoose = require("mongoose");
-import IEmployee = require("../Employee");
+import MongoDB from "../../config/MongoDB";
+import IEmployeeModel from "./../model/interfaces/EmployeeModel";
 
-/**
- * EmployeeSchema
- */
+var mongoose = MongoDB.mongooseInstance;
+var mongooseConnection = MongoDB.mongooseConnection;
+
 class EmployeeSchema {
-    
-    static get schema() {
-        var schema = new mongoose.Schema({
-             employeeID: {
+   
+  static get schema () {
+       var schema =  mongoose.Schema({
+           employeeID: {
                 type: String,
                 required: true,
                 unique: true
@@ -16,7 +16,8 @@ class EmployeeSchema {
             name: {
                 first: {
                     type: String,
-                    required: true
+                    required: true,
+                    errMsg: 'Enter First Name'
                 },
                 last: {
                     type: String,
@@ -37,11 +38,11 @@ class EmployeeSchema {
                     type: Number
                 }
             }
-        });
-        return schema;
-    }
+       });
+       
+       return schema;
+   }
+   
 }
-
-var repository = mongoose.model<IEmployee>("Employee", EmployeeSchema.schema);
-
-export = repository;
+var schema = mongooseConnection.model<IEmployeeModel>("Employees", EmployeeSchema.schema);
+export default schema;

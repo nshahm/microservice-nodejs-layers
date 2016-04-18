@@ -1,8 +1,13 @@
+import * as Express from "express";
 
-export default class BaseService {
+interface BaseService {
     
-    /** 
-     * Common methods accross the services will be implemented here.
-     */
+    create: Express.RequestHandler;
+    update: Express.RequestHandler;
+    delete: Express.RequestHandler;
+    retrieve: Express.RequestHandler;
+    findById: Express.RequestHandler;
    
 }
+
+export default BaseService;

@@ -19,12 +19,11 @@ class EmployeeAPI extends AbstractBaseAPI {
         /**
          * Adding routes to employee service
          */
-        router.get('/employee', employeeService.getAll);
-        router.get('/employee/:id', employeeService.getEmployee);
-        router.post('/employee', employeeService.createEmployee);
-        router.put('/employee/:id', employeeService.updateEmployee);
-        router.delete('/employee/:id', employeeService.deleteEmployee);
-        router.get('/employee/:id/exists', employeeService.exists);
+        router.get('/employee', employeeService.retrieve);
+        router.get('/employee/:id', employeeService.findById);
+        router.post('/employee', employeeService.create);
+        router.put('/employee/:id', employeeService.update);
+        router.delete('/employee/:id', employeeService.delete);
     }
 };
 export default this.router;
