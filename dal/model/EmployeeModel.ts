@@ -2,21 +2,21 @@ import IEmployeeModel from "./interfaces/EmployeeModel";
 
 class HeroModel {
    
-   private _heroModel: IEmployeeModel;
+   private _employeeModel: IEmployeeModel;
    
    constructor(heroModel: IEmployeeModel) {
-       this._heroModel = heroModel;
+       this._employeeModel = heroModel;
    }
    get employeeID (): string {
-       return this._heroModel.employeeID;
+       return this._employeeModel.employeeID;
    }
    
    get name (): any {
-       return this._heroModel.name;
+       return this._employeeModel.name;
    }
    
    get address (): any {
-       return this._heroModel.address;
+       return this._employeeModel.address;
    }    
 }
 Object.seal(HeroModel);
