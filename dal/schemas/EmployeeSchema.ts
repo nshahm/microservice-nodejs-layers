@@ -1,4 +1,4 @@
-import MongoDB from "../../config/MongoDB";
+import MongoDB from "../../config/Mongodb";
 import IEmployeeModel from "./../model/interfaces/EmployeeModel";
 
 var mongoose = MongoDB.mongooseInstance;
