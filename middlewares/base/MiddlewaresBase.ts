@@ -1,7 +1,8 @@
 import * as Express from "express";
 import * as BodyParser from "body-parser";
 
-import BaseRoutes from "./../../routes/base/BaseRoutes"; 
+import BaseAPI from "./../../api//base/BaseAPI";
+import MongoDB from "./../../config/MongoDB"; 
 
 
 class MiddlewaresBase {
@@ -9,10 +10,10 @@ class MiddlewaresBase {
     static get configuration () {
          var app = Express();
          app.use(BodyParser.json());
-         app.use(new BaseRoutes().routes);
+         app.use(new BaseAPI().routes);
          
          return app;
     }    
 }
 Object.seal(MiddlewaresBase);
-export = MiddlewaresBase;
+export default MiddlewaresBase;

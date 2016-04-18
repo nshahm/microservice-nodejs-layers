@@ -1,29 +1,24 @@
-import { AbstractBaseAPI } from "./base/AbstractBaseAPI";
-import  EmployeeService from "../service/EmployeeService";
-import * as express from "express";
+import * as Express from "express";
+import EmployeeService from "./../service/EmployeeService";
 
-class EmployeeAPI extends AbstractBaseAPI {
-    constructor(app:any) {
-        super(app);
+var router = Express.Router();
+class EmployeeRoutes {
+    private _employeeController: EmployeeService;
+    
+    constructor () {
+        this._employeeController = new EmployeeService();   
     }
-
-    createRoutes(router) {
-
-        //Creating a instance for EmployeeService
-        let employeeService = new EmployeeService();
-
-        if (router == null) {
-            throw Error("router is null");
-        }
-
-        /**
-         * Adding routes to employee service
-         */
-        router.get('/employee', employeeService.retrieve);
-        router.get('/employee/:id', employeeService.findById);
-        router.post('/employee', employeeService.create);
-        router.put('/employee/:id', employeeService.update);
-        router.delete('/employee/:id', employeeService.delete);
+    get routes () {
+        var service = this._employeeController;
+        router.get("/", service.retrieve);
+        router.get("/:_id", service.findById);
+        router.post("/", service.create);
+        router.put("/:_id", service.update);        
+        router.delete("/:_id", service.delete);
+        
+        return router;
     }
-};
-export default this.router;
+}
+
+Object.seal(EmployeeRoutes);
+export default EmployeeRoutes;
