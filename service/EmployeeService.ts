@@ -20,7 +20,7 @@ class EmployeeService implements IEmployeeService {
      * @param {Object} req - The request of the employee.
      * @param {Object} res - The response of the employee.
      */
-    public createEmployee(req:Request, res:Response) {
+    public create(req:Request, res:Response) {
         try {
             var employee: IEmployeeModel = <IEmployeeModel>req.body;
             var employeeDataAccess = new EmployeeDataAccess();
@@ -42,7 +42,7 @@ class EmployeeService implements IEmployeeService {
      * @param {Object} req - The request of the employee.
      * @param {Object} res - The response of the employee.
      */
-    public updateEmployee(req:Request, res:Response) {
+    public update(req:Request, res:Response) {
         try {
             var employee: IEmployeeModel = <IEmployeeModel>req.body;
             var _id: string = req.params.id;
@@ -65,7 +65,7 @@ class EmployeeService implements IEmployeeService {
      * @param {Object} req - The request of the employee.
      * @param {Object} res - The response of the employee.
      */
-    public deleteEmployee(req:Request, res:Response) {
+    public delete(req:Request, res:Response) {
         try {
             var _id: string = req.params.id;
             var employeeDataAccess = new EmployeeDataAccess();
@@ -87,7 +87,7 @@ class EmployeeService implements IEmployeeService {
      * @param {Object} req - The request of the employee.
      * @param {Object} res - The response of the employee.
      */
-    public getAll(req:Request, res:Response) {
+    public retrieve(req:Request, res:Response) {
         try {
             var employeeDataAccess = new EmployeeDataAccess();
             employeeDataAccess.retrieve((error, result) => {
@@ -108,7 +108,7 @@ class EmployeeService implements IEmployeeService {
      * @param {Object} req - The request of the employee.
      * @param {Object} res - The response of the employee.
      */
-    public getEmployee(req:Request, res:Response) {
+    public findById(req:Request, res:Response) {
         try {
             var _id: string = req.params.id;
             var employeeDataAccess = new EmployeeDataAccess();
