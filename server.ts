@@ -3,14 +3,12 @@
 
 import * as config  from "config";
 import app from "./config/Express";
-
-import initializeMongoDB from "./config/Mongodb";
 import initializeAPI  from './api/API'
 
 /**
  * initilize MongoDB 
  */
-initializeMongoDB();
+//initializeMongoDB();
 
 /**
  * Inititlize all the API for this microservices

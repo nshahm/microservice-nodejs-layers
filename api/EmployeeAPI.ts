@@ -24,7 +24,6 @@ class EmployeeAPI extends AbstractBaseAPI {
         router.post('/employee', employeeService.createEmployee);
         router.put('/employee/:id', employeeService.updateEmployee);
         router.delete('/employee/:id', employeeService.deleteEmployee);
-        router.get('/employee/:id/exists', employeeService.exists);
     }
 };
 export default this.router;

@@ -31,9 +31,6 @@ router.put('/:id', employeeService.updateEmployee);
 // delete employee
 router.delete('/:id', employeeService.deleteEmployee);
 
-// check employee exists
-router.get('/:id/exists', employeeService.exists);
-
 export default router;
         
         

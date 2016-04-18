@@ -1,6 +1,10 @@
-import BaseService  from "./base/BaseService";
+import IEmployeeService  from "./interfaces/IEmployeeService";
 import {Request, Response} from "express";
-import EmployeeDAO = require("../dal/EmployeeDAO");
+import IEmployeeModel from "./../dal/model/interfaces/EmployeeModel";
+import EmployeeDataAccess from "./../dal/DataAccess/EmployeeDataAccess";
+import ServiceResponse from "../helpers/error/Response"
+import Constants from "../helpers/constants/Constants"
+
 
 /**
  * EmployeeService
@@ -8,7 +12,7 @@ import EmployeeDAO = require("../dal/EmployeeDAO");
  * Employee Service is used to write any business validation
  * and the bridge between API and Data access layer
  */
-export default class EmployeeService extends BaseService {
+class EmployeeService implements IEmployeeService {
 
     /**
      * Create Employee
@@ -17,7 +21,64 @@ export default class EmployeeService extends BaseService {
      * @param {Object} res - The response of the employee.
      */
     public createEmployee(req:Request, res:Response) {
-        EmployeeDAO.createEmployee(req, res);
+        try {
+            var employee: IEmployeeModel = <IEmployeeModel>req.body;
+            var employeeDataAccess = new EmployeeDataAccess();
+            employeeDataAccess.create(employee, (error, result) => {
+                if (error) {
+                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                } else {
+                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.EMPLOYEE_CREATE_SUCCESS));
+                }
+            });
+        } catch (e)  {
+            res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, Constants.SERVICE_EXCEPTION_MESSAGE));
+        }
+    }
+    
+    /**
+     * Updatae Employee
+     * 
+     * @param {Object} req - The request of the employee.
+     * @param {Object} res - The response of the employee.
+     */
+    public updateEmployee(req:Request, res:Response) {
+        try {
+            var employee: IEmployeeModel = <IEmployeeModel>req.body;
+            var _id: string = req.params.id;
+            var employeeDataAccess = new EmployeeDataAccess();
+            employeeDataAccess.update(_id, employee, (error, result) => {
+                if(error) {
+                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                } else {
+                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.EMPLOYEE_UPDATE_SUCCESS));
+                }
+            });
+        } catch (e)  {
+            res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, Constants.SERVICE_EXCEPTION_MESSAGE));
+        }
+    }
+    
+    /**
+     * Delete Employee
+     * 
+     * @param {Object} req - The request of the employee.
+     * @param {Object} res - The response of the employee.
+     */
+    public deleteEmployee(req:Request, res:Response) {
+        try {
+            var _id: string = req.params.id;
+            var employeeDataAccess = new EmployeeDataAccess();
+            employeeDataAccess.delete(_id, (error, result) => {
+                if (error) {
+                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                } else {
+                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.EMPLOYEE_DELETE_SUCCESS));
+                }
+            });
+        } catch (e)  {
+            res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, Constants.SERVICE_EXCEPTION_MESSAGE));
+        }
     }
 
     /**
@@ -27,7 +88,18 @@ export default class EmployeeService extends BaseService {
      * @param {Object} res - The response of the employee.
      */
     public getAll(req:Request, res:Response) {
-        EmployeeDAO.getEmployees(req, res);
+        try {
+            var employeeDataAccess = new EmployeeDataAccess();
+            employeeDataAccess.retrieve((error, result) => {
+                if(error) {
+                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                } else {
+                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, result));
+                }
+            });
+        } catch (e)  {
+            res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, Constants.SERVICE_EXCEPTION_MESSAGE));
+        }
     }
 
     /**
@@ -37,36 +109,20 @@ export default class EmployeeService extends BaseService {
      * @param {Object} res - The response of the employee.
      */
     public getEmployee(req:Request, res:Response) {
-        EmployeeDAO.getEmployeeByID(req, res);
-    }
-
-    /**
-     * Updatae Employee
-     * 
-     * @param {Object} req - The request of the employee.
-     * @param {Object} res - The response of the employee.
-     */
-    public updateEmployee(req:Request, res:Response) {
-        EmployeeDAO.updateEmployee(req, res);
-    }
-
-    /**
-     * Delete Employee
-     * 
-     * @param {Object} req - The request of the employee.
-     * @param {Object} res - The response of the employee.
-     */
-    public deleteEmployee(req:Request, res:Response) {
-        EmployeeDAO.deleteEmployee(req, res);
-    }
-
-    /**
-     * Employee exists
-     * 
-     * @param {Object} req - The request of the employee.
-     * @param {Object} res - The response of the employee.
-     */
-    public exists(req:Request, res:Response) {
-        EmployeeDAO.findEmployeeByName(req, res);
+        try {
+            var _id: string = req.params.id;
+            var employeeDataAccess = new EmployeeDataAccess();
+            employeeDataAccess.findById(_id, (error, result) => {
+                if(error) {
+                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                } else {
+                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, result));
+                }
+            });
+        } catch (e)  {
+            res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, Constants.SERVICE_EXCEPTION_MESSAGE));
+        }
     }
 }
+
+export default EmployeeService;
