@@ -62,4 +62,3 @@ class MongoDB {
 
 MongoDB.connect();
 export default MongoDB;
-    
