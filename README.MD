@@ -20,6 +20,9 @@
 * Code
 >- typescript (typed superset of javascript)
 
+* Dependency Injection
+>- Inversify
+
 * database
 >- mongodb
 >- mangoose (ODM)
