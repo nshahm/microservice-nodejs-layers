@@ -5,7 +5,9 @@
 import app from "./config/Express";
 import {initializeLogging } from './config/Logger';
 import Mongodb from "./config/Mongodb";
-import Middlewares from "./middlewares/base/BaseMiddlewares";
+import IMiddlewares from "./middlewares/IMiddlewares";
+
+import kernel, { getInstance } from "./inversify.config";
 
 /**
  * Initialize logging
@@ -17,7 +19,7 @@ initializeLogging();
 /**
  * initilize MongoDB 
  */
-Mongodb.initialize();
+//Mongodb.initialize();
 
 
 /*app.use('/', (req, res, next) => {
@@ -25,7 +27,8 @@ Mongodb.initialize();
     next();
 })*/
 
-app.use(Middlewares.configuration);
+
+app.use(getInstance<IMiddlewares>("IMiddlewares").config());
 
 /**
  * Initilizing server with serverport and serverHost.

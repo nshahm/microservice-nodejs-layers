@@ -10,8 +10,8 @@
     "target": "es5",
     "pretty":true,
     "noLib": false,
-    "emitDecoratorMetadata": false,
-    "experimentalDecorators": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "outDir": "dist/employee-microservice.d.ts"
     //"outFile":"dist/employee-microservice.d.ts"
   },

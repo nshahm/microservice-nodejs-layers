@@ -57,5 +57,5 @@ class MongoDB {
     
 }
 
-//MongoDB.connect();
+MongoDB.initialize();
 export default MongoDB;

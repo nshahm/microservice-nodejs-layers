@@ -4,7 +4,7 @@ import IEmployeeModel from "./../dal/model/IEmployeeModel";
 import EmployeeDAO from "./../dal/EmployeeDAO";
 import ServiceResponse from "../helpers/error/Response"
 import Constants from "../helpers/constants/Constants"
-
+import { injectable } from "inversify";
 
 /**
  * EmployeeService
@@ -12,6 +12,7 @@ import Constants from "../helpers/constants/Constants"
  * Employee Service is used to write any business validation
  * and the bridge between API and Data access layer
  */
+@injectable()
 class EmployeeService implements IEmployeeService {
 
     /**

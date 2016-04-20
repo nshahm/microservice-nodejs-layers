@@ -1,20 +1,27 @@
+/// <reference path="../node_modules/inversify/type_definitions/inversify/inversify.d.ts" />
+
 import * as Express from "express";
-import EmployeeService from "./../service/EmployeeService";
+import IEmployeeService from "./../service/IEmployeeService";
+import IEmployeeAPI from "./IEmployeeAPI";
+
+import { injectable, inject } from "inversify";
 
 var router = Express.Router();
-class EmployeeAPI {
-    private _employeeController: EmployeeService;
+
+@injectable()
+class EmployeeAPI implements IEmployeeAPI {
+    private _employeeService: IEmployeeService;
     
-    constructor () {
-        this._employeeController = new EmployeeService();   
+    constructor (@inject("IEmployeeService")  employeeService:IEmployeeService) {
+        this._employeeService = employeeService;   
     }
-    get routes () {
-        var service = this._employeeController;
-        router.get("/", service.retrieve);
-        router.get("/:_id", service.findById);
-        router.post("/", service.create);
-        router.put("/:_id", service.update);        
-        router.delete("/:_id", service.delete);
+    routes () {
+        
+        router.get("/", this._employeeService.retrieve);
+        router.get("/:_id", this._employeeService.findById);
+        router.post("/", this._employeeService.create);
+        router.put("/:_id", this._employeeService.update);        
+        router.delete("/:_id", this._employeeService.delete);
         
         return router;
     }
