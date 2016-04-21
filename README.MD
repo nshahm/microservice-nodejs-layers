@@ -42,5 +42,5 @@
 npm run build 
 export NODE_ENV=dev
 export NODE_CONFIG_DIR=./config/environment
-node ./dist/server.js
+node ./dist/app.js
 ```
