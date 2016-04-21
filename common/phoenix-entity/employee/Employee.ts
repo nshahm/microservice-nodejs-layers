@@ -1,13 +1,10 @@
-import MongoDB from "../../config/Mongodb";
-import IEmployeeModel from "./../model/IEmployeeModel";
-
-var mongoose = MongoDB.mongooseInstance;
-var mongooseConnection = MongoDB.mongooseConnection;
+import {IEmployee} from "./IEmployee";
+import * as Mongoose from "mongoose";
 
 class EmployeeSchema {
    
-  static get schema () {
-       let schema =  mongoose.Schema({
+  static get employeeSchema () {
+       let employeeSchema =  new Mongoose.Schema({
            employeeID: {
                 type: String,
                 required: true,
@@ -40,9 +37,9 @@ class EmployeeSchema {
             }
        });
        
-       return schema;
+       return employeeSchema;
    }
    
 }
-const schema = mongooseConnection.model<IEmployeeModel>("Employees", EmployeeSchema.schema);
-export default schema;
+const Employee = Mongoose.model<IEmployee>("Employees", EmployeeSchema.employeeSchema);
+export {Employee};

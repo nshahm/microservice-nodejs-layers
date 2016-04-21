@@ -1,7 +1,7 @@
-/// <reference path="../../typings/main.d.ts" />
+/// <reference path="../../../typings/main.d.ts" />
 import * as mongoose from "mongoose";
 
-interface EmployeeModel extends mongoose.Document {
+interface IEmployee extends mongoose.Document {
   employeeID: string,
     name: {
         first: string,
@@ -15,4 +15,4 @@ interface EmployeeModel extends mongoose.Document {
     }
 }
 
-export default EmployeeModel;
+export {IEmployee};

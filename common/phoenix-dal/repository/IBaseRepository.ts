@@ -1,5 +1,5 @@
 import mongoose = require("mongoose");
-interface IRepositoryBase<T> {
+interface IBaseRepository<T> {
     
     // Read
     retrieve: (callback: (error: any, result: any)=> void)=> void;
@@ -12,4 +12,4 @@ interface IRepositoryBase<T> {
     
 }
 
-export default IRepositoryBase;
+export {IBaseRepository};

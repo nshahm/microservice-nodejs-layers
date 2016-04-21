@@ -1,10 +1,11 @@
-import IEmployeeService  from "./IEmployeeService";
+import {IEmployeeService}  from "./IEmployeeService";
 import {Request, Response} from "express";
-import IEmployeeModel from "./../dal/model/IEmployeeModel";
-import EmployeeDAO from "./../dal/EmployeeDAO";
+import {IEmployee} from "./../common/phoenix-entity/index";
+import EmployeeDAO from "./../dal/dao/EmployeeDAO";
 import ServiceResponse from "../helpers/error/Response"
 import Constants from "../helpers/constants/Constants"
 import { injectable } from "inversify";
+
 
 /**
  * EmployeeService
@@ -23,7 +24,7 @@ class EmployeeService implements IEmployeeService {
      */
     public create(req:Request, res:Response) {
         try {
-            var employee: IEmployeeModel = <IEmployeeModel>req.body;
+            var employee: IEmployee = <IEmployee>req.body;
             var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.create(employee, (error, result) => {
                 if (error) {
@@ -45,7 +46,7 @@ class EmployeeService implements IEmployeeService {
      */
     public update(req:Request, res:Response) {
         try {
-            var employee: IEmployeeModel = <IEmployeeModel>req.body;
+            var employee: IEmployee = <IEmployee>req.body;
             var _id: string = req.params.id;
             var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.update(_id, employee, (error, result) => {
@@ -99,6 +100,7 @@ class EmployeeService implements IEmployeeService {
                 }
             });
         } catch (e)  {
+            console.log(e);
             res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, Constants.SERVICE_EXCEPTION_MESSAGE));
         }
     }

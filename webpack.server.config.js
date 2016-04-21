@@ -15,13 +15,13 @@ module.exports = {
   entry: [
        // 'webpack/hot/dev-server',
        // 'webpack-hot-middleware/client',
-        __dirname + '/server.ts'
+        __dirname + '/app.ts'
   ],
   target: 'node',
   devtool: process.env.NODE_ENV === 'dev' ? 'sourcemap' : '',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'server.js',
+    filename: 'app.js',
   },
   externals: nodeModules,
   plugins: [

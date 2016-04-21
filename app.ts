@@ -1,13 +1,12 @@
 /// <reference path="./typings/main.d.ts" />
 
-
-//import * as config  from "config";
-import app from "./config/Express";
+import * as express from "express";
 import {initializeLogging } from './config/Logger';
-import Mongodb from "./config/Mongodb";
-import IMiddlewares from "./middlewares/IMiddlewares";
-
+import {IMiddlewares} from "./common/phoenix-middlewares/IMiddlewares";
 import kernel, { getInstance } from "./inversify.config";
+import {IAPI} from "./api/IAPI";
+
+let app:any = express();
 
 /**
  * Initialize logging
@@ -16,17 +15,11 @@ import kernel, { getInstance } from "./inversify.config";
  */
 initializeLogging();
 
-/**
- * initilize MongoDB 
- */
-//Mongodb.initialize();
 
+/** establish mongo database connection */
+require(__dirname + "/config/Mongodb");
 
-/*app.use('/', (req, res, next) => {
-    console.log("middleware function called from server.ts");
-    next();
-})*/
-
+//const API:IAPI = getInstance<IAPI>("IAPI");
 
 app.use(getInstance<IMiddlewares>("IMiddlewares").config());
 

@@ -1,6 +1,6 @@
 import * as Express from "express";
 
-interface BaseService {
+interface IBaseService {
     
     create: Express.RequestHandler;
     update: Express.RequestHandler;
@@ -9,4 +9,4 @@ interface BaseService {
     findById: Express.RequestHandler;
 }
 
-export default BaseService;
+export {IBaseService};

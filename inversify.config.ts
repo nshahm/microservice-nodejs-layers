@@ -7,14 +7,14 @@ import { Kernel } from "inversify";
 // Actual implementation
 import EmployeeService from "./service/EmployeeService";
 import EmployeeAPI from "./api/EmployeeAPI";
-import Middlewares from "./middlewares/Middlewares";
+import {Middlewares} from "./common/phoenix-middlewares/Middlewares";
 import API from "./api/API";
 
 // Interfaces
-import IEmployeeService from "./service/IEmployeeService";
-import IEmployeeAPI from "./api/IEmployeeAPI";
-import IMiddlewares from "./middlewares/IMiddlewares";
-import IAPI from "./api/API";
+import {IEmployeeService} from "./service/IEmployeeService";
+import {IEmployeeAPI} from "./api/IEmployeeAPI";
+import {IMiddlewares} from "./common/phoenix-middlewares/IMiddlewares";
+import {IAPI} from "./api/IAPI";
 
 let kernel:inversify.IKernel = new Kernel();
 

@@ -1,5 +1,5 @@
-export interface IAPI {
+interface IAPI {
     routes()
 }
 
-export default IAPI;
+export {IAPI};

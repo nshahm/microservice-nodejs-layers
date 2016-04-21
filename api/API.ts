@@ -1,6 +1,6 @@
 import * as Express from "express";
 import IEmployeeAPI from "./EmployeeAPI";
-import IAPI from "./API";
+import {IAPI} from "./IAPI";
 import { inject, injectable } from "inversify";
 
 

@@ -1,11 +1,9 @@
-import EmployeeModel from "./../model/EmployeeModel";
-import IEmployeeModel from "./../model/IEmployeeModel";
-import EmployeeSchema from "./../schemas/EmployeeSchema";
-import BaseRepository from "./base/BaseRepository";
+import {Employee, IEmployee} from "./../../common/phoenix-entity/index"
+import {BaseRepository} from "./../../common/phoenix-dal/index";
 
-class EmployeeRepository  extends BaseRepository<IEmployeeModel> {
+class EmployeeRepository  extends BaseRepository<IEmployee> {
     constructor () {
-        super(EmployeeSchema);
+        super(Employee);
     }    
 } 
 
