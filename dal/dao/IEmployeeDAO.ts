@@ -1,8 +1,8 @@
 
-import {IBaseDAO} from "./../../common/phoenix-dal/index";
-import {IEmployee} from "./../../common/phoenix-entity/index";
+import {IBaseDAO} from "base-dal";
+import {IEmployeeModel} from "entity-employee";
 
-interface IEmployeeDAO extends IBaseDAO<IEmployee> {
+interface IEmployeeDAO extends IBaseDAO<IEmployeeModel> {
     
 } 
 export default IEmployeeDAO;

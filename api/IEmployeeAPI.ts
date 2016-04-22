@@ -1,4 +1,4 @@
-import {BaseAPI} from "../common/phoenix-api/index";
+import {BaseAPI} from "base-api";
 
 interface IEmployeeAPI extends BaseAPI {
     routes();

@@ -1,11 +1,10 @@
-import {Employee, IEmployee} from "./../../common/phoenix-entity/index"
-import {BaseRepository} from "./../../common/phoenix-dal/index";
-
-class EmployeeRepository  extends BaseRepository<IEmployee> {
+import {BaseRepository} from "base-dal";
+import {IEmployeeModel, EmployeeModel} from "entity-employee";
+class EmployeeRepository  extends BaseRepository<IEmployeeModel> {
     constructor () {
-        super(Employee);
-    }    
-} 
+        super(EmployeeModel);
+    }
+}
 
 Object.seal(EmployeeRepository);
 export default EmployeeRepository;

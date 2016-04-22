@@ -1,4 +1,4 @@
-import {IBaseService} from "../common/phoenix-service/index";
+import {IBaseService} from "base-service";
 import * as Express from "express";
 
 interface IEmployeeService extends IBaseService {

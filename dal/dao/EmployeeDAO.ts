@@ -1,7 +1,7 @@
 /// <reference path="../../typings/main.d.ts" />
 import EmployeeRepository from "../repository/EmployeeRepository";
 import IEmployeeDAO from "./EmployeeDAO";
-import {IEmployee} from "./../../common/phoenix-entity/index";
+import {IEmployeeModel} from "entity-employee";
 import * as Mongoose from "mongoose";
 
 
@@ -12,7 +12,7 @@ class EmployeeDAO  implements IEmployeeDAO {
         this._employeeRepository = new EmployeeRepository();
     }
 
-    create (item: IEmployee, callback: (error: any, result: any) => void) {
+    create (item: IEmployeeModel, callback: (error: any, result: any) => void) {
         this._employeeRepository.create(item, callback);
     }
 
@@ -20,7 +20,7 @@ class EmployeeDAO  implements IEmployeeDAO {
          this._employeeRepository.retrieve(callback);
     }
 
-    update (_id: string, item: IEmployee, callback: (error: any, result: any) => void) {
+    update (_id: string, item: IEmployeeModel, callback: (error: any, result: any) => void) {
 
         this._employeeRepository.findById(_id, (err, res) => {
             if(err) {
@@ -36,7 +36,7 @@ class EmployeeDAO  implements IEmployeeDAO {
         this._employeeRepository.delete(_id , callback);
     }
 
-    findById (_id: string, callback: (error: any, result: IEmployee) => void) {
+    findById (_id: string, callback: (error: any, result: IEmployeeModel) => void) {
         this._employeeRepository.findById(_id, callback);
     }
 

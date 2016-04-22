@@ -1,15 +1,15 @@
 import {IEmployeeService}  from "./IEmployeeService";
 import {Request, Response} from "express";
-import {IEmployee} from "./../common/phoenix-entity/index";
 import EmployeeDAO from "./../dal/dao/EmployeeDAO";
 import ServiceResponse from "../helpers/error/Response"
 import Constants from "../helpers/constants/Constants"
 import { injectable } from "inversify";
-
+import {Pony} from "module-pony";
+import {EmployeeModel, IEmployeeModel} from "entity-employee";
 
 /**
  * EmployeeService
- * 
+ *
  * Employee Service is used to write any business validation
  * and the bridge between API and Data access layer
  */
@@ -18,13 +18,13 @@ class EmployeeService implements IEmployeeService {
 
     /**
      * Create Employee
-     * 
+     *
      * @param {Object} req - The request of the employee.
      * @param {Object} res - The response of the employee.
      */
     public create(req:Request, res:Response) {
         try {
-            var employee: IEmployee = <IEmployee>req.body;
+            var employee: IEmployeeModel = <IEmployeeModel>req.body;
             var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.create(employee, (error, result) => {
                 if (error) {
@@ -37,16 +37,16 @@ class EmployeeService implements IEmployeeService {
             res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, Constants.SERVICE_EXCEPTION_MESSAGE));
         }
     }
-    
+
     /**
      * Updatae Employee
-     * 
+     *
      * @param {Object} req - The request of the employee.
      * @param {Object} res - The response of the employee.
      */
     public update(req:Request, res:Response) {
         try {
-            var employee: IEmployee = <IEmployee>req.body;
+            var employee: IEmployeeModel = <IEmployeeModel>req.body;
             var _id: string = req.params.id;
             var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.update(_id, employee, (error, result) => {
@@ -60,10 +60,10 @@ class EmployeeService implements IEmployeeService {
             res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, Constants.SERVICE_EXCEPTION_MESSAGE));
         }
     }
-    
+
     /**
      * Delete Employee
-     * 
+     *
      * @param {Object} req - The request of the employee.
      * @param {Object} res - The response of the employee.
      */
@@ -85,7 +85,7 @@ class EmployeeService implements IEmployeeService {
 
     /**
      * Get all employees
-     * 
+     *
      * @param {Object} req - The request of the employee.
      * @param {Object} res - The response of the employee.
      */
@@ -107,7 +107,7 @@ class EmployeeService implements IEmployeeService {
 
     /**
      * Get Employee by Id
-     * 
+     *
      * @param {Object} req - The request of the employee.
      * @param {Object} res - The response of the employee.
      */
