@@ -1,5 +1,6 @@
 /// <reference path="../../typings/main.d.ts" />
-import EmployeeRepository from "../repository/EmployeeRepository";
+
+import {EmployeeRepository} from "../repository/EmployeeRepository";
 import IEmployeeDAO from "./EmployeeDAO";
 import {IEmployeeModel} from "entity-employee";
 import * as Mongoose from "mongoose";

@@ -7,4 +7,4 @@ class EmployeeRepository  extends BaseRepository<IEmployeeModel> {
 }
 
 Object.seal(EmployeeRepository);
-export default EmployeeRepository;
+export {EmployeeRepository};

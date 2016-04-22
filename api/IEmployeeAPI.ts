@@ -1,6 +1,6 @@
-import {BaseAPI} from "base-api";
+import {IBaseAPI} from "base-api";
 
-interface IEmployeeAPI extends BaseAPI {
+interface IEmployeeAPI extends IBaseAPI {
     routes();
 }
 

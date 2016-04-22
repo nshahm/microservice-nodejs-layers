@@ -2,7 +2,7 @@
 
 import * as express from "express";
 import {initializeLogging } from './config/Logger';
-import {IMiddlewares} from "./common/phoenix-middlewares/IMiddlewares";
+import {IMiddlewares} from "base-middlewares";
 import kernel, { getInstance } from "./inversify.config";
 import {IAPI} from "./api/IAPI";
 
@@ -19,9 +19,9 @@ initializeLogging();
 /** establish mongo database connection */
 require(__dirname + "/config/Mongodb");
 
-//const API:IAPI = getInstance<IAPI>("IAPI");
+const API:IAPI = getInstance<IAPI>("IAPI");
 
-app.use(getInstance<IMiddlewares>("IMiddlewares").config());
+app.use(getInstance<IMiddlewares>("IMiddlewares").config(API.routes()));
 
 /**
  * Initilizing server with serverport and serverHost.

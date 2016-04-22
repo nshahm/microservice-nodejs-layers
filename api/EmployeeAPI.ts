@@ -3,16 +3,18 @@
 import * as Express from "express";
 import {IEmployeeService} from "./../service/IEmployeeService";
 import {IEmployeeAPI} from "./IEmployeeAPI";
+import {BaseAPI} from "base-api";
 
 import { injectable, inject } from "inversify";
 
 var router = Express.Router();
 
 @injectable()
-class EmployeeAPI implements IEmployeeAPI {
+class EmployeeAPI extends BaseAPI implements IEmployeeAPI {
     private _employeeService: IEmployeeService;
     
     constructor (@inject("IEmployeeService")  employeeService:IEmployeeService) {
+        super();
         this._employeeService = employeeService;   
     }
     routes () {
