@@ -4,7 +4,6 @@ import EmployeeDAO from "./../dal/dao/EmployeeDAO";
 import ServiceResponse from "../helpers/error/Response"
 import Constants from "../helpers/constants/Constants"
 import { injectable } from "inversify";
-import {Pony} from "module-pony";
 import {EmployeeModel, IEmployeeModel} from "entity-employee";
 
 /**

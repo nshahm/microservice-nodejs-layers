@@ -11,7 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENV=dev ./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js",
     "build": "npm install && npm run post-install && npm run dev",
-    "build-prod": "NODE_ENV=prod ./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js -p"
+    "build-prod": "NODE_ENV=prod ./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js -p",
+    "test": "mocha test/**/*.js"
   },
   "author": {
     "email": "n.shahm@gmail.com",
@@ -40,13 +41,17 @@
     "winston": "^2.2.0",
     "winston-daily-rotate-file": "^1.0.1",
     "inversify": "2.0.0-beta.1",
-    "reflect-metadata": "^0.1.3"
+    "reflect-metadata": "^0.1.3",
+    
+    "gulp-typings": "^1.3.4",
+    "gulp-typescript": "^2.13.0",
+    "mocha-mongoose": "1.2.0"
   },
   "devDependencies": {
     "errorhandler": "^1.4.3",
     "json-loader": "^0.5.4",
     "ts-loader": "^0.8.2",
-    
+
     "entity-employee": "^0.0.1",
     "base-service": "0.0.1",
     "base-dal": "0.0.1",
