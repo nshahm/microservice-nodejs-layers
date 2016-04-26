@@ -1,10 +1,10 @@
 import {IEmployeeService}  from "./IEmployeeService";
 import {Request, Response} from "express";
 import EmployeeDAO from "./../dal/dao/EmployeeDAO";
-import ServiceResponse from "../helpers/error/Response"
 import Constants from "../helpers/constants/Constants"
 import { injectable } from "inversify";
 import {EmployeeModel, IEmployeeModel} from "entity-employee";
+import {BaseService} from "base-service";
 
 /**
  * EmployeeService
@@ -13,7 +13,7 @@ import {EmployeeModel, IEmployeeModel} from "entity-employee";
  * and the bridge between API and Data access layer
  */
 @injectable()
-class EmployeeService implements IEmployeeService {
+class EmployeeService extends BaseService implements IEmployeeService {
 
     /**
      * Create Employee
@@ -27,13 +27,13 @@ class EmployeeService implements IEmployeeService {
             var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.create(employee, (error, result) => {
                 if (error) {
-                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                    res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
                 } else {
-                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.EMPLOYEE_CREATE_SUCCESS));
+                    res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.EMPLOYEE_CREATE_SUCCESS));
                 }
             });
         } catch (e)  {
-            res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, Constants.SERVICE_EXCEPTION_MESSAGE));
+            res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, e));
         }
     }
 
@@ -50,13 +50,13 @@ class EmployeeService implements IEmployeeService {
             var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.update(_id, employee, (error, result) => {
                 if(error) {
-                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                    res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
                 } else {
-                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.EMPLOYEE_UPDATE_SUCCESS));
+                    res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.EMPLOYEE_UPDATE_SUCCESS));
                 }
             });
         } catch (e)  {
-            res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, Constants.SERVICE_EXCEPTION_MESSAGE));
+            res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, e));
         }
     }
 
@@ -72,13 +72,13 @@ class EmployeeService implements IEmployeeService {
             var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.delete(_id, (error, result) => {
                 if (error) {
-                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                    res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
                 } else {
-                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.EMPLOYEE_DELETE_SUCCESS));
+                    res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.EMPLOYEE_DELETE_SUCCESS));
                 }
             });
         } catch (e)  {
-            res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, Constants.SERVICE_EXCEPTION_MESSAGE));
+            res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, e));
         }
     }
 
@@ -93,14 +93,14 @@ class EmployeeService implements IEmployeeService {
             var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.retrieve((error, result) => {
                 if(error) {
-                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                    res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
                 } else {
-                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, result));
+                    res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, result));
                 }
             });
         } catch (e)  {
             console.log(e);
-            res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, Constants.SERVICE_EXCEPTION_MESSAGE));
+            res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, e));
         }
     }
 
@@ -116,13 +116,35 @@ class EmployeeService implements IEmployeeService {
             var employeeDataAccess = new EmployeeDAO();
             employeeDataAccess.findById(_id, (error, result) => {
                 if(error) {
-                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                    res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
                 } else {
-                    res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, result));
+                    res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, result));
                 }
             });
         } catch (e)  {
-            res.send(new ServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, Constants.SERVICE_EXCEPTION_MESSAGE));
+            res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, e));
+        }
+    }
+    
+    /**
+     * findByEmployeeId
+     * 
+     * @param {Object} req - The request of the employee.
+     * @param {Object} res - The response of the employee. 
+     */
+    public findByEmployeeId(req: Request, res: Response) {
+        try {
+            var _employeeId: string = req.params.employeeID;
+            var employeeDataAccess = new EmployeeDAO();
+            employeeDataAccess.findByEmployeeId(_employeeId, (error, result) => {
+                if(error) {
+                    res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                } else {
+                    res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, result));
+                }
+            });
+        } catch (e) {
+            res.send(this.createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, e));
         }
     }
 }

@@ -7,7 +7,7 @@ import * as Mongoose from "mongoose";
 
 
 class EmployeeDAO  implements IEmployeeDAO {
-    private _employeeRepository: EmployeeRepository;
+    private _employeeRepository: EmployeeRepository<IEmployeeModel>;
 
     constructor () {
         this._employeeRepository = new EmployeeRepository();
@@ -39,6 +39,10 @@ class EmployeeDAO  implements IEmployeeDAO {
 
     findById (_id: string, callback: (error: any, result: IEmployeeModel) => void) {
         this._employeeRepository.findById(_id, callback);
+    }
+    
+    findByEmployeeId (_employeeId: string, callback: (error: any, result: IEmployeeModel) => void) {
+        this._employeeRepository.findByEmployeeId(_employeeId, callback);
     }
 
 }

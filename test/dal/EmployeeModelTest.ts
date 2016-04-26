@@ -66,7 +66,7 @@ describe("Example spec for a model", function () {
     it("can be find by ID .....", function (done) {
 
         EmployeeModel.create(employee, function (err, model: any) {
-            EmployeeModel.findOne({ _id: model._id }, function (err, docs) {
+            EmployeeModel.findById(model._id, function (err, docs) {
 
                 expect(err).to.not.exist;
                 expect(docs.name.first).to.equal("John");
@@ -96,13 +96,27 @@ describe("Example spec for a model", function () {
 
     it("can be deleted .....", function (done) {
 
+        EmployeeModel.create(employee, function (error, model: any) {
+            expect(error).to.not.exist;
+            EmployeeModel.findById(model._id, function (error, docs: any) {
+
+                expect(error).to.not.exist;
+                EmployeeModel.remove({ _id: docs._id }, function (error) {
+                    expect(error).to.not.exist;
+                });
+                done();
+            });
+        });
+    });
+    
+    it("can be find one .....", function (done) {
+
         EmployeeModel.create(employee, function (err, model: any) {
-            EmployeeModel.findById(model._id, function (err, docs: any) {
+            var employeeID = model.employeeID;
+            EmployeeModel.findOne({ employeeID: model.employeeID }, function (err, docs) {
 
                 expect(err).to.not.exist;
-                EmployeeModel.remove({ _id: docs._id }, function (err) {
-                    expect(err).to.not.exist;
-                });
+                expect(docs.employeeID).to.equal(employeeID);
                 done();
             });
         });
