@@ -1,7 +1,12 @@
 import {BaseRepository} from "base-dal";
+// import { EmployeeRepository} from "./EmployeeRepository";
 import {IEmployeeModel, EmployeeModel} from "entity-employee";
 import * as Mongoose from "mongoose";
-class EmployeeRepository<T extends Mongoose.Document>  extends BaseRepository<IEmployeeModel> {
+import {injectable} from "inversify"
+
+@injectable()
+class EmployeeRepository<T extends Mongoose.Document> 
+extends BaseRepository<IEmployeeModel> {
     
     private _employeeModel: Mongoose.Model<Mongoose.Document>;
     
@@ -9,11 +14,6 @@ class EmployeeRepository<T extends Mongoose.Document>  extends BaseRepository<IE
         
         super(EmployeeModel);
         this._employeeModel = EmployeeModel;
-    }
-    
-    
-    findByEmployeeId (_employeeId: string, callback: (error: any, result: T) => void) {
-        this._employeeModel.findOne({employeeID: _employeeId}, callback);
     }
 }
 

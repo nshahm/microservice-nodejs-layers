@@ -27,7 +27,7 @@ app.use(getInstance<IMiddlewares>("IMiddlewares").config(API.routes()));
  * Initilizing server with serverport and serverHost.
  */
 const serverHost = process.env.HOST || '0.0.0.0';
-const serverPort = process.env.PORT || 8080
+const serverPort = 8888; //||  process.env.PORT;
 
 let server = app.listen (serverPort, serverHost, () => {
     const host:string = server.address().address;

@@ -1,7 +1,8 @@
 /// <reference path="../../typings/main.d.ts" />
 
 var dbURI = 'mongodb://localhost/employees';
-var expect = require('chai').expect;
+import {expect, Mocha, Sinon} from "../config/Testing"
+
 var mongoose = require('mongoose');
 import {EmployeeModel, IEmployeeModel} from "entity-employee";
 
@@ -23,6 +24,7 @@ describe("Example spec for a model", function () {
         }
     };
 
+
     beforeEach(function (done) {
 
         if (mongoose.connection.db) {
@@ -31,6 +33,10 @@ describe("Example spec for a model", function () {
         mongoose.connect(dbURI, done);
     });
 
+    /**
+     * Clear all the data in collection for test purpose
+     * Comment out this beforeEach() block if the data not to be cleared.
+     */
     beforeEach(function (done) {
         //delete all the customer records    
         EmployeeModel.remove({}, function () {
@@ -42,14 +48,14 @@ describe("Example spec for a model", function () {
 
     var employee: IEmployeeModel = <IEmployeeModel>payload;
 
-    it("can be saved .....", function (done) {
+    it("create", function (done) {
         EmployeeModel.create(employee, function(error) {
             expect(error).to.not.exist;
             done();
         });
     });
 
-    it("can be listed .....", function (done) {
+    it("find", function (done) {
 
         EmployeeModel.create(employee, function (err, model) {
 
@@ -63,7 +69,7 @@ describe("Example spec for a model", function () {
         });
     });
 
-    it("can be find by ID .....", function (done) {
+    it("findById", function (done) {
 
         EmployeeModel.create(employee, function (err, model: any) {
             EmployeeModel.findById(model._id, function (err, docs) {
@@ -75,7 +81,7 @@ describe("Example spec for a model", function () {
         });
     });
 
-    it("can be updated .....", function (done) {
+    it("update", function (done) {
 
         EmployeeModel.create(employee, function (err, model: any) {
 
@@ -94,7 +100,7 @@ describe("Example spec for a model", function () {
         });
     });
 
-    it("can be deleted .....", function (done) {
+    it("delete", function (done) {
 
         EmployeeModel.create(employee, function (error, model: any) {
             expect(error).to.not.exist;
@@ -109,7 +115,7 @@ describe("Example spec for a model", function () {
         });
     });
     
-    it("can be find one .....", function (done) {
+    it("findOne", function (done) {
 
         EmployeeModel.create(employee, function (err, model: any) {
             var employeeID = model.employeeID;

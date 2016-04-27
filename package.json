@@ -3,16 +3,14 @@
   "version": "1.0.0",
   "description": "Microservice nodejs layering that show, API, Business and data layer and its communication",
   "main": "app.js",
-  "scripts": {
-    "start": "node server.js --NODE_ENV=dev --NODE_CONFIG_DIR=$(pwd)/config/environment",
-    "typings-update": "npm i -g typings to update",
-    "ti": "typings install --save-dev --ambient",
-    "post-install": "typings install",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_ENV=dev ./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js",
+"scripts": {
+    "start": "node ./dist/app.js",
+    "post-install": "./node_modules/.bin/typings install",
+    "dev": "./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js",
     "build": "npm install && npm run post-install && npm run dev",
-    "build-prod": "NODE_ENV=prod ./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js -p",
-    "test": "mocha test/**/*.js"
+    "prod": "./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js -p",
+    "test": "mocha --colors --reporter spec --recursive dist/test//**/*.js",
+    "gulp": "gulp default"
   },
   "author": {
     "email": "n.shahm@gmail.com",
@@ -20,42 +18,42 @@
   },
   "license": "MIT",
   "publishConfig": {
-    "registry": "http://192.168.99.100:4873/"
+    "registry": "http://localhost:4873/"
   },
   "dependencies": {
-    "body-parser": "^1.15.0",
-    "chai": "^3.5.0",
-    "config": "^1.20.1",
-    "cookie-parser": "^1.4.1",
-    "express": "^4.13.4",
-    "mocha": "^2.4.5",
-    "mongoose": "^4.4.12",
-    "morgan": "^1.7.0",
-    "sinon": "^1.17.3",
-    "source-map-support": "^0.4.0",
-    "typescript": "^1.8.9",
-    "typings": "^0.7.12",
-    "webpack": "^1.12.15",
-    "webpack-dev-middleware": "^1.6.1",
-    "webpack-hot-middleware": "^2.10.0",
-    "winston": "^2.2.0",
-    "winston-daily-rotate-file": "^1.0.1",
+    "body-parser": "1.15.0",
+    "chai": "3.5.0",
+    "config": "1.20.1",
+    "cookie-parser": "1.4.1",
+    "express": "4.13.4",
+    "mocha": "2.4.5",
+    "mongoose": "4.4.12",
+    "morgan": "1.7.0",
+    "sinon": "1.17.3",
+    "source-map-support": "0.4.0",
+    "typescript": "1.8.9",
+    "typings": "0.7.12",
+    "webpack": "1.12.15",
+    "webpack-dev-middleware": "1.6.1",
+    "webpack-hot-middleware": "2.10.0",
+    "winston": "2.2.0",
+    "winston-daily-rotate-file": "1.0.1",
     "inversify": "2.0.0-beta.1",
-    "reflect-metadata": "^0.1.3",
-    
-    "gulp-typings": "^1.3.4",
-    "gulp-typescript": "^2.13.0",
-    "mocha-mongoose": "1.2.0"
+    "reflect-metadata": "0.1.3",
+    "gulp-shell": "0.5.2",
+    "gulp-typings": "1.3.4",
+    "gulp-typescript": "2.13.0",
+    "mocha-mongoose": "1.2.0",
+    "entity-employee": "*",
+    "base-service": "*",
+    "base-dal": "*",
+    "base-api": "*",
+    "base-middlewares": "*"
   },
   "devDependencies": {
-    "errorhandler": "^1.4.3",
-    "json-loader": "^0.5.4",
-    "ts-loader": "^0.8.2",
-
-    "entity-employee": "^0.0.1",
-    "base-service": "0.0.1",
-    "base-dal": "0.0.1",
-    "base-api": "1.0.0",
-    "base-middlewares": "0.0.1"
+    "errorhandler": "1.4.3",
+    "json-loader": "0.5.4",
+    "ts-loader": "0.8.2",
+    "webpack-stream": "3.2.0"
   }
 }

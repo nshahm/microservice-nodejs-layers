@@ -1,51 +1,65 @@
 /// <reference path="../../typings/main.d.ts" />
 
 import {EmployeeRepository} from "../repository/EmployeeRepository";
-import IEmployeeDAO from "./EmployeeDAO";
+import IEmployeeDAO from "./IEmployeeDAO";
 import {IEmployeeModel} from "entity-employee";
 import * as Mongoose from "mongoose";
+import {inject, injectable } from "inversify";
 
-
+@injectable()
 class EmployeeDAO  implements IEmployeeDAO {
-    private _employeeRepository: EmployeeRepository<IEmployeeModel>;
+    
 
-    constructor () {
-        this._employeeRepository = new EmployeeRepository();
+    constructor (@inject("EmployeeRepository") _employeeRepository: EmployeeRepository<IEmployeeModel>) {
+        employeeRepository = _employeeRepository;
     }
-
+    
+    /**
+     * Create employee
+     */
     create (item: IEmployeeModel, callback: (error: any, result: any) => void) {
-        this._employeeRepository.create(item, callback);
+        employeeRepository.create(item, callback);
     }
 
+    /**
+     * Retrieve employee
+     */
     retrieve (callback: (error: any, result: any) => void) {
-         this._employeeRepository.retrieve(callback);
+         employeeRepository.retrieve(callback);
     }
 
+    /**
+     * update employee
+     */
     update (_id: string, item: IEmployeeModel, callback: (error: any, result: any) => void) {
 
-        this._employeeRepository.findById(_id, (err, res) => {
+        employeeRepository.findById(_id, (err, res) => {
             if(err) {
                 callback(err, res);
             }
             else {
-                this._employeeRepository.update(res._id, item, callback);
+                employeeRepository.update(res._id, item, callback);
             }
         });
     }
 
+    /**
+     * delete employee
+     */
     delete (_id: string, callback:(error: any, result: any) => void) {
-        this._employeeRepository.delete(_id , callback);
+        employeeRepository.delete(_id , callback);
     }
 
+    /**
+     * Find by employee id
+     */
     findById (_id: string, callback: (error: any, result: IEmployeeModel) => void) {
-        this._employeeRepository.findById(_id, callback);
+        employeeRepository.findById(_id, callback);
     }
-    
-    findByEmployeeId (_employeeId: string, callback: (error: any, result: IEmployeeModel) => void) {
-        this._employeeRepository.findByEmployeeId(_employeeId, callback);
-    }
-
 }
 
+let employeeRepository: EmployeeRepository<IEmployeeModel>;
+
+
 Object.seal(EmployeeDAO);
-export default EmployeeDAO;
+export { EmployeeDAO };
