@@ -18,7 +18,7 @@ module.exports = {
         __dirname + '/app.ts'
   ],
   target: 'node',
-  devtool: process.env.NODE_ENV === 'dev' ? 'sourcemap' : '',
+  devtool: process.env.NODE_ENV === 'dev' ? 'eval-source-map' : '',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'app.js',

@@ -90,7 +90,7 @@ class EmployeeService  implements IEmployeeService {
                 if (error) {
                     res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
                 } else {
-                    res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.EMPLOYEE_DELETE_SUCCESS));
+                    res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.DELETE_SUCCESS));
                 }
             });
         } catch (e)  {
