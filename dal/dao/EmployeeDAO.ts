@@ -1,13 +1,13 @@
 /// <reference path="../../typings/main.d.ts" />
 
-import {EmployeeRepository} from "../repository/EmployeeRepository";
-import IEmployeeDAO from "./IEmployeeDAO";
+import { EmployeeRepository } from "../repository/EmployeeRepository";
+import { IEmployeeDAO } from "./IEmployeeDAO";
 import {IEmployeeModel} from "entity-employee";
 import * as Mongoose from "mongoose";
-import {inject, injectable } from "inversify";
+import { inject, injectable } from "inversify";
 
 @injectable()
-class EmployeeDAO  implements IEmployeeDAO {
+class EmployeeDAO implements IEmployeeDAO {
     
 
     constructor (@inject("EmployeeRepository") _employeeRepository: EmployeeRepository<IEmployeeModel>) {

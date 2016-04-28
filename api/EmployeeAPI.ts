@@ -30,4 +30,4 @@ class EmployeeAPI extends BaseAPI implements IEmployeeAPI {
 }
 
 Object.seal(EmployeeAPI);
-export default EmployeeAPI;
+export { EmployeeAPI };

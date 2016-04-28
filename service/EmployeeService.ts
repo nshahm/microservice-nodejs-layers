@@ -1,13 +1,13 @@
-/// <reference path="../node_modules/inversify/type_definitions/inversify/inversify.d.ts" />
-
-import {IEmployeeService}  from "./IEmployeeService";
-import {Request, Response} from "express";
-import IEmployeeDAO from "./../dal/dao/IEmployeeDAO";
-import { EmployeeDAO } from "./../dal/dao/EmployeeDAO";
-import Constants from "../helpers/constants/Constants"
+// Library import
+import { Request, Response } from "express";
 import { injectable, inject } from "inversify";
-import {EmployeeModel, IEmployeeModel} from "entity-employee";
-import {ServiceResponse} from "base-service";
+// Privatye npm package import
+import { EmployeeModel, IEmployeeModel } from "entity-employee";
+import { BaseService } from "base-service";
+// File import
+import { IEmployeeService }  from "./IEmployeeService";
+import { IEmployeeDAO } from "./../dal/dao/IEmployeeDAO";
+import { Constants } from "../helpers/constants/Constants"
 
 /**
  * EmployeeService
@@ -16,13 +16,13 @@ import {ServiceResponse} from "base-service";
  * and the bridge between API and Data access layer
  */
 @injectable()
-class EmployeeService  implements IEmployeeService {
+class EmployeeService 
+extends BaseService 
+implements IEmployeeService {
 
-
-    private _this = this;
     constructor(@inject("IEmployeeDAO") _employeeDAO:IEmployeeDAO) {
+        super();
         employeeDAO = _employeeDAO;
-        
     }
 
     /**
@@ -31,24 +31,19 @@ class EmployeeService  implements IEmployeeService {
      * @param {Object} req - The request of the employee.
      * @param {Object} res - The response of the employee.
      */
-    
     public create(req:Request, res:Response) {
         try {
             var employee: IEmployeeModel = <IEmployeeModel>req.body;
 
             employeeDAO.create(employee, (error, result) => {
                 if (error) {
-                    console.log(error);
-                    console.log(result);
-                   
-                    res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                   res.status(422).send(super.createServiceResponse(Constants.FAILURE, error));
                 } else {
-                    res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.CREATE_SUCCESS));
+                    res.status(200).send(super.createServiceResponse(Constants.SUCCESS, Constants.CREATE_SUCCESS));
                 }
             });
         } catch (e)  {
-            console.log(e);
-            res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, e));
+            res.status(500).send(super.createServiceResponse(Constants.FAILURE, e.stack));
         }
     }
 
@@ -65,13 +60,13 @@ class EmployeeService  implements IEmployeeService {
             
             employeeDAO.update(_id, employee, (error, result) => {
                 if(error) {
-                    res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                    res.status(422).send(super.createServiceResponse(Constants.FAILURE, error));
                 } else {
-                    res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.UPDATE_SUCCESS));
+                    res.send(super.createServiceResponse(Constants.SUCCESS, Constants.UPDATE_SUCCESS));
                 }
             });
         } catch (e)  {
-            res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, e));
+            res.status(500).send(super.createServiceResponse(Constants.FAILURE, e.stack));
         }
     }
 
@@ -88,13 +83,13 @@ class EmployeeService  implements IEmployeeService {
             
             employeeDAO.delete(_id, (error, result) => {
                 if (error) {
-                    res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                    res.status(422).send(super.createServiceResponse(Constants.FAILURE, error));
                 } else {
-                    res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, Constants.EMPLOYEE_DELETE_SUCCESS));
+                    res.send(super.createServiceResponse(Constants.SUCCESS, Constants.DELETE_SUCCESS));
                 }
             });
         } catch (e)  {
-            res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, e));
+            res.status(500).send(super.createServiceResponse(Constants.FAILURE, e.stack));
         }
     }
 
@@ -109,14 +104,13 @@ class EmployeeService  implements IEmployeeService {
            
             employeeDAO.retrieve((error, result) => {
                 if(error) {
-                    res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                    res.status(422).send(super.createServiceResponse(Constants.FAILURE, error));
                 } else {
-                    res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, result));
+                    res.send(super.createServiceResponse(Constants.SUCCESS, result));
                 }
             });
         } catch (e)  {
-            console.log(e);
-            res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, e));
+           res.status(500).send(super.createServiceResponse(Constants.FAILURE, e.stack));
         }
     }
 
@@ -132,30 +126,18 @@ class EmployeeService  implements IEmployeeService {
             
             employeeDAO.findById(_id, (error, result) => {
                 if(error) {
-                    res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, error));
+                    res.status(422).send(super.createServiceResponse(Constants.FAILURE, error));
                 } else {
-                    res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_SUCCESS, result));
+                    res.send(super.createServiceResponse(Constants.SUCCESS, result));
                 }
             });
         } catch (e)  {
-            res.send(createServiceResponse(Constants.SERVICE_RESPONSE_STATUS_FAILURE, e));
+            res.status(500).send(super.createServiceResponse(Constants.FAILURE, e.stack));
         }
     }
-}
-
-/**
- * createServiceResponse
- *
- * @param {String} status - Response status.
- * @param {Object} message - The response object of the API request.
- */
-let  createServiceResponse = (status, message) => {
-
-    var _response = new ServiceResponse(status, message)
-    return _response;
 }
 
 // Holding the dao instance globally as this operator does not available at method scope.
 let employeeDAO:IEmployeeDAO;
 
-export default EmployeeService;
+export { EmployeeService };

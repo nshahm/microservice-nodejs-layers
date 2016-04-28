@@ -1,12 +1,17 @@
 /// <reference path="./typings/main.d.ts" />
 
+/** Import libraries */ 
 import * as express from "express";
-import {initializeLogging } from './config/Logger';
+import { kernel, getInstance } from "./inversify.config";
+/** Import preivate npm packages */
 import {IMiddlewares} from "base-middlewares";
-import kernel, { getInstance } from "./inversify.config";
+/** Import files */
+import {initializeLogging } from './config/Logger';
 import {IAPI} from "./api/IAPI";
 
-let app:any = express();
+let app:any = express(),
+    _api:IAPI = getInstance<IAPI>("IAPI"),
+    _middlewares = getInstance<IMiddlewares>("IMiddlewares");
 
 /**
  * Initialize logging
@@ -15,24 +20,27 @@ let app:any = express();
  */
 initializeLogging();
 
-
-/** establish mongo database connection */
+/** Establish mongoDB database connection */
 require(__dirname + "/config/Mongodb");
 
-const API:IAPI = getInstance<IAPI>("IAPI");
+app.use(_middlewares.config(_api.routes()));
 
-app.use(getInstance<IMiddlewares>("IMiddlewares").config(API.routes()));
+/** Handle uncaughtException through out the application */
+process.on('uncaughtException', function(err) {
+    console.error('Exception at :  ' + new Date() + err);
+});
 
 /**
- * Initilizing server with serverport and serverHost.
+ * Initilizing server with serverHost and serverPort.
  */
 const serverHost = process.env.HOST || '0.0.0.0';
-const serverPort = 8888; //||  process.env.PORT;
+const serverPort = process.env.PORT || 8080;
 
 let server = app.listen (serverPort, serverHost, () => {
+  
     const host:string = server.address().address;
     const port:number = server.address().port;
 
-    console.log('App listening at http://%s:%s', host, port);
+    console.log('Server listening at http://%s:%s', host, port);
 });
 

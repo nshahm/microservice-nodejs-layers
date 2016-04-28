@@ -5,4 +5,4 @@ import {IEmployeeModel} from "entity-employee";
 interface IEmployeeDAO extends IBaseDAO<IEmployeeModel> {
     
 } 
-export default IEmployeeDAO;
+export {IEmployeeDAO};

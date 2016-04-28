@@ -4,35 +4,36 @@
 import "reflect-metadata";
 import { Kernel } from "inversify";
 
-// Actual implementation
-import EmployeeService from "./service/EmployeeService";
-import EmployeeAPI from "./api/EmployeeAPI";
-import {Middlewares} from "base-middlewares";
-import { EmployeeRepository } from "./dal/repository/EmployeeRepository";
-import { EmployeeDAO } from "./dal/dao/EmployeeDAO";
-import IEmployeeDAO from "./dal/dao/IEmployeeDAO";
+// Actual implementation class
 import API from "./api/API";
+import { Middlewares } from "base-middlewares";
+
+import { EmployeeAPI } from "./api/EmployeeAPI";
+import { EmployeeModel }from "entity-employee"; 
+import { EmployeeService } from "./service/EmployeeService";
+import { EmployeeDAO } from "./dal/dao/EmployeeDAO";
+import { EmployeeRepository } from "./dal/repository/EmployeeRepository";
  
 // Interfaces
-import { IEmployeeService } from "./service/IEmployeeService";
-// import { IEmployeeRepository } from "./dal/repository/IEmployeeRepository";
+import {IAPI} from "./api/IAPI";
+import {IMiddlewares} from "base-middlewares";
+
 import { IEmployeeAPI } from "./api/IEmployeeAPI";
 import { IEmployeeModel }from "entity-employee"; 
-
-import {IMiddlewares} from "base-middlewares";
-import {IAPI} from "./api/IAPI";
-
+import { IEmployeeService } from "./service/IEmployeeService";
+import { IEmployeeDAO } from "./dal/dao/IEmployeeDAO";
+import { IEmployeeRepository } from "./dal/repository/IEmployeeRepository";
 
 let kernel:inversify.IKernel = new Kernel();
 
-kernel.bind("EmployeeRepository").toValue(new EmployeeRepository<IEmployeeModel>());
-kernel.bind<IEmployeeDAO>("IEmployeeDAO").to(EmployeeDAO).inSingletonScope();
-kernel.bind<IEmployeeService>("IEmployeeService").to(EmployeeService).inSingletonScope();
-kernel.bind<IEmployeeAPI>("IEmployeeAPI").to(EmployeeAPI).inSingletonScope();
-kernel.bind<IMiddlewares>("IMiddlewares").to(Middlewares).inSingletonScope(); 
 kernel.bind<IAPI>("IAPI").to(API).inSingletonScope();
+kernel.bind<IMiddlewares>("IMiddlewares").to(Middlewares).inSingletonScope(); 
+kernel.bind<IEmployeeAPI>("IEmployeeAPI").to(EmployeeAPI).inSingletonScope();
+kernel.bind<IEmployeeService>("IEmployeeService").to(EmployeeService).inSingletonScope();
+kernel.bind<IEmployeeDAO>("IEmployeeDAO").to(EmployeeDAO).inSingletonScope();
+kernel.bind("EmployeeRepository").toValue(new EmployeeRepository<IEmployeeModel>());
 
-export default kernel;
+export {kernel};
 
 
 export function getInstance<T>(name:string): T {
