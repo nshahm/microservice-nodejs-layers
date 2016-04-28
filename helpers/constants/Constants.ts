@@ -3,9 +3,9 @@ class Constants {
     static SUCCESS: string  = "Success";
     static FAILURE: string  = "Failure";
     
-    static CREATE_SUCCESS: string  = "Employee created successfully";
-    static UPDATE_SUCCESS: string = "Employee updated successfully";
-    static DELETE_SUCCESS: string = "Employee deleted successfully";
+    static CREATE_SUCCESS: string  = "Created successfully";
+    static UPDATE_SUCCESS: string = "Updated successfully";
+    static DELETE_SUCCESS: string = "Deleted successfully";
 }
 Object.seal(Constants);
 export { Constants };
