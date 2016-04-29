@@ -100,32 +100,32 @@ describe("Example spec for a model", function () {
         });
     });
 
-    it("delete", function (done) {
+    // it("delete", function (done) {
 
-        EmployeeModel.create(employee, function (error, model: any) {
-            expect(error).to.not.exist;
-            EmployeeModel.findById(model._id, function (error, docs: any) {
+    //     EmployeeModel.create(employee, function (error, model: any) {
+    //         expect(error).to.not.exist;
+    //         EmployeeModel.findById(model._id, function (error, docs: any) {
 
-                expect(error).to.not.exist;
-                EmployeeModel.remove({ _id: docs._id }, function (error) {
-                    expect(error).to.not.exist;
-                });
-                done();
-            });
-        });
-    });
+    //             expect(error).to.not.exist;
+    //             EmployeeModel.remove({ _id: docs._id }, function (error) {
+    //                 expect(error).to.not.exist;
+    //             });
+    //             done();
+    //         });
+    //     });
+    // });
     
-    it("findOne", function (done) {
+    // it("findOne", function (done) {
 
-        EmployeeModel.create(employee, function (err, model: any) {
-            var employeeID = model.employeeID;
-            EmployeeModel.findOne({ employeeID: model.employeeID }, function (err, docs) {
+    //     EmployeeModel.create(employee, function (err, model: any) {
+    //         var employeeID = model.employeeID;
+    //         EmployeeModel.findOne({ employeeID: model.employeeID }, function (err, docs) {
 
-                expect(err).to.not.exist;
-                expect(docs.employeeID).to.equal(employeeID);
-                done();
-            });
-        });
-    });
+    //             expect(err).to.not.exist;
+    //             expect(docs.employeeID).to.equal(employeeID);
+    //             done();
+    //         });
+    //     });
+    // });
 
 });

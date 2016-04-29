@@ -9,8 +9,11 @@
     "dev": "./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js",
     "build": "npm install && npm run post-install && npm run dev",
     "prod": "./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js -p",
-    "test": "mocha --colors --reporter spec --recursive dist/test//**/*.js",
-    "gulp": "gulp default"
+    "test": "mocha --colors --reporter spec --recursive dist/js/test/**/*.js",
+    "itest": "./node_modules/.bin/istanbul test ./node_modules/.bin/_mocha -- --colors --reporter spec --recursive dist/js/test/**/*.js",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --recursive -R spec --dir ./dist/js/app/js",
+    "gulp": "gulp default",
+    "nodemon": "nodemon --watch dist app.js"
   },
   "author": {
     "email": "n.shahm@gmail.com",
@@ -57,8 +60,17 @@
   },
   "devDependencies": {
     "errorhandler": "1.4.3",
+    "gulp-concat": "^2.6.0",
+    "gulp-istanbul": "^0.10.4",
+    "gulp-nodemon": "^2.0.6",
+    "gulp-tslint": "^5.0.0",
+    "istanbul": "^0.4.3",
     "json-loader": "0.5.4",
+    "merge2": "^1.0.2",
+    "remap-istanbul": "^0.6.3",
     "ts-loader": "0.8.2",
+    "tslint": "^3.8.1",
+    "tslint-loader": "^2.1.4",
     "webpack-stream": "3.2.0"
   }
 }

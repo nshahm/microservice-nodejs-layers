@@ -1,5 +1,5 @@
 import  {expect } from "../config/Testing";
-import { EmployeeService } from "../../service/EmployeeService";
+import { EmployeeService } from "../../src/service/EmployeeService";
 
 describe('Employee Service testcases', ()=> {
     it('placeholder...', ()=> {

@@ -2,24 +2,25 @@ import {BaseRepository} from "base-dal";
 import { IEmployeeRepository} from "./IEmployeeRepository";
 import { IEmployeeModel, EmployeeModel } from "entity-employee";
 import * as Mongoose from "mongoose";
-import {injectable} from "inversify"
+import {injectable} from "inversify";
 
 @injectable()
-class EmployeeRepository<T extends Mongoose.Document> 
+class EmployeeRepository<T extends Mongoose.Document>
 extends BaseRepository<IEmployeeModel>
-implements IEmployeeRepository<IEmployeeModel> { 
-    
-    private _employeeModel: Mongoose.Model<Mongoose.Document>;
-    
+implements IEmployeeRepository<IEmployeeModel> {
+
+    private employeeModel: Mongoose.Model<Mongoose.Document>;
+
     constructor () {
-        
         super(EmployeeModel);
-        this._employeeModel = EmployeeModel;
+        this.employeeModel = EmployeeModel;
     }
-    
-    /** Method Implementation goes here */
-    
+
+    /**
+     *  New Additional Method Implementation goes here (if required)
+     */
 }
 
 Object.seal(EmployeeRepository);
 export {EmployeeRepository};
+

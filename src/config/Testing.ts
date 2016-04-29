@@ -1,12 +1,10 @@
-/// <reference path="../typings/main.d.ts" />
+/// <reference path="../../typings/main.d.ts" />
 
 import * as Mocha from "mocha";
 import * as chai from "chai";
 import * as Sinon from "sinon";
 
-
-    
-var expect:Chai.ExpectStatic = chai.expect;
+let expect: Chai.ExpectStatic = chai.expect;
 
 /**
  * Chai configuraitonn
@@ -14,15 +12,15 @@ var expect:Chai.ExpectStatic = chai.expect;
 chai.config.includeStack = true;
 
 // To add chai plugins 
-//chai.use(PLUGIN); // for now there is no plugins.
+// chai.use(PLUGIN); // for now there is no plugins.
 
 /**
  * Mocha Configurationn
  */
 let mochaSetupOptions = {
-    ui : 'tdd',
-    ignoreLeaks :true,
-    reporters : Mocha.reporters.List
+    ignoreLeaks : true,
+    reporters : Mocha.reporters.List,
+    ui : "tdd",
 };
 mocha.setup(mochaSetupOptions);
 

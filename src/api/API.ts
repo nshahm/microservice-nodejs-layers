@@ -3,20 +3,19 @@ import { IEmployeeAPI } from "./IEmployeeAPI";
 import {IAPI} from "./IAPI";
 import { inject, injectable } from "inversify";
 
-
-const app:Express.Express = Express();
+const app: Express.Express = Express();
 /**
  * This class is to add all the different API as part of this microservices.
  */
 @injectable()
 class API implements IAPI {
-    private employeeAPI:IEmployeeAPI
-    
-    constructor(@inject("IEmployeeAPI") employeeAPI:IEmployeeAPI) {
+    private employeeAPI: IEmployeeAPI;
+
+    constructor(@inject("IEmployeeAPI") employeeAPI: IEmployeeAPI) {
         this.employeeAPI = employeeAPI;
     }
-    
-    routes() {
+
+    public routes() {
         app.use("/v1/employee/", this.employeeAPI.routes());
         return app;
     }

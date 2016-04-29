@@ -15,10 +15,10 @@ module.exports = {
   entry: [
        // 'webpack/hot/dev-server',
        // 'webpack-hot-middleware/client',
-        __dirname + '/app.ts'
+        __dirname + '/src/app.ts'
   ],
   target: 'node',
-  devtool: process.env.NODE_ENV === 'dev' ? 'eval-source-map' : '',
+  devtool: process.env.NODE_ENV === 'dev' ? 'inline-source-map' : '#inline-source-map',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'app.js',
@@ -30,6 +30,11 @@ module.exports = {
                              { raw: true, entryOnly: false })
   ],
    module : {
+        preLoaders : [          {
+                test: /\.ts$/,
+                loader: "tslint-loader"
+            }
+        ],
         loaders: [
             {
                 test: /\.ts?$/,
@@ -41,6 +46,23 @@ module.exports = {
             }
         ]
     },
+     tslint: {
+        configuration: {
+            rules: {
+                quotemark: [true, "double"]
+            }
+        },
+ 
+        // tslint errors are displayed by default as warnings 
+        // set emitErrors to true to display them as errors 
+        emitErrors: false,
+ 
+        // tslint does not interrupt the compilation by default 
+        // if you want any file with tslint errors to fail 
+        // set failOnHint to true 
+        failOnHint: true  
+     },
+    
     resolve : {
        extensions: ['', '.js', '.webpack.js', '.ts'],
     },
