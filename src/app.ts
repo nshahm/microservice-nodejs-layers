@@ -1,5 +1,3 @@
-/// <reference path="../typings/main.d.ts" />
-
 /** Import libraries */
 import * as express from "express";
 import { getInstance } from "./inversify.config";
@@ -41,6 +39,6 @@ let server = app.listen (serverPort, serverHost, () => {
     const host: string = server.address().address;
     const port: number = server.address().port;
 
-    console.log("App listening at http://%s:%s", host, port);
+    console.log("Sbros listening at http://%s:%s", host, port);
 });
 

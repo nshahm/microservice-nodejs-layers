@@ -1,5 +1,3 @@
-/// <reference path="../../typings/main.d.ts" />
-
 import * as Mocha from "mocha";
 import * as chai from "chai";
 import * as Sinon from "sinon";

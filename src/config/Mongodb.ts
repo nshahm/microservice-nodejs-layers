@@ -1,5 +1,3 @@
-/// <reference path="../../typings/main.d.ts" />
-
 import * as Mongoose from "mongoose";
 import * as Config from "config";
 

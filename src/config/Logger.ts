@@ -1,5 +1,3 @@
-/// <reference path="../../typings/main.d.ts" />
-
 import * as winston from "winston";
 // import * as winstonDailyRotateFile from "winston-daily-rotate-file";
 import * as path from "path";

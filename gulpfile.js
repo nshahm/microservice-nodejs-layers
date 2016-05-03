@@ -14,6 +14,8 @@ var merge       = require("merge2");
 var concat      = require("gulp-concat");
 var nodemon     = require("gulp-nodemon");
 var istanbul    = require("gulp-istanbul");
+var sourcemaps  = require("gulp-sourcemaps");
+var uglify      = require('gulp-uglify');
 
 var tsProject = ts.createProject('tsconfig.json');
 
@@ -70,13 +72,15 @@ gulp.task('build',function() {
  * Coverage using istanbul
  */
 gulp.task('coverage', function (cb) {
-  gulp.src(['./src/*.ts'])
+  gulp.src(['./src/**/*.ts', 'typings/index.d.ts', './test/**/*.ts'])
     .pipe(ts(tsProject))
-    .pipe(gulp.dest('dist/js/src'))
+    .js
+    .pipe(gulp.dest('dist/js'))
+    .pipe(gulp.src('dist/js/src/**/*.js'))
     .pipe(istanbul())
     .pipe(istanbul.hookRequire()) 
     .on('finish', function () {
-      gulp.src(['./dist/js/test/*.js'])
+      gulp.src(['./dist/js/test/**/*.js'])
         .pipe(mocha())
 	.pipe(istanbul.writeReports())
 	.pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
@@ -93,9 +97,9 @@ gulp.task("test", function() {
 
 gulp.task("compile-test", function () {
     
- return gulp.src('test/**/*.ts')
+ return gulp.src(['test/**/*.ts', 'typings/index.d.ts'])
         .pipe(ts(tsProject))
-        .pipe(gulp.dest('dist/js/test'));
+        .pipe(gulp.dest('dist/js/'));
 });
 gulp.task('run-tests', shell.task(['npm run test']));
  
@@ -119,13 +123,37 @@ gulp.task('run', function() {
  });
 
 gulp.task('compile-src', function() {
-    var tsResult = gulp.src('src/**/*.ts')
-                    .pipe(ts(tsProject));
-
-    return merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done.
+    var tsResult = gulp.src(['src/**/*.ts', 'typings/index.d.ts']) // By default the gulp-typescript plugin not resolving directory that mentioned in 
+                   .pipe(sourcemaps.init())
+                   .pipe(ts(tsProject));
+        
+      
+              
+   return (process.env.NODE_ENV === 'dev') ? 
+    merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done.
+         
         tsResult.dts.pipe(gulp.dest('dist/js/definitions')),
-        tsResult.js.pipe(gulp.dest('dist/js/src'))
+        tsResult.js.pipe(
+            sourcemaps.write('.', {
+            sourceRoot: function(file) {
+                    // var sourceFile = path.join(file.cwd, 'src',file.sourceMap.file);
+                    // console.log("sourcefile", sourceFile);
+                    // var p = path.relative(path.dirname(sourceFile), file.cwd);
+                    // console.log(p);
+                    //  return p;
+                    return file.cwd + '/src';
+                }
+            }
+            )) 
+            .pipe(gulp.dest('dist/js/'))
+    ]) : 
+    merge([ 
+         
+        tsResult.dts.pipe(gulp.dest('dist/js/definitions')),
+        tsResult.js.pipe(uglify())
+                   .pipe(gulp.dest('dist/js/'))
     ]);
+    // return tsResult
 });
 
 // gulp.task('copy-environment', function() {

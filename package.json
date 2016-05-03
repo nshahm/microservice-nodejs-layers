@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Microservice nodejs layering that show, API, Business and data layer and its communication",
   "main": "app.js",
+  "typescript": {
+    "definition": "./typings/index.d.ts"
+  },
   "scripts": {
     "start": "node ./dist/app.js",
     "post-install": "./node_modules/.bin/typings install",
@@ -41,6 +44,7 @@
     "gulp-mocha": "2.2.0",
     "gulp-typescript": "2.13.0",
     "gulp-typings": "1.3.4",
+    "gulp-uglify": "^1.5.3",
     "inversify": "2.0.0-beta.1",
     "mocha": "2.4.5",
     "mocha-mongoose": "1.2.0",
@@ -50,7 +54,6 @@
     "run-sequence": "1.1.5",
     "sinon": "1.17.3",
     "source-map-support": "0.4.0",
-    "typescript": "1.8.9",
     "typings": "0.7.12",
     "webpack": "1.12.15",
     "webpack-dev-middleware": "1.6.1",
@@ -61,8 +64,10 @@
   "devDependencies": {
     "errorhandler": "1.4.3",
     "gulp-concat": "^2.6.0",
+    "gulp-include": "^2.1.0",
     "gulp-istanbul": "^0.10.4",
     "gulp-nodemon": "^2.0.6",
+    "gulp-sourcemaps": "^2.0.0-alpha",
     "gulp-tslint": "^5.0.0",
     "istanbul": "^0.4.3",
     "json-loader": "0.5.4",

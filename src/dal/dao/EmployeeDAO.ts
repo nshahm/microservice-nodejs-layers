@@ -1,5 +1,3 @@
-/// <reference path="../../../typings/main.d.ts" />
-
 import { EmployeeRepository } from "../repository/EmployeeRepository";
 import { IEmployeeDAO } from "./IEmployeeDAO";
 import {IEmployeeModel} from "entity-employee";
