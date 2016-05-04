@@ -1,44 +1,37 @@
-/** Import libraries */
 import * as express from "express";
+import * as BodyParser from "body-parser";
+import * as CookieParser from "cookie-parser";
+import * as morgan  from "morgan";
 import { getInstance } from "./inversify.config";
-/** Import preivate npm packages */
-import {IMiddlewares} from "base-middlewares";
-/** Import files */
-import {initializeLogging } from "./config/Logger";
-import {IAPI} from "./api/IAPI";
-
+import { Logger } from "asd-microservice-logger";
+import { IAPI } from "./api/IAPI";
 import "./config/Mongodb";
 
-let app: express.Express = express(),
-    api: IAPI = getInstance<IAPI>("IAPI"),
-    middlewares: IMiddlewares = getInstance<IMiddlewares>("IMiddlewares");
+let app: any = express(),
+    api: IAPI = getInstance<IAPI>("IAPI");
 
 /**
- * Initialize logging
- * TODO - Eventually This will a logging client to logging service running 
- * separately to enter logs in Mongodb 
+ * Initialize Logger
  */
-initializeLogging();
+Logger.init("", false);
 
-/** Establish mongoDB database connection */
-app.use(middlewares.config(api.routes()));
+/** App Middlewares */
+app.use(BodyParser.urlencoded({ extended: false }));
+app.use(BodyParser.json());
+app.use(CookieParser());
+app.use(api.routes());
 
-/** Handle uncaughtException through out the application */
-process.on("uncaughtException", function(err) {
-    console.error("Exception at :  " + new Date() + err);
+app.use(morgan("combined", { "stream": { write: (message) => { Logger.info(message); } } }));
+
+app.use(function (err, req, res, next) {
+    Logger.info(err.stack);
+    res.status(500).send({
+        "status": "internal error",
+        "message": err.stack,
+    });
 });
 
-/**
- * Initilizing server with serverHost and serverPort.
- */
-const serverHost = process.env.HOST || "0.0.0.0";
-const serverPort = process.env.PORT || 8080;
-
-let server = app.listen (serverPort, serverHost, () => {
-
-    const host: string = server.address().address;
-    const port: number = server.address().port;
-
-    console.log("Sbros listening at http://%s:%s", host, port);
-});
-
+/** start the app by listening to the port */
+const port = process.env.PORT ? process.env.PORT : 8080;
+app.listen(port);
+console.log("Server listening on port " + port);

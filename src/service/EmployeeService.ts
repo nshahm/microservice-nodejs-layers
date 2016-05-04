@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { injectable, inject } from "inversify";
-// Privatye npm package import
-import {  IEmployeeModel } from "entity-employee";
+import { IEmployeeModel } from "entity-employee";
 import { BaseService } from "base-service";
-// File import
+import { ParseError } from "asd-mongoose-error-parse";
 import { IEmployeeService }  from "./IEmployeeService";
 import { IEmployeeDAO } from "./../dal/dao/IEmployeeDAO";
 import { Constants } from "../helpers/constants/Constants";
@@ -19,10 +18,10 @@ let employeeDAO: IEmployeeDAO;
  */
 @injectable()
 class EmployeeService
-extends BaseService
-implements IEmployeeService {
+    extends BaseService
+    implements IEmployeeService {
 
-    constructor(@inject("IEmployeeDAO") employeeDAOObj: IEmployeeDAO) {
+    constructor( @inject("IEmployeeDAO") employeeDAOObj: IEmployeeDAO) {
         super();
         employeeDAO = employeeDAOObj;
     }
@@ -34,19 +33,15 @@ implements IEmployeeService {
      * @param {Object} res - The response of the employee.
      */
     public create(req: Request, res: Response) {
-        try {
-            let employee: IEmployeeModel = <IEmployeeModel>req.body;
+        let employee: IEmployeeModel = <IEmployeeModel>req.body;
 
-            employeeDAO.create(employee, (error, result) => {
-                if (error) {
-                   res.status(422).send(super.createServiceResponse(Constants.FAILURE, error));
-                } else {
-                    res.status(200).send(super.createServiceResponse(Constants.SUCCESS, Constants.CREATE_SUCCESS));
-                }
-            });
-        } catch (e)  {
-            res.status(500).send(super.createServiceResponse(Constants.FAILURE, e.stack));
-        }
+        employeeDAO.create(employee, (error, result) => {
+            if (error) {
+                res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
+            } else {
+                res.status(200).send(super.createServiceResponse(Constants.SUCCESS, Constants.CREATE_SUCCESS));
+            }
+        });
     }
 
     /**
@@ -56,20 +51,16 @@ implements IEmployeeService {
      * @param {Object} res - The response of the employee.
      */
     public update(req: Request, res: Response) {
-        try {
-            let employee: IEmployeeModel = <IEmployeeModel>req.body;
-            let id: string = req.params.id;
+        let employee: IEmployeeModel = <IEmployeeModel>req.body;
+        let id: string = req.params.id;
 
-            employeeDAO.update(id, employee, (error, result) => {
-                if (error) {
-                    res.status(422).send(super.createServiceResponse(Constants.FAILURE, error));
-                } else {
-                    res.send(super.createServiceResponse(Constants.SUCCESS, Constants.UPDATE_SUCCESS));
-                }
-            });
-        } catch (e)  {
-            res.status(500).send(super.createServiceResponse(Constants.FAILURE, e.stack));
-        }
+        employeeDAO.update(id, employee, (error, result) => {
+            if (error) {
+                res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
+            } else {
+                res.send(super.createServiceResponse(Constants.SUCCESS, Constants.UPDATE_SUCCESS));
+            }
+        });
     }
 
     /**
@@ -79,19 +70,15 @@ implements IEmployeeService {
      * @param {Object} res - The response of the employee.
      */
     public delete(req: Request, res: Response) {
-        try {
-            let id: string = req.params.id;
+        let id: string = req.params.id;
 
-            employeeDAO.delete(id, (error, result) => {
-                if (error) {
-                    res.status(422).send(super.createServiceResponse(Constants.FAILURE, error));
-                } else {
-                    res.send(super.createServiceResponse(Constants.SUCCESS, Constants.DELETE_SUCCESS));
-                }
-            });
-        } catch (e)  {
-            res.status(500).send(super.createServiceResponse(Constants.FAILURE, e.stack));
-        }
+        employeeDAO.delete(id, (error, result) => {
+            if (error) {
+                res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
+            } else {
+                res.send(super.createServiceResponse(Constants.SUCCESS, Constants.DELETE_SUCCESS));
+            }
+        });
     }
 
     /**
@@ -101,18 +88,13 @@ implements IEmployeeService {
      * @param {Object} res - The response of the employee.
      */
     public retrieve(req: Request, res: Response) {
-        try {
-
-            employeeDAO.retrieve((error, result) => {
-                if (error) {
-                    res.status(422).send(super.createServiceResponse(Constants.FAILURE, error));
-                } else {
-                    res.send(super.createServiceResponse(Constants.SUCCESS, result));
-                }
-            });
-        } catch (e)  {
-           res.status(500).send(super.createServiceResponse(Constants.FAILURE, e.stack));
-        }
+        employeeDAO.retrieve((error, result) => {
+            if (error) {
+                res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
+            } else {
+                res.send(super.createServiceResponse(Constants.SUCCESS, result));
+            }
+        });
     }
 
     /**
@@ -122,19 +104,15 @@ implements IEmployeeService {
      * @param {Object} res - The response of the employee.
      */
     public findById(req: Request, res: Response) {
-        try {
-            let id: string = req.params.id;
+        let id: string = req.params.id;
 
-            employeeDAO.findById(id, (error, result) => {
-                if (error) {
-                    res.status(422).send(super.createServiceResponse(Constants.FAILURE, error));
-                } else {
-                    res.send(super.createServiceResponse(Constants.SUCCESS, result));
-                }
-            });
-        } catch (e)  {
-            res.status(500).send(super.createServiceResponse(Constants.FAILURE, e.stack));
-        }
+        employeeDAO.findById(id, (error, result) => {
+            if (error) {
+                res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
+            } else {
+                res.send(super.createServiceResponse(Constants.SUCCESS, result));
+            }
+        });
     }
 }
 

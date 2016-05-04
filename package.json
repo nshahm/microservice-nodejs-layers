@@ -27,6 +27,8 @@
     "registry": "http://localhost:4873/"
   },
   "dependencies": {
+    "asd-mongoose-error-parse": "*",
+    "asd-microservice-logger": "*",
     "base-api": "*",
     "base-dal": "*",
     "base-middlewares": "*",
