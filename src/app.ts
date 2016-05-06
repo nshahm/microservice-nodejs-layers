@@ -11,7 +11,7 @@ import "./config/Mongodb";
 let app: any = express(),
     api: IAPI = getInstance<IAPI>("IAPI"),
     loggerConfig: any = Config.get("logger");
-    
+
 /**
  * Initialize Logger
  */
