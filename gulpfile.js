@@ -81,8 +81,8 @@ gulp.task('coverage', function (cb) {
     .pipe(istanbul.hookRequire()) 
     .on('finish', function () {
       gulp.src(['./dist/js/test/**/*.js'])
-        .pipe(mocha())
-	.pipe(istanbul.writeReports())
+         .pipe(mocha({ui: 'bdd'}))
+         .pipe(istanbul.writeReports())
 	.pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
 	.on('end', cb);
     });
@@ -97,9 +97,18 @@ gulp.task("test", function() {
 
 gulp.task("compile-test", function () {
     
- return gulp.src(['test/**/*.ts', 'typings/index.d.ts'])
+  gulp.src(['test/**/*.ts', 'typings/index.d.ts'])
+        .pipe(sourcemaps.init())
         .pipe(ts(tsProject))
-        .pipe(gulp.dest('dist/js/'));
+        .js
+        .pipe(
+            sourcemaps.write('.', {
+            sourceRoot: function(file) {
+                    return file.cwd + '/test';
+                }
+            }
+            )) 
+        .pipe(gulp.dest('dist/js/test'));
 });
 gulp.task('run-tests', shell.task(['npm run test']));
  
@@ -126,8 +135,6 @@ gulp.task('compile-src', function() {
     var tsResult = gulp.src(['src/**/*.ts', 'typings/index.d.ts']) // By default the gulp-typescript plugin not resolving directory that mentioned in 
                    .pipe(sourcemaps.init())
                    .pipe(ts(tsProject));
-        
-      
               
    return (process.env.NODE_ENV === 'dev') ? 
     merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done.
@@ -136,16 +143,11 @@ gulp.task('compile-src', function() {
         tsResult.js.pipe(
             sourcemaps.write('.', {
             sourceRoot: function(file) {
-                    // var sourceFile = path.join(file.cwd, 'src',file.sourceMap.file);
-                    // console.log("sourcefile", sourceFile);
-                    // var p = path.relative(path.dirname(sourceFile), file.cwd);
-                    // console.log(p);
-                    //  return p;
                     return file.cwd + '/src';
                 }
             }
             )) 
-            .pipe(gulp.dest('dist/js/'))
+            .pipe(gulp.dest('dist/js/src'))
     ]) : 
     merge([ 
          
@@ -173,14 +175,6 @@ gulp.task('create-one-typedefinition', function() {
             .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('remove-ref', function() {
-    var a = '/// <reference path="../node_modules/inversify/type_definitions/inversify/inversify.d.ts" />';
-    
-    var b = new RegExp('/\/\/\/[^]*/>$');
-    console.log(b.test(a));
-/// <reference path="../node_modules/reflect-metadata/reflect-metadata.d.ts"/>
-})
-
 gulp.task('nodemon', function () {
   nodemon({ script: './dist/js/src/app.js'
           , ext: 'js'
@@ -195,12 +189,39 @@ gulp.task('nodemon', function () {
     })
 });
 
+gulp.task('nodemon-test', function () {
+  nodemon({ 
+          watch: './dist/js/test'
+          , ext: 'js',
+          exec : 'mocha --colors --reporter spec',
+          //, ignore: ['ignored.js']
+          //, tasks: ['tslint']
+          env: { 'NODE_ENV': 'dev',
+                    'NODE_CONFIG_DIR' : path.resolve(__dirname, './src/config/environment') 
+                 } 
+         })
+    .on('restart', function () {
+      console.log('SPEC RE-STARTED!')
+    })
+});
+
 gulp.task('re-compile', function() {
     gulp.watch('src/**/*.ts', ['compile-src', 'tslint']);
 });  
 
+gulp.task('re-compile-test', function() {
+    gulp.watch('test/**/*.ts', ['compile-test', 'tslint']);
+});  
+
+
+
 gulp.task('watch', function() {
     runSequence('re-compile', 'nodemon');
 });
+
+gulp.task('watchspec', function() {
+    runSequence('re-compile-test');
+});
+
 
 

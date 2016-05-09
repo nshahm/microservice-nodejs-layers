@@ -1,14 +1,17 @@
 /// <reference path="../../typings/main.d.ts" />
 
-var dbURI = 'mongodb://localhost/testing';
-import {expect, Mocha, Sinon} from "../config/Testing"
+const dbURI = "mongodb://localhost/Testing";
+import {expect } from "../config/Testing"
 
-var mongoose = require('mongoose');
+const mongoose = require("mongoose");
 import {EmployeeModel, IEmployeeModel} from "entity-employee";
 
 describe("Example spec for a model", function () {
 
-   let id: string;
+   // To hold ObjectId
+   let id: any;
+
+   // Create payload
    const payload = {
         "employeeID": "1000002",
         "name": {
@@ -25,110 +28,104 @@ describe("Example spec for a model", function () {
         }
     };
 
+    // Update payload
+    const updatePayload = {
+        name : {
+             first: "John William",
+             last : "Patrick"
+        },
+    };
 
-    beforeEach(function (done) {
+    // Delete all document before starting the testcase
+    before ((done) => {
 
+        // Create mongoose connection to mongodb
         if (mongoose.connection.db) {
             return done();
         }
         mongoose.connect(dbURI, done);
+
     });
+
+    // Disconnect mongoose connection
+    after((done) => {
+       mongoose.disconnect();
+       done();
+    });
+
+    const employee: IEmployeeModel = <IEmployeeModel> payload;
 
     /**
-     * Clear all the data in collection for test purpose
-     * Comment out this beforeEach() block if the data not to be cleared.
+     * Create Employee
      */
-    beforeEach(function (done) {
-        // //delete all the customer records    
-        // EmployeeModel.remove({}, function () {
-        //     done();
-        // });
-        done();
-    });
-
-
-
-    const employee: IEmployeeModel = <IEmployeeModel>payload;
-
-    it("create", function (done) {
-        EmployeeModel.create(employee, function(error) {
+    it("create", (done) => {
+        EmployeeModel.create(employee, (error) => {
             expect(error).to.not.exist;
+
             done();
         });
     });
 
-    it("find", function (done) {
+    /**
+     * Find Employee
+     */
+    it("find", (done) => {
 
-        // EmployeeModel.create(employee, function (err, model) {
-
-            // expect(err).to.not.exist;
-            EmployeeModel.find({}, function (err, docs: any) {
-                id = docs.id;
-                expect(err).to.not.exist;
-                expect(docs).to.be.an("array").with.length(1);
-                done();
-            });
-        // });
+        EmployeeModel.find({}, (err, docs: any) => {
+                id = docs[0]._id;
+            expect(err).to.not.exist;
+            expect(docs).to.be.an("array").with.length(1);
+            done();
+        });
     });
 
-    it("findById", function (done) {
+    /**
+     * FindById Employee
+     */
+    it("findById", (done) => {
 
-        // EmployeeModel.create(employee, function (err, model: any) {
-            EmployeeModel.findById(this.id, function (err, docs) {
+        EmployeeModel.findById(id,  (err, docs) => {
 
-                expect(err).to.not.exist;
-                expect(docs.name.first).to.equal("John");
-                done();
-            });
-        // });
+            expect(err).to.not.exist;
+            expect(docs.name.first).to.equal("John");
+            done();
+        });
     });
 
-    it("update", function (done) {
+    /**
+     * Update Employee
+     */
+    it("update",  (done) => {
 
-       // EmployeeModel.create(employee, function (err, model: any) {
-
-            // EmployeeModel.findById(model._id, function (err, docs: any) {
-
-                // expect(err).to.not.exist;
-                const docs = {name : { first: "John William"} };
-                // docs.name.first = "John William";
-
-                // var _id = docs._id;
-                EmployeeModel.update({ _id: id }, docs, function (err, doc: any) {
-                    expect(err).to.not.exist;
-                    expect(doc.ok).to.equal(1);
-                });
-                done();
-            // });
-        // });
+        EmployeeModel.update({ _id: id }, updatePayload,  (err, doc: any) => {
+            expect(err).to.not.exist;
+            expect(doc.ok).to.equal(1);
+        });
+        done();
     });
 
-    it("delete", function (done) {
+    /**
+     * FindByOne Employee
+     */
+    it("findOne",  (done) => {
 
-        // EmployeeModel.create(employee, function (error, model: any) {
-            // expect(error).to.not.exist;
-            // EmployeeModel.findById(model._id, function (error, docs: any) {
+        EmployeeModel.findOne({ employeeID: payload.employeeID },  (err, docs) => {
 
-                // expect(error).to.not.exist;
-                EmployeeModel.remove({ _id: this.id }, function (error) {
-                    expect(error).to.not.exist;
-                });
-                done();
-            // });
-        // });
+            expect(err).to.not.exist;
+            expect(docs.employeeID).to.equal(payload.employeeID);
+            done();
+        });
     });
 
-    // it("findOne", function (done) {
+    /**
+     * Delete Employee
+     */
+    it("delete",  (done) => {
 
-    //     EmployeeModel.create(employee, function (err, model: any) {
-    //         var employeeID = model.employeeID;
-    //         EmployeeModel.findOne({ employeeID: model.employeeID }, function (err, docs) {
-
-    //             expect(err).to.not.exist;
-    //             expect(docs.employeeID).to.equal(employeeID);
-    //             done();
-    //         });
-    //     });
-    // });
+        EmployeeModel.remove({ _id: id },  (error) => {
+            expect(error).to.not.exist;
+        });
+        done();
+    });
 
 });

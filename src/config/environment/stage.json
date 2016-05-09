@@ -1,19 +1,31 @@
 {
+
     "mongodb":
-            {
-                "host": "localhost",
-                "port": 27017,
-                "dbName": "employees",
-                "user": "",
-                "pass": "",
-                "poolSize":"10"
-            },
+        {
+            "host": "localhost",
+            "port": 27017,
+            "dbName": "employees",
+            "user": "",
+            "pass": "",
+            "poolSize":"10"
+        },
     "logger":
-            {
-                "dir": "/Users/carestream/app/microservice-nodejs-layers/",
-                "fileName": "microservice-employee.log",
-                "dbURL": "mongodb://localhost/employees",
-                "db": true,
-                "file": true
-            }
+        {
+            "dir": "/Users/carestream/app/microservice-nodejs-layers/",
+            "fileName": "microservice-employee.log",
+            "dbURL": "mongodb://localhost/employees",
+            "db": true,
+            "file": true
+        },
+
+    "mongodbtest": 
+        {
+            "host": "localhost",
+            "port": 27017,
+            "dbName": "employees",
+            "user": "",
+            "pass": "",
+            "poolSize":"10"
+        }
 }
+

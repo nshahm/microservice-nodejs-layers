@@ -12,9 +12,9 @@
     "pretty":true,
     "noLib": false,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
+    "experimentalDecorators": true
     //"sortOutput":true
-    "outDir": "out"
+    //"outDir": "out"
     
     //"outFile":"dist/employee-microservice.d.ts"
   },

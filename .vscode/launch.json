@@ -2,7 +2,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Launch",
+			"name": "LaunchSource",
 			"type": "node",
 			"request": "launch",
 			"program": "${workspaceRoot}/dist/js/src/app.js",
@@ -22,6 +22,28 @@
 			"sourceMaps": true,
 			"outDir": null
 		},
+		{
+			"name": "LaunchTest",
+			"type": "node",
+			"request": "launch",
+			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+			"stopOnEntry": false,
+			"args": ["dist/js/test/**/*.js"],
+			"cwd": "${workspaceRoot}",
+			"preLaunchTask": null,
+			"runtimeExecutable": null,
+			"runtimeArgs": [
+				"--nolazy"
+			],
+			"env": {
+				"NODE_ENV": "dev",
+                "NODE_CONFIG_DIR":"./src/config/environment"
+			},
+			"externalConsole": false,
+			"sourceMaps": true,
+			"outDir": "${workspaceRoot}/dist/js/test"
+		},
+		
 		{
 			"name": "Attach",
 			"type": "node",
