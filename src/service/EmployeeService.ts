@@ -8,7 +8,7 @@ import { IEmployeeDAO } from "./../dal/dao/IEmployeeDAO";
 import { Constants } from "../helpers/constants/Constants";
 
 // Holding the dao instance globally as this operator does not available at method scope.
-let employeeDAO: IEmployeeDAO;
+let employeeDAO: IEmployeeDAO<IEmployeeModel>;
 
 /**
  * EmployeeService
@@ -21,7 +21,7 @@ class EmployeeService
     extends BaseService
     implements IEmployeeService {
 
-    constructor( @inject("IEmployeeDAO") employeeDAOObj: IEmployeeDAO) {
+    constructor( @inject("IEmployeeDAO") employeeDAOObj: IEmployeeDAO<IEmployeeModel>) {
         super();
         employeeDAO = employeeDAOObj;
     }
@@ -54,13 +54,19 @@ class EmployeeService
         let employee: IEmployeeModel = <IEmployeeModel>req.body;
         let id: string = req.params.id;
 
-        employeeDAO.update(id, employee, (error, result) => {
+        employeeDAO.findById(id, (error, data) => {
             if (error) {
                 res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
-            } else {
-                res.send(super.createServiceResponse(Constants.SUCCESS, Constants.UPDATE_SUCCESS));
             }
+            employeeDAO.update(data._id, employee, (err, result) => {
+                if (err) {
+                    res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
+                } else {
+                    res.send(super.createServiceResponse(Constants.SUCCESS, Constants.UPDATE_SUCCESS));
+                }
+            });
         });
+
     }
 
     /**

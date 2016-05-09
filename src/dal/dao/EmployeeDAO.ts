@@ -1,56 +1,44 @@
-import { EmployeeRepository } from "../repository/EmployeeRepository";
+import * as mongoose from "mongoose";
+import { injectable } from "inversify";
+import { EmployeeModel } from "entity-employee";
 import { IEmployeeDAO } from "./IEmployeeDAO";
-import {IEmployeeModel} from "entity-employee";
-import { inject, injectable } from "inversify";
-
-let employeeRepository: EmployeeRepository<IEmployeeModel>;
 
 @injectable()
-class EmployeeDAO implements IEmployeeDAO {
+class EmployeeDAO<T extends mongoose.Document>
+implements IEmployeeDAO<T> {
 
-    constructor (@inject("EmployeeRepository") employeeRepositoryObj: EmployeeRepository<IEmployeeModel>) {
-        employeeRepository = employeeRepositoryObj;
+    private model: mongoose.Model<mongoose.Document>;
+
+    constructor () {
+        this.model = EmployeeModel;
     }
 
-    /**
-     * Create employee
-     */
-    public create (item: IEmployeeModel, callback: (error: any, result: any) => void) {
-        employeeRepository.create(item, callback);
+    public create (item: T, callback: (error: any, result: any) => void) {
+        this.model.create(item, callback);
+
     }
 
-    /**
-     * Retrieve employee
-     */
     public retrieve (callback: (error: any, result: any) => void) {
-         employeeRepository.retrieve(callback);
+         this.model.find({}, callback);
     }
 
-    /**
-     * update employee
-     */
-    public update (id: string, item: IEmployeeModel, callback: (error: any, result: any) => void) {
+    public update (id: mongoose.Types.ObjectId, item: T, callback: (error: any, result: any) => void) {
+            this.model.update({_id: id}, item, callback);
 
-        employeeRepository.findById(id, (err, res) => {
-            if (err) {
-                callback(err, res);
-            }
-            employeeRepository.update(res._id, item, callback);
-        });
     }
 
-    /**
-     * delete employee
-     */
     public delete (id: string, callback: (error: any, result: any) => void) {
-        employeeRepository.delete(id, callback);
+        this.model.remove({_id: this.toObjectId(id)}, (err) => callback(err, null));
+
     }
 
-    /**
-     * Find by employee id
-     */
-    public findById (id: string, callback: (error: any, result: IEmployeeModel) => void) {
-        employeeRepository.findById(id, callback);
+    public findById (id: string, callback: (error: any, result: T) => void) {
+        this.model.findById( id, callback);
+    }
+
+
+    private toObjectId (id: string): mongoose.Types.ObjectId {
+        return mongoose.Types.ObjectId.createFromHexString(id);
     }
 }
 

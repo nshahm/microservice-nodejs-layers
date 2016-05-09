@@ -8,7 +8,6 @@ import API from "./api/API";
 import { EmployeeAPI } from "./api/EmployeeAPI";
 import { EmployeeService } from "./service/EmployeeService";
 import { EmployeeDAO } from "./dal/dao/EmployeeDAO";
-import { EmployeeRepository } from "./dal/repository/EmployeeRepository";
 
 // Interfaces
 import {IAPI} from "./api/IAPI";
@@ -25,8 +24,7 @@ kernel.bind<IAPI> ("IAPI").to(API).inSingletonScope();
 // kernel.bind<IMiddlewares>("IMiddlewares").to(Middlewares).inSingletonScope();
 kernel.bind<IEmployeeAPI>("IEmployeeAPI").to(EmployeeAPI).inSingletonScope();
 kernel.bind<IEmployeeService>("IEmployeeService").to(EmployeeService).inSingletonScope();
-kernel.bind<IEmployeeDAO>("IEmployeeDAO").to(EmployeeDAO).inSingletonScope();
-kernel.bind("EmployeeRepository").toValue(new EmployeeRepository<IEmployeeModel>());
+kernel.bind<IEmployeeDAO<IEmployeeModel>>("IEmployeeDAO").to(EmployeeDAO).inSingletonScope();
 
 export {kernel};
 export function getInstance<T> (name: string): T {
