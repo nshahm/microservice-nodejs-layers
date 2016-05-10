@@ -110,15 +110,13 @@ gulp.task("compile-test", function () {
             )) 
         .pipe(gulp.dest('dist/js/test'));
 });
-gulp.task('run-tests', shell.task(['npm run test']));
+gulp.task('run-tests', ['setenv'],  shell.task(['npm run test']));
  
-//gulp.task("compile-src",  shell.task(['npm run dev']));
-//  {
-  //    shell.task(['npm run dev']);
-    //   return gulp.src('./app.ts')
-    //     .pipe(webpack(require('./webpack.server.config.js')))
-    //     .pipe(gulp.dest('dist/'));
-//});
+gulp.task('setenv', () => {
+   env.set({
+            NODE_CONFIG_DIR : path.resolve(__dirname, './src/config/environment')
+      }); 
+});
 
 /**
  * Running - invoking npm start;

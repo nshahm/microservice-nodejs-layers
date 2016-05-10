@@ -1,39 +1,67 @@
 import * as Mongoose from "mongoose";
-import * as Config from "config";
 
-const dbConfig: any = Config.get("mongodb");
-const options: any = {
-    pass: "",
-    server: {
-        poolSize: dbConfig.poolSize,
-    },
-    user: "",
-};
+class Mongodb {
+    public config: any;
 
-const mongodbUrl = "mongodb://" + dbConfig.host + ":" + dbConfig.port + "/" + dbConfig.dbName;
+    constructor(config: any) {
+        this.config = config;
+    }
 
-Mongoose.connect(mongodbUrl, options);
+    /**
+     * Mongodb connection
+     */
+    public connect() {
 
-/** CONNECTION EVENTS */
-/** When successfully connected */
-Mongoose.connection.on("connected", function() {
-    console.log("Mongoose connection open");
-});
+        Mongoose.connect(this.dburl, this.options);
 
-/** If the connection throws an error */
-Mongoose.connection.on("error", function(err) {
-    console.log("Mongoose default connection error: " + err);
-});
+        /** CONNECTION EVENTS */
+        /** When successfully connected */
+        Mongoose.connection.on("connected", function() {
+            console.log("Mongoose connection open");
+        });
 
-/** When the connection is disconnected */
-Mongoose.connection.on("disconnected", function() {
-    console.log("Mongoose default connection disconnected");
-});
+        /** If the connection throws an error */
+        Mongoose.connection.on("error", function(err) {
+            console.log("Mongoose default connection error: " + err);
+        });
+    }
+    /**
+     * Mongodb disconnect
+     */
+    public disconnect(): void {
 
-/** If the Node process ends, close the Mongoose connection */
-process.on("SIGINT", function() {
-    Mongoose.connection.close(function() {
-        console.log("Mongoose default connection disconnected through app termination");
+        Mongoose.connection.close(function() {
+             console.log("Mongoose connection disconnected");
+            // process.exit(0);
+        });
+
+        /** When the connection is disconnected */
+        Mongoose.connection.on("disconnected", function() {
+            console.log("Mongoose default connection disconnected");
+        });
+    }
+
+    public exit(): void {
+        this.disconnect();
         process.exit(0);
-    });
-});
+    }
+
+    /**
+     * Mongo db options constructed in template 
+     */
+    get options() {
+        return {
+            pass: this.config.pass,
+            server: {
+                poolSize: this.config.poolSize,
+            },
+            user: this.config.user,
+        };
+    }
+
+    get dburl(): string {
+        return "mongodb://" + this.config.host + ":" + this.config.port + "/" + this.config.dbName;
+    }
+}
+
+export { Mongodb };

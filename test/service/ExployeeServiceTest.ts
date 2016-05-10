@@ -4,16 +4,15 @@ import { EmployeeService } from "../../src/service/EmployeeService";
 describe("Employee API and service testcases", ()=> {
 
     before((done) => {
-
+        done();
     });
-    
+
     after((done) => {
-
+        done();
     });
 
-    
-    it("invoke employee API", ()=> {
-
+    it("invoke employee API", (done) => {
+        done();
     });
 });
 
