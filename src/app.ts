@@ -50,7 +50,11 @@ app.use(function (err, req, res, next) {
     });
 });
 
-
+/** Handle uncaughtException through out the application */
+process.on("uncaughtException", function(err) {
+    /** Server going to crash !!! Sending alert to configured mail. */
+    console.log("Exception at :  " + new Date() + err);
+});
 
 
 

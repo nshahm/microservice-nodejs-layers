@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { injectable, inject } from "inversify";
-import { IEmployeeModel } from "entity-employee";
+import { IEmployeeModel, EmployeeModel } from "entity-employee";
 import { BaseService } from "base-service";
 import { ParseError } from "asd-mongoose-error-parse";
 import { IEmployeeService }  from "./IEmployeeService";
@@ -34,14 +34,18 @@ class EmployeeService
      */
     public create(req: Request, res: Response) {
         let employee: IEmployeeModel = <IEmployeeModel>req.body;
+        if (super.validateEntityVersion(employee.entityVersion, new EmployeeModel().entityVersion)) {
+            res.status(505).send(super.createServiceResponse(Constants.FAILURE, "Entity Version Not Supported"));
+        } else {
 
-        employeeDAO.create(employee, (error, result) => {
-            if (error) {
-                res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
-            } else {
-                res.status(200).send(super.createServiceResponse(Constants.SUCCESS, Constants.CREATE_SUCCESS));
-            }
-        });
+            employeeDAO.create(employee, (error, result) => {
+                if (error) {
+                    res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
+                } else {
+                    res.status(200).send(super.createServiceResponse(Constants.SUCCESS, Constants.CREATE_SUCCESS));
+                }
+            });
+        }
     }
 
     /**
