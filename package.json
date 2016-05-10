@@ -27,8 +27,6 @@
     "registry": "http://localhost:4873/"
   },
   "dependencies": {
-    "asd-mongoose-error-parse": "*",
-    "asd-microservice-logger": "*",
     "base-api": "*",
     "base-dal": "*",
     "base-service": "*",
@@ -47,8 +45,10 @@
     "gulp-typings": "1.3.4",
     "gulp-uglify": "^1.5.3",
     "inversify": "2.0.0-beta.1",
+    "logger": "*",
     "mocha": "2.4.5",
     "mongoose": "4.4.12",
+    "mongoose-error-parser": "*",
     "morgan": "1.7.0",
     "reflect-metadata": "0.1.3",
     "run-sequence": "1.1.5",

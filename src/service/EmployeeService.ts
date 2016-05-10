@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { injectable, inject } from "inversify";
 import { IEmployeeModel, EmployeeModel } from "entity-employee";
 import { BaseService } from "base-service";
-import { ParseError } from "asd-mongoose-error-parse";
+import { ParseError } from "mongoose-error-parser";
 import { IEmployeeService }  from "./IEmployeeService";
 import { IEmployeeDAO } from "./../dal/dao/IEmployeeDAO";
 import { Constants } from "../helpers/constants/Constants";

@@ -5,7 +5,7 @@ import { Mongodb} from "./config/Mongodb";
 import * as morgan  from "morgan";
 import * as Config from "config";
 import { getInstance } from "./inversify.config";
-import { Logger } from "asd-microservice-logger";
+import { Logger } from "logger";
 import { IAPI } from "./api/IAPI";
 // import "./config/Mongodb";
 
