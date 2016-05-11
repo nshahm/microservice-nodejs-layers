@@ -16,7 +16,7 @@ describe("Employee API and service spec", function () {
 
    // Create payload
    const payload: IEmployeeModel = <IEmployeeModel> {
-       "entityVersion": "0.0.1",
+        "entityVersion": "0.0.1",
         "employeeID": "1000002",
         "name": {
             "first": "Richard",

@@ -21,7 +21,7 @@ import { IEmployeeDAO } from "./dal/dao/IEmployeeDAO";
 let kernel: inversify.IKernel = new Kernel();
 
 kernel.bind<IAPI> ("IAPI").to(API).inSingletonScope();
-// kernel.bind<IMiddlewares>("IMiddlewares").to(Middlewares).inSingletonScope();
+
 kernel.bind<IEmployeeAPI>("IEmployeeAPI").to(EmployeeAPI).inSingletonScope();
 kernel.bind<IEmployeeService>("IEmployeeService").to(EmployeeService).inSingletonScope();
 kernel.bind<IEmployeeDAO<IEmployeeModel>>("IEmployeeDAO").to(EmployeeDAO).inSingletonScope();

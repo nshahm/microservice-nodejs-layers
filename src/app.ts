@@ -50,6 +50,7 @@ app.use(function (err, req, res, next) {
     });
 });
 
+
 /** Handle uncaughtException through out the application */
 process.on("uncaughtException", function(err) {
     /** Server going to crash !!! Sending alert to configured mail. */
@@ -59,6 +60,6 @@ process.on("uncaughtException", function(err) {
 
 
 /** start the app by listening to the port */
-const port = process.env.PORT ? process.env.PORT : 8080;
+const port = process.env.PORT ? process.env.PORT : 8888;
 app.listen(port);
 console.log("Server listening on port " + port);

@@ -66,7 +66,7 @@ class EmployeeService
                 if (err) {
                     res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
                 } else {
-                    res.send(super.createServiceResponse(Constants.SUCCESS, Constants.UPDATE_SUCCESS));
+                    res.status(200).send(super.createServiceResponse(Constants.SUCCESS, Constants.UPDATE_SUCCESS));
                 }
             });
         });
@@ -86,7 +86,7 @@ class EmployeeService
             if (error) {
                 res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
             } else {
-                res.send(super.createServiceResponse(Constants.SUCCESS, Constants.DELETE_SUCCESS));
+                res.status(200).send(super.createServiceResponse(Constants.SUCCESS, Constants.DELETE_SUCCESS));
             }
         });
     }
@@ -102,7 +102,7 @@ class EmployeeService
             if (error) {
                 res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
             } else {
-                res.send(super.createServiceResponse(Constants.SUCCESS, result));
+                res.status(200).send(super.createServiceResponse(Constants.SUCCESS, result));
             }
         });
     }
@@ -120,7 +120,7 @@ class EmployeeService
             if (error) {
                 res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
             } else {
-                res.send(super.createServiceResponse(Constants.SUCCESS, result));
+                res.status(200).send(super.createServiceResponse(Constants.SUCCESS, result));
             }
         });
     }

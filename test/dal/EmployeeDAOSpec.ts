@@ -14,10 +14,11 @@ describe("Example spec for a model", function () {
 
    // Create payload
    const payload: IEmployeeModel = <IEmployeeModel> {
+        "entityVersion": "0.0.1",
         "employeeID": "1000002",
         "name": {
             "first": "John",
-            "last": "Patrick",
+             "last": "Patrick",
         },
         "address": {
             "lines": [
@@ -75,8 +76,10 @@ describe("Example spec for a model", function () {
     it("create", (done) => {
 
         employeeDAO.create(payload, (error) => {
+            if (error) {
+                console.log(error);
+            }
             expect(error).to.not.exist;
-
             done();
         });
     });
@@ -87,6 +90,10 @@ describe("Example spec for a model", function () {
     it("retrieve",  (done) => {
 
         employeeDAO.retrieve((err, docs) => {
+            if (err) {
+                console.log(err);
+            }
+
             id = docs[0]._id;
             expect(err).to.not.exist;
             expect(docs[0]._doc.employeeID).to.equal(payload.employeeID);
@@ -100,7 +107,9 @@ describe("Example spec for a model", function () {
     it("findById", (done) => {
 
         employeeDAO.findById(id.toHexString(),  (err, docs) => {
-
+            if (err) {
+                console.log(err);
+            }
             expect(err).to.not.exist;
             expect(docs.name.first).to.equal("John");
             done();
@@ -113,6 +122,9 @@ describe("Example spec for a model", function () {
     it("update",  (done) => {
 
         employeeDAO.update( id, updatePayload,  (err, doc: any) => {
+            if (err) {
+                console.log(err);
+            }
             expect(err).to.not.exist;
             expect(doc.ok).to.equal(1);
         });
@@ -125,6 +137,9 @@ describe("Example spec for a model", function () {
     it("delete",  (done) => {
 
         employeeDAO.delete(id.toHexString(),  (error) => {
+            if (error) {
+                console.log(error);
+            }
             expect(error).to.not.exist;
         });
         done();

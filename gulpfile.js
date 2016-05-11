@@ -28,6 +28,14 @@ gulp.task('clean', function () {
 });
 
 /**
+ * Clean test 
+ */ 
+gulp.task('cleantest', function () {  
+  return gulp.src(['dist/js/test/dal', 'dist/js/test/api', 'dist/js/test/config'], {read: false})
+    .pipe(clean());
+});
+
+/**
  * tslint
  */
 gulp.task("tslint", function() {
@@ -71,7 +79,7 @@ gulp.task('build',function() {
 /**
  * Coverage using istanbul
  */
-gulp.task('coverage', function (cb) {
+gulp.task('coverage', ['setconfigdir'], function (cb) {
   gulp.src(['./src/**/*.ts', 'typings/index.d.ts', './test/**/*.ts'])
     .pipe(ts(tsProject))
     .js
@@ -92,7 +100,7 @@ gulp.task('coverage', function (cb) {
  * Running the testcase
  */
 gulp.task("test", function() {
-    runSequence('compile-test', 'run-tests');
+    return runSequence('compile-test', 'run-tests');
 });
 
 gulp.task("compile-test", function () {
@@ -110,9 +118,9 @@ gulp.task("compile-test", function () {
             )) 
         .pipe(gulp.dest('dist/js/test'));
 });
-gulp.task('run-tests', ['setenv'],  shell.task(['npm run test']));
- 
-gulp.task('setenv', () => {
+gulp.task('run-tests', ['setconfigdir'],  shell.task(['npm run test']));
+
+gulp.task('setconfigdir', () => {
    env.set({
             NODE_CONFIG_DIR : path.resolve(__dirname, './src/config/environment')
       }); 
@@ -151,7 +159,7 @@ gulp.task('compile-src', function() {
          
         tsResult.dts.pipe(gulp.dest('dist/js/definitions')),
         tsResult.js.pipe(uglify())
-                   .pipe(gulp.dest('dist/js/'))
+                   .pipe(gulp.dest('dist/js/src'))
     ]);
     // return tsResult
 });

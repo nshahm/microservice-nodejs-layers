@@ -15,5 +15,9 @@
     "serve-static": "registry:dt/serve-static#0.0.0+20160317120654",
     "sinon": "registry:dt/sinon#1.16.0+20160317120654",
     "winston": "registry:dt/winston#0.0.0+20160417152829"
+  },
+  "ambientDevDependencies": {
+    "superagent": "registry:dt/superagent#1.4.0+20160317120654",
+    "supertest": "registry:dt/supertest#1.1.0+20160317120654"
   }
 }

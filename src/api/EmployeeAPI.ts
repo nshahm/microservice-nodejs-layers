@@ -18,10 +18,10 @@ class EmployeeAPI extends BaseAPI implements IEmployeeAPI {
     public routes () {
 
         router.get("/", this.employeeService.retrieve);
-        router.get("/:_id", this.employeeService.findById);
+        router.get("/:id", this.employeeService.findById);
         router.post("/", this.employeeService.create);
-        router.put("/:_id", this.employeeService.update);
-        router.delete("/:_id", this.employeeService.delete);
+        router.put("/:id", this.employeeService.update);
+        router.delete("/:id", this.employeeService.delete);
 
         return router;
     }

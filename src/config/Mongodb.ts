@@ -1,5 +1,5 @@
 import * as Mongoose from "mongoose";
-
+import {Logger } from "logger";
 class Mongodb {
     public config: any;
 
@@ -17,27 +17,28 @@ class Mongodb {
         /** CONNECTION EVENTS */
         /** When successfully connected */
         Mongoose.connection.on("connected", function() {
-            console.log("Mongoose connection open");
+            Logger.info("Mongoose connection open");
         });
 
         /** If the connection throws an error */
         Mongoose.connection.on("error", function(err) {
-            console.log("Mongoose default connection error: " + err);
+            Logger.info("Mongoose default connection error: " + err);
         });
     }
+
     /**
      * Mongodb disconnect
      */
     public disconnect(): void {
 
         Mongoose.connection.close(function() {
-             console.log("Mongoose connection disconnected");
+             Logger.info("Mongoose connection disconnected");
             // process.exit(0);
         });
 
         /** When the connection is disconnected */
         Mongoose.connection.on("disconnected", function() {
-            console.log("Mongoose default connection disconnected");
+            Logger.info("Mongoose default connection disconnected");
         });
     }
 

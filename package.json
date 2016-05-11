@@ -12,7 +12,7 @@
     "dev": "./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js",
     "build": "npm install && npm run post-install && npm run dev",
     "prod": "./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js -p",
-    "test": "mocha --colors --reporter spec --recursive dist/js/test/**/*.js",
+    "test": "mocha --colors --reporter spec --timeout 50000 --recursive dist/js/test/dal/*.js dist/js/test/api/*.js",
     "itest": "./node_modules/.bin/istanbul test ./node_modules/.bin/_mocha -- --colors --reporter spec --recursive dist/js/test/**/*.js",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --recursive -R spec --dir ./dist/js/app/js",
     "gulp": "gulp default",
@@ -55,9 +55,6 @@
     "sinon": "1.17.3",
     "source-map-support": "0.4.0",
     "typings": "0.7.12",
-    "webpack": "1.12.15",
-    "webpack-dev-middleware": "1.6.1",
-    "webpack-hot-middleware": "2.10.0",
     "winston": "2.2.0",
     "winston-daily-rotate-file": "1.0.1"
   },
@@ -73,9 +70,7 @@
     "json-loader": "0.5.4",
     "merge2": "^1.0.2",
     "remap-istanbul": "^0.6.3",
-    "ts-loader": "0.8.2",
-    "tslint": "^3.8.1",
-    "tslint-loader": "^2.1.4",
-    "webpack-stream": "3.2.0"
+    "supertest": "^1.2.0",
+    "tslint": "^3.8.1"
   }
 }

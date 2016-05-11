@@ -36,7 +36,6 @@ implements IEmployeeDAO<T> {
         this.model.findById( id, callback);
     }
 
-
     private toObjectId (id: string): mongoose.Types.ObjectId {
         return mongoose.Types.ObjectId.createFromHexString(id);
     }
