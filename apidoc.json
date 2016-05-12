@@ -1,0 +1,8 @@
+{
+  "name": "Microservice NodeJs",
+  "version": "1.0.0",
+  "description": "Microservice NodeJs template",
+  "header": {
+    "title": "Microservice NodeJs"
+  }
+}

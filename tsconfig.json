@@ -6,7 +6,7 @@
     "noImplicitAny": false,
     "preserveConstEnums": true,
     "moduleResolution": "node",
-    "removeComments": true,
+    "removeComments": false,
     "sourceMap": true,
     "target": "ES6",
     "pretty":true,

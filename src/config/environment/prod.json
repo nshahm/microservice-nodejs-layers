@@ -2,7 +2,7 @@
 
     "mongodb":
         {
-            "host": "localhost",
+            "host": "prodmachine",
             "port": 27017,
             "dbName": "employees",
             "user": "",

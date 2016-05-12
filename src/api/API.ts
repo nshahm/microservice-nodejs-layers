@@ -5,6 +5,7 @@ import { inject, injectable } from "inversify";
 
 const app: Express.Express = Express();
 /**
+ * @class
  * This class is to add all the different API as part of this microservices.
  */
 @injectable()

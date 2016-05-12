@@ -24,3 +24,5 @@ typings/**/*
 
 dist
 "/coverage" 
+
+docs

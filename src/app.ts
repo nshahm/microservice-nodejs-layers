@@ -7,6 +7,7 @@ import * as Config from "config";
 import { getInstance } from "./inversify.config";
 import { Logger } from "logger";
 import { IAPI } from "./api/IAPI";
+
 // import "./config/Mongodb";
 
 let app: any = express(),
@@ -26,9 +27,15 @@ Logger.init(loggerConfig);
 mongodb = new Mongodb(dbConfig);
 mongodb.connect();
 
+// operation performed during process kill
+let quit = () => {
+    mongodb.disconnect();
+    process.exit(0);
+};
+
 /** If the Node process ends, close the Mongoose connection */
-process.on("SIGINT", mongodb.exit)
-       .on("SIGTERM", mongodb.exit);
+process.on("SIGINT", quit)
+       .on("SIGTERM", quit);
 
 /** App Middlewares */
 app.use(function (req, res, next) {
@@ -51,11 +58,19 @@ app.use(function (err, req, res, next) {
 });
 
 
+// app.use("/apidoc", app.static("docs/api"));
+// app.use("/doc", app.static("docs/doc"));
+
+
+
+
+
 /** Handle uncaughtException through out the application */
 process.on("uncaughtException", function(err) {
     /** Server going to crash !!! Sending alert to configured mail. */
     console.log("Exception at :  " + new Date() + err);
 });
+
 
 
 

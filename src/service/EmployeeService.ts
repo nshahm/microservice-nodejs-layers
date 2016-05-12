@@ -12,9 +12,8 @@ let employeeDAO: IEmployeeDAO<IEmployeeModel>;
 
 /**
  * EmployeeService
- *
- * Employee Service is used to write any business validation
- * and the bridge between API and Data access layer
+ * @class
+ * @classdesc Employee Service is used to write any business validation and the bridge between API and Data access layer
  */
 @injectable()
 class EmployeeService
@@ -27,10 +26,10 @@ class EmployeeService
     }
 
     /**
-     * Create Employee
-     *
-     * @param {Object} req - The request of the employee.
-     * @param {Object} res - The response of the employee.
+     * @method Create Employee
+     * @memberof EmployeeService
+     * @param {Express.Request} req - The request of the employee.
+     * @param {Express.Response} res - The response of the employee.
      */
     public create(req: Request, res: Response) {
         let employee: IEmployeeModel = <IEmployeeModel>req.body;
@@ -49,10 +48,10 @@ class EmployeeService
     }
 
     /**
-     * Updatae Employee
-     *
-     * @param {Object} req - The request of the employee.
-     * @param {Object} res - The response of the employee.
+     * @method Update Employee
+     * @memberof EmployeeService
+     * @param {Express.Request} req - The request of the employee.
+     * @param {Express.Response} res - The response of the employee.
      */
     public update(req: Request, res: Response) {
         let employee: IEmployeeModel = <IEmployeeModel>req.body;
@@ -74,10 +73,10 @@ class EmployeeService
     }
 
     /**
-     * Delete Employee
-     *
-     * @param {Object} req - The request of the employee.
-     * @param {Object} res - The response of the employee.
+     * @method Delete Employee
+     * @memberof EmployeeService
+     * @param {Express.Request} req - The request of the employee.
+     * @param {Express.Response} res - The response of the employee.
      */
     public delete(req: Request, res: Response) {
         let id: string = req.params.id;
@@ -92,10 +91,10 @@ class EmployeeService
     }
 
     /**
-     * Get all employees
-     *
-     * @param {Object} req - The request of the employee.
-     * @param {Object} res - The response of the employee.
+     * @method Get all employees
+     * @memberof EmployeeService
+     * @param {Express.Request} req - The request of the employee.
+     * @param {Express.Response} res - The response of the employee.
      */
     public retrieve(req: Request, res: Response) {
         employeeDAO.retrieve((error, result) => {
@@ -108,10 +107,10 @@ class EmployeeService
     }
 
     /**
-     * Get Employee by Id
-     *
-     * @param {Object} req - The request of the employee.
-     * @param {Object} res - The response of the employee.
+     * @method Get Employee by Id
+     * @memberof EmployeeService
+     * @param {Express.Request} req - The request of the employee.
+     * @param {Express.Response} res - The response of the employee.
      */
     public findById(req: Request, res: Response) {
         let id: string = req.params.id;
@@ -126,5 +125,8 @@ class EmployeeService
     }
 }
 
+/**
+ * @export - EmployeeService exported will be used in API layer.
+ */
 export { EmployeeService };
 

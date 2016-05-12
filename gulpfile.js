@@ -1,21 +1,23 @@
-var gulp        = require("gulp");
-var gulpTypings = require("gulp-typings");
-var shell       = require("gulp-shell");
-var ts          = require("gulp-typescript");
-var webpack     = require("webpack-stream");
-var install     = require("gulp-install");
-var clean       = require("gulp-clean");
-var runSequence = require("run-sequence");
-var env         = require("gulp-env");
-var mocha       = require("gulp-mocha");
-var path        = require("path");
-var tslint      = require("gulp-tslint");
-var merge       = require("merge2");
-var concat      = require("gulp-concat");
-var nodemon     = require("gulp-nodemon");
-var istanbul    = require("gulp-istanbul");
-var sourcemaps  = require("gulp-sourcemaps");
-var uglify      = require('gulp-uglify');
+var gulp        = require("gulp"),
+    gulpTypings = require("gulp-typings"),
+    shell       = require("gulp-shell"),
+    ts          = require("gulp-typescript"),
+    webpack     = require("webpack-stream"),
+    install     = require("gulp-install"),
+    clean       = require("gulp-clean"),
+    runSequence = require("run-sequence"),
+    env         = require("gulp-env"),
+    mocha       = require("gulp-mocha"),
+    path        = require("path"),
+    tslint      = require("gulp-tslint"),
+    merge       = require("merge2"),
+    concat      = require("gulp-concat"),
+    nodemon     = require("gulp-nodemon"),
+    istanbul    = require("gulp-istanbul"),
+    sourcemaps  = require("gulp-sourcemaps"),
+    uglify      = require('gulp-uglify'),
+    jsdoc       = require('gulp-jsdoc3'),
+    apidoc      = require('gulp-apidoc');
 
 var tsProject = ts.createProject('tsconfig.json');
 
@@ -23,7 +25,7 @@ var tsProject = ts.createProject('tsconfig.json');
  * Clean 
  */ 
 gulp.task('clean', function () {  
-  return gulp.src('dist', {read: false})
+  return gulp.src(['dist', 'docs'], {read: false})
     .pipe(clean());
 });
 
@@ -73,7 +75,7 @@ gulp.task("typings", function() {
  * Build  
  */
 gulp.task('build',function() {
-    runSequence('clean', 'compile-src', 'tslint', 'create-one-js', 'create-one-typedefinition','test');
+    runSequence('clean', 'compile-src', 'tslint', 'create-one-js', 'create-one-typedefinition','test', 'doc', 'apidoc');
 });
 
 /**
@@ -186,8 +188,9 @@ gulp.task('nodemon', function () {
           , ext: 'js'
           //, ignore: ['ignored.js']
           //, tasks: ['tslint']
-          , env: { 'NODE_ENV': 'dev',
-                    'NODE_CONFIG_DIR' : path.resolve(__dirname, './src/config/environment') 
+          , env: { 
+                'NODE_ENV': 'dev',
+                'NODE_CONFIG_DIR' : path.resolve(__dirname, './src/config/environment') 
                  } 
          })
     .on('restart', function () {
@@ -202,9 +205,10 @@ gulp.task('nodemon-test', function () {
           exec : 'mocha --colors --reporter spec',
           //, ignore: ['ignored.js']
           //, tasks: ['tslint']
-          env: { 'NODE_ENV': 'dev',
+            env: {
+                    'NODE_ENV': 'dev',
                     'NODE_CONFIG_DIR' : path.resolve(__dirname, './src/config/environment') 
-                 } 
+            } 
          })
     .on('restart', function () {
       console.log('SPEC RE-STARTED!')
@@ -229,5 +233,23 @@ gulp.task('watchspec', function() {
     runSequence('re-compile-test');
 });
 
+/**
+ * JSDoc for all the service and dao layer using jsdoc3
+ */
+gulp.task('doc', function (cb) {
+    var config = require('./jsdoc.json');
+    gulp.src(['README.md'], {read: false})
+         .pipe(jsdoc(config, cb));
+});
 
-
+/**
+ * API documentation using apidocjs
+ */
+gulp.task('apidoc',function(done){
+    apidoc({
+        src: "dist/js/src/api/",
+        dest: "docs/api/",
+        debug: true,
+        includeFilters: [ ".*\\.js$" ]
+    },done);
+});

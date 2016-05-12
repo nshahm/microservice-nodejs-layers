@@ -42,11 +42,6 @@ class Mongodb {
         });
     }
 
-    public exit(): void {
-        this.disconnect();
-        process.exit(0);
-    }
-
     /**
      * Mongo db options constructed in template 
      */
