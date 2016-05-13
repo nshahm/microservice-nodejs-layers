@@ -15,9 +15,13 @@ var gulp        = require("gulp"),
     nodemon     = require("gulp-nodemon"),
     istanbul    = require("gulp-istanbul"),
     sourcemaps  = require("gulp-sourcemaps"),
-    uglify      = require('gulp-uglify'),
-    jsdoc       = require('gulp-jsdoc3'),
-    apidoc      = require('gulp-apidoc');
+    uglify      = require("gulp-uglify"),
+    jsdoc       = require("gulp-jsdoc3"),
+    apidoc      = require("gulp-apidoc"),
+    rename      = require("gulp-rename"),
+    gutil       = require("gulp-util"),
+    gulpif      = require("gulp-if"),
+    webpack     = require('webpack-stream');
 
 var tsProject = ts.createProject('tsconfig.json');
 
@@ -75,7 +79,7 @@ gulp.task("typings", function() {
  * Build  
  */
 gulp.task('build',function() {
-    runSequence('clean', 'compile-src', 'tslint', 'create-one-js', 'create-one-typedefinition','test', 'doc', 'apidoc');
+    runSequence('clean', 'compile-src', 'tslint', 'bundle-one-js',  'create-one-typedefinition','test', 'doc', 'apidoc');
 });
 
 /**
@@ -144,37 +148,26 @@ gulp.task('compile-src', function() {
                    .pipe(sourcemaps.init())
                    .pipe(ts(tsProject));
               
-   return (process.env.NODE_ENV === 'dev') ? 
-    merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done.
+   return merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done.
          
         tsResult.dts.pipe(gulp.dest('dist/js/definitions')),
         tsResult.js.pipe(
-            sourcemaps.write('.', {
-            sourceRoot: function(file) {
-                    return file.cwd + '/src';
+            gulpif(process.env.NODE_ENV === 'dev', 
+                sourcemaps.write('.', {
+                sourceRoot: function(file) {
+                        return file.cwd + '/src';
+                    }
                 }
-            }
-            )) 
+                )))
             .pipe(gulp.dest('dist/js/src'))
-    ]) : 
-    merge([ 
-         
-        tsResult.dts.pipe(gulp.dest('dist/js/definitions')),
-        tsResult.js.pipe(uglify())
-                   .pipe(gulp.dest('dist/js/src'))
     ]);
     // return tsResult
 });
 
-// gulp.task('copy-environment', function() {
-//         return  gulp.src('./src/config/environment/*.json')
-//             .pipe(gulp.dest('./dist/js/src/config/environment'));
-// })
-
-gulp.task('create-one-js', function() {
-     return gulp.src(['dist/js/src/**/*.js', 'dist/js/src/*.js'])
-                .pipe(concat('app.js'))
-                .pipe(gulp.dest('./dist/'));
+gulp.task('bundle-one-js', function() {
+     return gulp.src('dist/js/src/app.js')
+        .pipe(webpack(require('./webpack.config.js')))
+        .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('create-one-typedefinition', function() {

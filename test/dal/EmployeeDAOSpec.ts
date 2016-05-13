@@ -14,7 +14,7 @@ describe("Example spec for a model", function () {
 
    // Create payload
    const payload: IEmployeeModel = <IEmployeeModel> {
-        "entityVersion": "0.0.1",
+        "entityVersion": "1.0.0",
         "employeeID": "1000002",
         "name": {
             "first": "John",
@@ -39,6 +39,7 @@ describe("Example spec for a model", function () {
     };
 
     let employeeDAO: IEmployeeDAO<IEmployeeModel>;
+    let employeeID = "1000002";
 
     // Delete all document before starting the testcase
     before ((done) => {
@@ -106,7 +107,7 @@ describe("Example spec for a model", function () {
      */
     it("findById", (done) => {
 
-        employeeDAO.findById(id.toHexString(),  (err, docs) => {
+        employeeDAO.findById(employeeID,  (err, docs) => {
             if (err) {
                 console.log(err);
             }

@@ -8,15 +8,15 @@
     "moduleResolution": "node",
     "removeComments": false,
     "sourceMap": true,
-    "target": "ES6",
+    "target": "ES5",
     "pretty":true,
     "noLib": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
     //"sortOutput":true
-    //"outDir": "out"
-    
-    //"outFile":"dist/employee-microservice.d.ts"
+   // "outDir": "dist",
+    // "out":"app.js"
+    //"outFile":"dist/employee-microservice.js"
   },
 
  "exclude": [

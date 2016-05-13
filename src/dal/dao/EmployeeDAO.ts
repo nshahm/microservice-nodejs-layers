@@ -76,7 +76,7 @@ implements IEmployeeDAO<T> {
      * @returns { result } Result will be success message. 
      */
     public findById (id: string, callback: (error: any, result: T) => void) {
-        this.model.findById( id, callback);
+        this.model.findOne({employeeID: id}, callback);
     }
 
     /**

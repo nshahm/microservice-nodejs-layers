@@ -27,18 +27,15 @@ Logger.init(loggerConfig);
 mongodb = new Mongodb(dbConfig);
 mongodb.connect();
 
-// operation performed during process kill
-let quit = () => {
+/** If the Node process ends, close the Mongoose connection */
+process.on("SIGINT", () => {
     mongodb.disconnect();
     process.exit(0);
-};
+});
 
-/** If the Node process ends, close the Mongoose connection */
-process.on("SIGINT", quit)
-       .on("SIGTERM", quit);
 
 /** App Middlewares */
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
     next();
 });
 
@@ -49,7 +46,7 @@ app.use(api.routes());
 
 app.use(morgan("combined", { "stream": { write: (message) => { Logger.info(message); } } }));
 
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
     Logger.info(err.stack);
     res.status(500).send({
         "status": "internal error",
@@ -66,8 +63,8 @@ app.use(function (err, req, res, next) {
 
 
 /** Handle uncaughtException through out the application */
-process.on("uncaughtException", function(err) {
-    /** Server going to crash !!! Sending alert to configured mail. */
+process.on("uncaughtException", (err) => {
+
     console.log("Exception at :  " + new Date() + err);
 });
 

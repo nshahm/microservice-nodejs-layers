@@ -6,11 +6,11 @@
             "dbName": "employees",
             "user": "",
             "pass": "",
-            "poolSize":"10"
+            "poolSize":"1"
         },
     "logger":
         {
-            "dir": "C:\\shahm\\dev\\projects\\carestream\\microservice-nodejs-layers",
+            "dir": "C:\\shahm\\dev\\projects\\carestream\\microservice-nodejs-layers\\",
             "fileName": "microservice-employee.log",
             "dbURL": "mongodb://localhost/employees",
             "db": true,
@@ -24,7 +24,7 @@
             "dbName": "testing",
             "user": "",
             "pass": "",
-            "poolSize":"10"
+            "poolSize":"1"
         }
 }
 
