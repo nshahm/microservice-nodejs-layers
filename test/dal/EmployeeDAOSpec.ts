@@ -7,7 +7,7 @@ import { IEmployeeDAO } from  "../../src/dal/dao/IEmployeeDAO";
 
 
 
-describe("Example spec for a model", function () {
+describe("Employee Data Access layer Spec", function () {
 
    // To hold ObjectId
    let id: Mongoose.Types.ObjectId;
@@ -44,14 +44,20 @@ describe("Example spec for a model", function () {
     // Delete all document before starting the testcase
     before ((done) => {
 
-       mongodb.connect();
-       done();
+       mongodb.connect(
+        (error) => {
+            console.log(error);
+            },
+        () => {
+            // console.log("Connected");
+             done();
+        });
     });
 
     // Disconnect mongoose connection
     after((done) => {
-       mongodb.disconnect();
-       done();
+       mongodb.disconnect(() => { });
+        done();
     });
 
     /**
@@ -63,12 +69,12 @@ describe("Example spec for a model", function () {
     });
 
 
-    /**
-     * After every testcase
-     */
-    afterEach((done) => {
-        done();
-    });
+    // /**
+    //  * After every testcase
+    //  */
+    // afterEach((done) => {
+    //     done();
+    // });
 
 
     /**
@@ -90,13 +96,13 @@ describe("Example spec for a model", function () {
      */
     it("retrieve",  (done) => {
 
-        employeeDAO.retrieve((err, docs) => {
-            if (err) {
-                console.log(err);
+        employeeDAO.retrieve((error, docs) => {
+            if (error) {
+                console.log(error);
             }
 
             id = docs[0]._id;
-            expect(err).to.not.exist;
+            expect(error).to.not.exist;
             expect(docs[0]._doc.employeeID).to.equal(payload.employeeID);
             done();
         });
@@ -107,11 +113,11 @@ describe("Example spec for a model", function () {
      */
     it("findById", (done) => {
 
-        employeeDAO.findById(employeeID,  (err, docs) => {
-            if (err) {
-                console.log(err);
+        employeeDAO.findById(employeeID,  (error, docs) => {
+            if (error) {
+                console.log(error);
             }
-            expect(err).to.not.exist;
+            expect(error).to.not.exist;
             expect(docs.name.first).to.equal("John");
             done();
         });
@@ -122,11 +128,11 @@ describe("Example spec for a model", function () {
      */
     it("update",  (done) => {
 
-        employeeDAO.update( id, updatePayload,  (err, doc: any) => {
-            if (err) {
-                console.log(err);
+        employeeDAO.update( id.toHexString(), updatePayload,  (error, doc: any) => {
+            if (error) {
+                console.log(error);
             }
-            expect(err).to.not.exist;
+            expect(error).to.not.exist;
             expect(doc.ok).to.equal(1);
         });
         done();

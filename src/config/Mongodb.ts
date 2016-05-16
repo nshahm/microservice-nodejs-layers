@@ -10,7 +10,7 @@ class Mongodb {
     /**
      * Mongodb connection
      */
-    public connect() {
+    public connect(error, callback) {
 
         Mongoose.connect(this.dburl, this.options);
 
@@ -18,11 +18,13 @@ class Mongodb {
         /** When successfully connected */
         Mongoose.connection.on("connected", function() {
             Logger.info("Mongoose connection open");
+            callback();
         });
 
         /** If the connection throws an error */
         Mongoose.connection.on("error", function(err) {
             Logger.info("Mongoose default connection error: " + err);
+            error(err);
         });
     }
 
@@ -31,10 +33,15 @@ class Mongodb {
      */
     public disconnect(): void {
 
-        Mongoose.connection.close(function() {
-             Logger.info("Mongoose connection disconnected");
-            // process.exit(0);
+        Mongoose.disconnect((err) => {
+            Logger.info(err);
         });
+
+        // Mongoose.connection.close(function() {
+        //      Logger.info("Mongoose connection disconnected");
+        //      callback();
+        //     // process.exit(0);
+        // });
 
         /** When the connection is disconnected */
         Mongoose.connection.on("disconnected", function() {

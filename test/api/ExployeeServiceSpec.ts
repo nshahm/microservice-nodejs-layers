@@ -2,7 +2,6 @@ import  {
     expect,
     sinon,
     getInstance,
-    mongodb,
  } from "../config/Testing";
 import * as supertest from "supertest";
 
@@ -10,7 +9,7 @@ import {IEmployeeModel} from "entity-employee";
 import { IEmployeeDAO } from  "../../src/dal/dao/IEmployeeDAO";
 import { app } from "../config/app";
 
-describe("Employee API and service spec", function () {
+describe("Employee API and service layer spec", function () {
 
    let request: supertest.SuperTest;
 
@@ -61,10 +60,10 @@ describe("Employee API and service spec", function () {
     /**
      * After all test case.
      */
-    after((done) => {
-      // mongodb.disconnect();
-       done();
-    });
+    // after((done) => {
+    //   // mongodb.disconnect();
+    //    done();
+    // });
 
     /**
      * Before every test case
@@ -100,10 +99,10 @@ describe("Employee API and service spec", function () {
         request
             .post("/v1/employee")
             .send(payload)
-            .expect(200)    // request.expect, is status code 200?
-            .expect("Content-Type", /json/)    // request.expect, does content-type match regex /json/?
-            .expect((res) => {  // request.expect, does this user-provided function throw?
-                // user-provided function can include Chai assertions
+            .expect(200)
+            .expect("Content-Type", /json/)
+            .expect((res) => {
+
                 expect(res.body).to.exist;
                 expect(res.body).to.have.property("status");
                 expect(res.body.status).to.equals("Success");
@@ -124,14 +123,13 @@ describe("Employee API and service spec", function () {
         request
             .get("/v1/employee/id")
             .send({id: "data"})
-            .expect(200)    // request.expect, is status code 200?
-            .expect("Content-Type", /json/)    // request.expect, does content-type match regex /json/?
-            .expect((res) => {  // request.expect, does this user-provided function throw?
-                // user-provided function can include Chai assertions
+            .expect(200)
+            .expect("Content-Type", /json/)
+            .expect((res) => {
+
                 expect(res.body).to.exist;
                 expect(res.body).to.have.property("status");
                 expect(res.body.status).to.equals("Success");
-                expect(res.body.message).to.exist;
             }).
             end(done);
     });
@@ -147,14 +145,13 @@ describe("Employee API and service spec", function () {
 
         request
             .get("/v1/employee")
-            .expect(200)    // request.expect, is status code 200?
-            .expect("Content-Type", /json/)    // request.expect, does content-type match regex /json/?
-            .expect((res) => {  // request.expect, does this user-provided function throw?
-                // user-provided function can include Chai assertions
+            .expect(200)
+            .expect("Content-Type", /json/)
+            .expect((res) => {
+
                 expect(res.body).to.exist;
                 expect(res.body).to.have.property("status");
                 expect(res.body.status).to.equals("Success");
-                expect(res.body.message).to.exist;
             }).
             end(done);
     });
@@ -164,32 +161,27 @@ describe("Employee API and service spec", function () {
      */
     it("PUT - Update employee - /employee", (done) => {
         done();
-        // employeeDAOMock
-        //     .expects("findById")
-        //     .withArgs("id")
-        //     .yields(null, { "data": { _id: "57325119da8a8f5c299edb31"} , status : "Success"});
 
-        // employeeDAOMock
-        //     .expects("update")
-        //     .withArgs("id", updatePayload)
-        //     .yields(null, {
-        //             "status": "Success",
-        //             "message": "Updated successfully",
-        //             });
+        employeeDAOMock
+            .expects("update")
+            .withArgs("57325119da8a8f5c299edb31", updatePayload)
+            .yields(null, {
+                    "status": "Success",
+                    "message": "Updated successfully",
+                    });
 
-        // request
-        //     .put("/v1/employee/id")
-        //      .set("id", "57325119da8a8f5c299edb31")
-        //     .send(updatePayload)
-        //     .expect(200)    // request.expect, is status code 200?
-        //     .expect("Content-Type", /json/)    // request.expect, does content-type match regex /json/?
-        //     .expect((res) => {  // request.expect, does this user-provided function throw?
-        //         // user-provided function can include Chai assertions
-        //         expect(res.body).to.exist;
-        //         expect(res.body).to.have.property("status");
-        //         expect(res.body.status).to.equals("Success");
-        //     }).
-        //     end(done);
+        request
+            .put("/v1/employee/57325119da8a8f5c299edb31")
+            .send(updatePayload)
+            .expect(200)
+            .expect("Content-Type", /json/)
+            .expect((res) => {
+
+                expect(res.body).to.exist;
+                expect(res.body).to.have.property("status");
+                expect(res.body.status).to.equals("Success");
+            }).
+            end(done);
     });
 
     /**
@@ -209,10 +201,10 @@ describe("Employee API and service spec", function () {
             .delete("/v1/employee/id")
              .set("id", "57325119da8a8f5c299edb31")
             .send(updatePayload)
-            .expect(200)    // request.expect, is status code 200?
-            .expect("Content-Type", /json/)    // request.expect, does content-type match regex /json/?
-            .expect((res) => {  // request.expect, does this user-provided function throw?
-                // user-provided function can include Chai assertions
+            .expect(200)
+            .expect("Content-Type", /json/)
+            .expect((res) => {
+
                 expect(res.body).to.exist;
                 expect(res.body).to.have.property("status");
                 expect(res.body.status).to.equals("Success");

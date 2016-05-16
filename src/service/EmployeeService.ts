@@ -57,19 +57,13 @@ class EmployeeService
         let employee: IEmployeeModel = <IEmployeeModel>req.body;
         let id: string = req.params.id;
 
-        employeeDAO.findById(id, (error, data) => {
+        employeeDAO.update(id, employee, (error, result) => {
             if (error) {
                 res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
+            } else {
+                res.status(200).send(super.createServiceResponse(Constants.SUCCESS, Constants.UPDATE_SUCCESS));
             }
-            employeeDAO.update(data._id, employee, (err, result) => {
-                if (err) {
-                    res.status(422).send(super.createServiceResponse(Constants.FAILURE, ParseError.parse(error)));
-                } else {
-                    res.status(200).send(super.createServiceResponse(Constants.SUCCESS, Constants.UPDATE_SUCCESS));
-                }
-            });
         });
-
     }
 
     /**

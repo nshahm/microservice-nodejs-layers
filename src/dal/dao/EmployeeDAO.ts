@@ -51,8 +51,8 @@ implements IEmployeeDAO<T> {
      * @returns { error } Error if exists
      * @returns { result } Result will be success message. 
      */
-    public update (id: mongoose.Types.ObjectId, item: T, callback: (error: any, result: any) => void) {
-            this.model.update({_id: id}, item, callback);
+    public update (id: string, item: T, callback: (error: any, result: any) => void) {
+            this.model.findByIdAndUpdate( id , item, callback);
 
     }
 

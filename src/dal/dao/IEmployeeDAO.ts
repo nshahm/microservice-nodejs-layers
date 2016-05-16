@@ -1,4 +1,3 @@
-import * as Mongoose from "mongoose";
 import {IBaseDAO} from "base-dal";
 
 /**
@@ -36,7 +35,7 @@ extends IBaseDAO<T> {
      * @returns { error } Error if exists
      * @returns { result } Result will be success message. 
      */
-    update: (id: Mongoose.Types.ObjectId, item: T, callback: (error: any, result: any) => void) => void ;
+    update: (id: string, item: T, callback: (error: any, result: any) => void) => void ;
 
     /**
      * @method delete

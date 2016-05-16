@@ -25,12 +25,20 @@ Logger.init(loggerConfig);
  * Initialize Mongodb
  */
 mongodb = new Mongodb(dbConfig);
-mongodb.connect();
+mongodb.connect(
+    (error) => {
+        Logger.log(error);
+    }, () => {
+        Logger.log("Connected");
+    }
+);
 
 /** If the Node process ends, close the Mongoose connection */
 process.on("SIGINT", () => {
-    mongodb.disconnect();
-    process.exit(0);
+    mongodb.disconnect(() => {
+        Logger.log("Disconnected");
+        process.exit(0);
+    });
 });
 
 

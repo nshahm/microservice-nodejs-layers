@@ -6,7 +6,7 @@
             "dbName": "employees",
             "user": "",
             "pass": "",
-            "poolSize":"1"
+            "poolSize":"10"
         },
     "logger":
         {
@@ -24,7 +24,7 @@
             "dbName": "testing",
             "user": "",
             "pass": "",
-            "poolSize":"1"
+            "poolSize":"10"
         }
 }
 
