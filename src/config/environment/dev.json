@@ -10,11 +10,12 @@
         },
     "logger":
         {
-            "dir": "C:\\shahm\\dev\\projects\\carestream\\microservice-nodejs-layers\\",
+            "dir": "/Users/carestream/app/application/microservice-nodejs-layers",
             "fileName": "microservice-employee.log",
             "dbURL": "mongodb://localhost/employees",
-            "db": true,
-            "file": true
+            "db": false,
+            "file": true,
+            "consoleLog": true
         },
 
     "mongodbtest": 
