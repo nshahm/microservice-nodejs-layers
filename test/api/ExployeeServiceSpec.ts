@@ -2,12 +2,12 @@ import  {
     expect,
     sinon,
     getInstance,
- } from "../config/Testing";
+ } from "../Testing";
 import * as supertest from "supertest";
 
 import {IEmployeeModel} from "entity-employee";
 import { IEmployeeDAO } from  "../../src/dal/dao/IEmployeeDAO";
-import { app } from "../config/app";
+import { app } from "../TestApp";
 
 describe("Employee API and service layer spec", function () {
 

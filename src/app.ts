@@ -1,14 +1,12 @@
 import * as express from "express";
 import * as BodyParser from "body-parser";
 import * as CookieParser from "cookie-parser";
-import { Mongodb} from "./config/Mongodb";
+import { Mongodb} from "./helpers/Mongodb";
 import * as morgan  from "morgan";
 import * as Config from "config";
 import { getInstance } from "./inversify.config";
 import { Logger } from "logger";
 import { IAPI } from "./api/IAPI";
-
-// import "./config/Mongodb";
 
 let app: any = express(),
     api: IAPI = getInstance<IAPI>("IAPI"),
@@ -35,10 +33,8 @@ mongodb.connect(
 
 /** If the Node process ends, close the Mongoose connection */
 process.on("SIGINT", () => {
-    mongodb.disconnect(() => {
-        Logger.log("Disconnected");
-        process.exit(0);
-    });
+    mongodb.disconnect();
+    process.exit(0);
 });
 
 
@@ -71,9 +67,6 @@ app.use((err, req, res, next) => {
 
 // app.use("/apidoc", app.static("docs/api"));
 // app.use("/doc", app.static("docs/doc"));
-
-
-
 
 
 /** Handle uncaughtException through out the application */

@@ -2,8 +2,8 @@ import * as express from "express";
 import * as BodyParser from "body-parser";
 import * as CookieParser from "cookie-parser";
 // import { mongodb} from "./Testing";
-import { getInstance } from "../../src/inversify.config";
-import { IAPI } from "../../src/api/IAPI";
+import { getInstance } from "../src/inversify.config";
+import { IAPI } from "../src/api/IAPI";
 // import "./config/Mongodb";
 
 let app: any = express(),

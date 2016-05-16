@@ -4,8 +4,8 @@ import * as chai from "chai";
 import * as Config from "config";
 import * as Sinon from "sinon";
 import "reflect-metadata";
-import { kernel, getInstance} from "../../src/inversify.config";
-import { Mongodb } from "../../src/config/Mongodb";
+import { kernel, getInstance} from "../src/inversify.config";
+import { Mongodb } from "../src/helpers/Mongodb";
 
 // const mongoose: Mongoose.Mongoose = new Mongoose.Mongoose();
 // const mockgoose = require("mockgoose");

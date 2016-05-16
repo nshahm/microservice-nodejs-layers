@@ -1,6 +1,5 @@
-import {expect, Mongoose, mongodb } from "../config/Testing";
+import {expect, Mongoose, mongodb } from "../Testing";
 
-// const mongoose = require("mongoose");
 import { getInstance } from "../../src/inversify.config";
 import {IEmployeeModel} from "entity-employee";
 import { IEmployeeDAO } from  "../../src/dal/dao/IEmployeeDAO";
@@ -56,7 +55,7 @@ describe("Employee Data Access layer Spec", function () {
 
     // Disconnect mongoose connection
     after((done) => {
-       mongodb.disconnect(() => { });
+       mongodb.disconnect();
         done();
     });
 

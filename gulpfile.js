@@ -85,7 +85,7 @@ gulp.task('build',function() {
 /**
  * Coverage using istanbul
  */
-gulp.task('coverage', ['setconfigdir'], function (cb) {
+gulp.task('coverage', function (cb) {
   gulp.src(['./src/**/*.ts', 'typings/index.d.ts', './test/**/*.ts'])
     .pipe(ts(tsProject))
     .js
@@ -124,27 +124,22 @@ gulp.task("compile-test", function () {
             )) 
         .pipe(gulp.dest('dist/js/test'));
 });
-gulp.task('run-tests', ['setconfigdir'],  shell.task(['npm run test']));
+gulp.task('run-tests', shell.task(['npm run test']));
 
-gulp.task('setconfigdir', () => {
-   env.set({
-            NODE_CONFIG_DIR : path.resolve(__dirname, './src/config/environment')
-      }); 
-});
 
 /**
  * Running - invoking npm start;
  * Prerequisite - gulp build
  */ 
 gulp.task('run', function() {
-      env.set({
-            NODE_CONFIG_DIR : path.resolve(__dirname, './src/config/environment')
-      });
       gulp.run(shell.task(['npm start']));
  });
 
 gulp.task('compile-src', function() {
-    var tsResult = gulp.src(['src/**/*.ts', 'typings/index.d.ts']) // By default the gulp-typescript plugin not resolving directory that mentioned in 
+    var copy =  gulp.src("config/*.json")
+                    .pipe(gulp.dest('dist/js/config'));
+    
+    var tsResult = gulp.src(['src/**/*.ts', 'typings/index.d.ts', "config/*.ts"]) // By default the gulp-typescript plugin not resolving directory that mentioned in 
                    .pipe(sourcemaps.init())
                    .pipe(ts(tsProject));
               
@@ -160,6 +155,7 @@ gulp.task('compile-src', function() {
                 }
                 )))
             .pipe(gulp.dest('dist/js/src'))
+
     ]);
     // return tsResult
 });
@@ -182,8 +178,7 @@ gulp.task('nodemon', function () {
           //, ignore: ['ignored.js']
           //, tasks: ['tslint']
           , env: { 
-                'NODE_ENV': 'dev',
-                'NODE_CONFIG_DIR' : path.resolve(__dirname, './src/config/environment') 
+                'NODE_ENV': 'dev'
                  } 
          })
     .on('restart', function () {
@@ -199,8 +194,7 @@ gulp.task('nodemon-test', function () {
           //, ignore: ['ignored.js']
           //, tasks: ['tslint']
             env: {
-                    'NODE_ENV': 'dev',
-                    'NODE_CONFIG_DIR' : path.resolve(__dirname, './src/config/environment') 
+                    'NODE_ENV': 'dev'                  
             } 
          })
     .on('restart', function () {
