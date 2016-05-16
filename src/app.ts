@@ -39,12 +39,18 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(morgan("combined", {
+    "stream":  {
+        write: (message: string) => {
+            Logger.info(message);
+        },
+    },
+}));
 app.use(BodyParser.urlencoded({ extended: false }));
 app.use(BodyParser.json());
 app.use(CookieParser());
 app.use(api.routes());
 
-app.use(morgan("combined", { "stream": { write: (message) => { Logger.info(message); } } }));
 
 app.use((err, req, res, next) => {
     Logger.info(err.stack);

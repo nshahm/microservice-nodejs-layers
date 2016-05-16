@@ -15,7 +15,8 @@
             "fileName": "microservice-employee.log",
             "dbURL": "mongodb://localhost/employees",
             "db": true,
-            "file": true
+            "file": true,
+            "consoleLog": false
         },
 
     "mongodbtest": 
