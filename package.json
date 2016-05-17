@@ -3,29 +3,15 @@
   "version": "1.0.0",
   "description": "Microservice nodejs layering that show, API, Business and data layer and its communication",
   "main": "app.js",
-  "typescript": {
-    "definition": "./typings/index.d.ts"
-  },
   "scripts": {
     "start": "node ./dist/app.js",
-    "post-install": "./node_modules/.bin/typings install",
-    "dev": "./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js",
-    "build": "npm install && npm run post-install && npm run dev",
-    "prod": "./node_modules/.bin/webpack --progress --colors --config webpack.server.config.js -p",
-    "test": "mocha --colors --reporter spec --timeout 50000 --recursive dist/js/test/dal/*.js dist/js/test/api/*.js",
-    "itest": "./node_modules/.bin/istanbul test ./node_modules/.bin/_mocha -- --colors --reporter spec --recursive dist/js/test/**/*.js",
-    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- --recursive -R spec --dir ./dist/js/app/js",
-    "gulp": "gulp default",
-    "nodemon": "nodemon --watch dist app.js"
-  },
+    "test": "mocha --colors --reporter spec --timeout 50000 --recursive dist/test/dal/*.js dist/test/api/*.js"
+    },
   "author": {
     "email": "n.shahm@gmail.com",
     "name": "Shahm Nattarshah"
   },
   "license": "MIT",
-  "publishConfig": {
-    "registry": "http://localhost:4873/"
-  },
   "dependencies": {
     "base-api": "*",
     "base-dal": "*",
@@ -67,20 +53,18 @@
     "gulp-concat": "2.6.0",
     "gulp-if": "2.0.1",
     "gulp-include": "2.1.0",
-    "gulp-istanbul": "0.10.4",
     "gulp-jsdoc3": "0.2.1",
     "gulp-nodemon": "2.0.6",
     "gulp-sourcemaps": "2.0.0-alpha",
     "gulp-tslint": "5.0.0",
     "gulp-util": "3.0.7",
     "ink-docstrap": "1.1.4",
-    "istanbul": "0.4.3",
     "jsdoc": "3.4.0",
+    "json-loader": "0.5.4",
     "merge2": "1.0.2",
-    "remap-istanbul": "0.6.3",
     "supertest": "1.2.0",
     "tslint": "3.8.1",
-    "webpack": "^1.13.0",
-    "webpack-stream": "^3.2.0"
+    "webpack": "1.13.0",
+    "webpack-stream": "3.2.0"
   }
 }

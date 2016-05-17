@@ -5,6 +5,7 @@ import  {
  } from "../Testing";
 import * as supertest from "supertest";
 
+import { Constants } from "../../src/helpers/constants/Constants";
 import {IEmployeeModel} from "entity-employee";
 import { IEmployeeDAO } from  "../../src/dal/dao/IEmployeeDAO";
 import { app } from "../TestApp";
@@ -39,7 +40,6 @@ describe("Employee API and service layer spec", function () {
         },
     };
 
-    // let employeeDAO: IEmployeeDAO<IEmployeeModel>;
    let employeeDAOMock: Sinon.SinonMock;
     let employeeDAO: IEmployeeDAO<IEmployeeModel>;
 
@@ -96,8 +96,9 @@ describe("Employee API and service layer spec", function () {
                 "message": "Created successfully",
                 });
 
+        const url = "/" + Constants.API_VERSION + "/employee/";
         request
-            .post("/v1/employee")
+            .post(url)
             .send(payload)
             .expect(200)
             .expect("Content-Type", /json/)
@@ -120,8 +121,9 @@ describe("Employee API and service layer spec", function () {
             .withArgs("id")
             .yields(null, { message: [  {"response": "responsedata"} ], status : "Success"});
 
+        const url = "/" + Constants.API_VERSION + "/employee/id";
         request
-            .get("/v1/employee/id")
+            .get(url)
             .send({id: "data"})
             .expect(200)
             .expect("Content-Type", /json/)
@@ -143,8 +145,9 @@ describe("Employee API and service layer spec", function () {
             .expects("retrieve")
             .yields(null, { message: [  {"response": "responsedata"} ], status : "Success"});
 
+        const url = "/" + Constants.API_VERSION + "/employee";
         request
-            .get("/v1/employee")
+            .get(url)
             .expect(200)
             .expect("Content-Type", /json/)
             .expect((res) => {
@@ -170,8 +173,9 @@ describe("Employee API and service layer spec", function () {
                     "message": "Updated successfully",
                     });
 
+        const url = "/" + Constants.API_VERSION + "/employee/57325119da8a8f5c299edb31";
         request
-            .put("/v1/employee/57325119da8a8f5c299edb31")
+            .put(url)
             .send(updatePayload)
             .expect(200)
             .expect("Content-Type", /json/)
@@ -197,8 +201,9 @@ describe("Employee API and service layer spec", function () {
                 "message": "Deleted successfully",
                 });
 
+        const url = "/" + Constants.API_VERSION + "/employee/id";
         request
-            .delete("/v1/employee/id")
+            .delete(url)
              .set("id", "57325119da8a8f5c299edb31")
             .send(updatePayload)
             .expect(200)

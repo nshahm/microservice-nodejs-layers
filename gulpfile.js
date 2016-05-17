@@ -13,7 +13,6 @@ var gulp        = require("gulp"),
     merge       = require("merge2"),
     concat      = require("gulp-concat"),
     nodemon     = require("gulp-nodemon"),
-    istanbul    = require("gulp-istanbul"),
     sourcemaps  = require("gulp-sourcemaps"),
     uglify      = require("gulp-uglify"),
     jsdoc       = require("gulp-jsdoc3"),
@@ -30,14 +29,6 @@ var tsProject = ts.createProject('tsconfig.json');
  */ 
 gulp.task('clean', function () {  
   return gulp.src(['dist', 'docs'], {read: false})
-    .pipe(clean());
-});
-
-/**
- * Clean test 
- */ 
-gulp.task('cleantest', function () {  
-  return gulp.src(['dist/js/test/dal', 'dist/js/test/api', 'dist/js/test/config'], {read: false})
     .pipe(clean());
 });
 
@@ -79,27 +70,7 @@ gulp.task("typings", function() {
  * Build  
  */
 gulp.task('build',function() {
-    runSequence('clean', 'compile-src', 'tslint', 'bundle-one-js',  'create-one-typedefinition','test', 'doc', 'apidoc');
-});
-
-/**
- * Coverage using istanbul
- */
-gulp.task('coverage', function (cb) {
-  gulp.src(['./src/**/*.ts', 'typings/index.d.ts', './test/**/*.ts'])
-    .pipe(ts(tsProject))
-    .js
-    .pipe(gulp.dest('dist/js'))
-    .pipe(gulp.src('dist/js/src/**/*.js'))
-    .pipe(istanbul())
-    .pipe(istanbul.hookRequire()) 
-    .on('finish', function () {
-      gulp.src(['./dist/js/test/**/*.js'])
-         .pipe(mocha({ui: 'bdd'}))
-         .pipe(istanbul.writeReports())
-	.pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
-	.on('end', cb);
-    });
+    runSequence('clean', 'compile-src', 'tslint', 'bundle-one-js',  'create-one-typedefinition', 'doc', 'apidoc');
 });
 
 /**
@@ -122,7 +93,7 @@ gulp.task("compile-test", function () {
                 }
             }
             )) 
-        .pipe(gulp.dest('dist/js/test'));
+        .pipe(gulp.dest('dist/test'));
 });
 gulp.task('run-tests', shell.task(['npm run test']));
 
@@ -137,7 +108,10 @@ gulp.task('run', function() {
 
 gulp.task('compile-src', function() {
     var copy =  gulp.src("config/*.json")
-                    .pipe(gulp.dest('dist/js/config'));
+                    .pipe(gulp.dest('dist/config'));
+                    
+    var copyPkgJson =  gulp.src("./package.json")
+                    .pipe(gulp.dest('dist/'));                  
     
     var tsResult = gulp.src(['src/**/*.ts', 'typings/index.d.ts', "config/*.ts"]) // By default the gulp-typescript plugin not resolving directory that mentioned in 
                    .pipe(sourcemaps.init())
@@ -145,7 +119,7 @@ gulp.task('compile-src', function() {
               
    return merge([ // Merge the two output streams, so this task is finished when the IO of both operations are done.
          
-        tsResult.dts.pipe(gulp.dest('dist/js/definitions')),
+        tsResult.dts.pipe(gulp.dest('dist/definitions')),
         tsResult.js.pipe(
             gulpif(process.env.NODE_ENV === 'dev', 
                 sourcemaps.write('.', {
@@ -154,26 +128,25 @@ gulp.task('compile-src', function() {
                     }
                 }
                 )))
-            .pipe(gulp.dest('dist/js/src'))
+            .pipe(gulp.dest('dist/src'))
 
     ]);
-    // return tsResult
 });
 
 gulp.task('bundle-one-js', function() {
-     return gulp.src('dist/js/src/app.js')
+     return gulp.src('dist/src/app.js')
         .pipe(webpack(require('./webpack.config.js')))
         .pipe(gulp.dest('dist/'));
 });
 
 gulp.task('create-one-typedefinition', function() {
-     return gulp.src(['dist/js/definitions/**/*.d.ts', 'dist/js/definitions/*.d.ts'])
+     return gulp.src(['dist/definitions/**/*.d.ts', 'dist/definitions/*.d.ts'])
             .pipe(concat('app.d.ts'))
             .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('nodemon', function () {
-  nodemon({ script: './dist/js/src/app.js'
+  nodemon({ script: './dist/src/app.js'
           , ext: 'js'
           //, ignore: ['ignored.js']
           //, tasks: ['tslint']
@@ -188,7 +161,7 @@ gulp.task('nodemon', function () {
 
 gulp.task('nodemon-test', function () {
   nodemon({ 
-          watch: './dist/js/test'
+          watch: './dist/test'
           , ext: 'js',
           exec : 'mocha --colors --reporter spec',
           //, ignore: ['ignored.js']
@@ -234,8 +207,8 @@ gulp.task('doc', function (cb) {
  */
 gulp.task('apidoc',function(done){
     apidoc({
-        src: "dist/js/src/api/",
-        dest: "docs/api/",
+        src: "dist/src/api/",
+        dest: "dist/docs/api/",
         debug: true,
         includeFilters: [ ".*\\.js$" ]
     },done);

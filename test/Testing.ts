@@ -7,12 +7,9 @@ import "reflect-metadata";
 import { kernel, getInstance} from "../src/inversify.config";
 import { Mongodb } from "../src/helpers/Mongodb";
 
-// const mongoose: Mongoose.Mongoose = new Mongoose.Mongoose();
-// const mockgoose = require("mockgoose");
 
 const expect: Chai.ExpectStatic = chai.expect;
 // const assert: Chai.AssertStatic = chai.assert;
-// const AssertionError: Chai.AssertionStatic = chai.AssertionError;
 
 /**
  * Chai configuraitonn

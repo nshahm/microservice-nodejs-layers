@@ -4,7 +4,7 @@
         "dictionaries": ["jsdoc"]
     },
    "source": {
-    "include": [ "dist/js/src/" ],
+    "include": [ "dist/src/" ],
     "includePattern": ".+\\.js(doc)?$"
     
     },
@@ -24,7 +24,7 @@
     },
     "opts": {
         "encoding": "utf8",              
-        "destination": "./docs/doc",       
+        "destination": "./dist/docs/doc",       
         "recurse": true
     }
 }

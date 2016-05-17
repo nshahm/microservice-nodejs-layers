@@ -5,7 +5,7 @@
 			"name": "LaunchSource",
 			"type": "node",
 			"request": "launch",
-			"program": "${workspaceRoot}/dist/js/src/app.js",
+			"program": "${workspaceRoot}/dist/src/app.js",
 			"stopOnEntry": false,
 			"args": [],
 			"cwd": "${workspaceRoot}",
@@ -16,11 +16,11 @@
 			],
 			"env": {
 				"NODE_ENV": "dev",
-                "NODE_CONFIG_DIR":"./src/config/environment"
+                "NODE_CONFIG_DIR":"./dist/config/"
 			},
 			"externalConsole": false,
 			"sourceMaps": true,
-			"outDir": "${workspaceRoot}/dist/js/src"
+			"outDir": "${workspaceRoot}/dist/src"
 		},
 		{
 			"name": "LaunchTest",
@@ -28,7 +28,7 @@
 			"request": "launch",
 			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
 			"stopOnEntry": false,
-			"args": ["dist/js/test/**/*.js"],
+			"args": ["dist/test/**/*.js"],
 			"cwd": "${workspaceRoot}",
 			"preLaunchTask": null,
 			"runtimeExecutable": null,
@@ -37,11 +37,11 @@
 			],
 			"env": {
 				"NODE_ENV": "dev",
-                "NODE_CONFIG_DIR":"./src/config/environment"
+                "NODE_CONFIG_DIR":"./dist/config"
 			},
 			"externalConsole": false,
 			"sourceMaps": true,
-			"outDir": "${workspaceRoot}/dist/js"
+			"outDir": "${workspaceRoot}/dist/test"
 		},
 		
 		{

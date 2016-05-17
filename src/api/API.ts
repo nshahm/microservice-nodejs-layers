@@ -2,6 +2,7 @@ import * as Express from "express";
 import { IEmployeeAPI } from "./IEmployeeAPI";
 import {IAPI} from "./IAPI";
 import { inject, injectable } from "inversify";
+import { Constants } from "../helpers/constants/Constants";
 
 const app: Express.Express = Express();
 /**
@@ -17,7 +18,7 @@ class API implements IAPI {
     }
 
     public routes() {
-        app.use("/v1/employee/", this.employeeAPI.routes());
+        app.use("/" + Constants.API_VERSION + "/employee/", this.employeeAPI.routes());
         return app;
     }
 }

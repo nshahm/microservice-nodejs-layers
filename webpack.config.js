@@ -13,7 +13,7 @@ fs.readdirSync('node_modules')
 
 module.exports = {
   entry: [
-        __dirname + '/dist/js/src/app.js'
+        __dirname + '/dist/src/app.js'
   ],
   target: 'node',
   output: {
@@ -29,7 +29,7 @@ module.exports = {
   ],
    module : {
         loaders: [
-           
+           { test: /\.json$/, loader: "json-loader" }
         ]
     },
     resolve : {

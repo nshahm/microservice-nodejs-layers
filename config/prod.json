@@ -11,7 +11,7 @@
         },
     "logger":
         {
-            "dir": "/Users/carestream/app/microservice-nodejs-layers/",
+            "dir": "",
             "fileName": "microservice-employee.log",
             "dbURL": "mongodb://localhost/employees",
             "db": true,
